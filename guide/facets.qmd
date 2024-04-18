@@ -1,0 +1,45 @@
+---
+title: Facets (subplots)
+---
+
+```{python}
+from plotnine import *
+from plotnine.data import mpg
+```
+
+```{python}
+(
+    ggplot(mpg, aes("displ", "hwy", color="class")) + geom_point()
+)
+```
+
+## facet_wrap(): a sequence of subplots
+
+```{python}
+(
+    ggplot(mpg, aes("displ", "hwy", color="class"))
+    + geom_point(show_legend=False)
+    + facet_wrap("class")
+)
+```
+
+```{python}
+(
+    ggplot(mpg, aes("displ", "hwy", color="class"))
+    + geom_point(show_legend=False)
+    + facet_wrap("~class", ncol=2)
+)
+```
+
+
+## facet_grid(): a matrix of subplots
+
+```{python}
+(ggplot(mpg, aes("displ", "hwy")) + geom_point() + facet_grid("cyl ~ year")) 
+```
+
+## facetting on multiple variables
+
+## `scales=` for freeing axes
+
+## `???=`

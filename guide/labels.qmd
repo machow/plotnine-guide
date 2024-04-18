@@ -1,0 +1,11 @@
+---
+title: Labels
+---
+
+* labs
+* renaming scales
+* theme (mention e.g. to remove axis text)
+* facet funcs have label argument
+
+
+* Diagram of graph with all labellable things marked

@@ -1,0 +1,156 @@
+---
+title: Aesthetic mappings
+---
+
+```{python}
+from plotnine import *
+from palmerpenguins import load_penguins
+
+penguins = load_penguins()
+```
+
+## Basics
+
+```{python}
+(
+    ggplot(
+      data = penguins,
+      mapping = aes(x = "flipper_length_mm", y = "body_mass_g")
+    )
+    + geom_point()
+)
+```
+
+## Common mappings
+
+::: {.panel-tabset}
+
+### Color
+
+```{python}
+(
+    ggplot(
+        penguins,
+        aes(x = "flipper_length_mm", y = "body_mass_g", color = "species")
+    ) +
+    geom_point()
+)
+
+```
+
+### Shape
+
+```{python}
+(
+    ggplot(
+        penguins,
+        aes(
+            x="flipper_length_mm", y="body_mass_g", shape="species"
+        ),
+    )
+    + geom_point()
+)
+```
+
+### Size and alpha
+
+```{python}
+(
+    ggplot(
+        penguins,
+        aes(
+            x="flipper_length_mm",
+            y="body_mass_g",
+            size="body_mass_g",
+            alpha="body_mass_g",
+        ),
+    )
+    + geom_point()
+)
+```
+
+:::
+
+## Literal mappings
+
+Unlike 
+
+```{python}
+(
+    ggplot(
+        penguins,
+        aes(x="flipper_length_mm", y="body_mass_g"),
+    )
+    + geom_point(size=7, alpha=.5, color="purple")
+)
+```
+
+## `aes()` inside a specific geom
+
+* draw a point over an outlier (a la R4DS)
+
+```{python}
+penguin_counts = penguins.value_counts(["species", "island"]).reset_index()
+
+(
+    ggplot(penguin_counts, aes(x="species", y="count"))
+    + geom_col()
+)
+```
+
+```{python}
+(
+    ggplot(penguins, aes(x="species", fill="island"))
+    + geom_bar()
+)
+```
+
+
+## `aes()` with collective geoms
+
+```{python}
+(
+    ggplot(
+        data=penguins,
+        mapping=aes(
+            x="flipper_length_mm", y="body_mass_g"
+        ),
+    )
+    + geom_point()
+    + geom_smooth(method="lm")
+)
+```
+
+## `aes()` collective groupings
+
+```{python}
+(
+    ggplot(
+        data=penguins,
+        mapping=aes(
+            x="flipper_length_mm", y="body_mass_g", color="species"
+        ),
+    )
+    + geom_point()
+    + geom_smooth(method="lm")
+)
+```
+
+
+```{python}
+(
+    ggplot(
+        data=penguins, mapping=aes(x="flipper_length_mm", y="body_mass_g")
+    )
+    + geom_point(aes(color="species"))
+    + geom_smooth(method="lm")
+)
+```
+
+## Mappings with expressions
+
+## Mappings and variable types
+
+* numeric
+* categorical
+* datetime

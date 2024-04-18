@@ -1,0 +1,37 @@
+project:
+  type: website
+
+
+format:
+  html:
+    toc: true
+
+website:
+  navbar:
+    left:
+      - file: index.qmd
+      - file: guide/intro.qmd
+        text: "Guide"
+  sidebar:
+    - title: Guide
+      contents:
+        - guide/intro.qmd
+        - section: "Basics"
+          contents:
+          - guide/overview.qmd
+          - guide/aesthetic-mappings.qmd
+          - guide/geometric-objects.qmd
+          - guide/facets.qmd
+          - guide/position-adjustments.qmd
+          - guide/labels.qmd
+          - guide/annotations.qmd
+          - guide/scale-basics.qmd
+        - section: "Scales"
+          contents:
+          - guide/scale-x-and-y.qmd
+          - guide/scale-breaks-labels.qmd
+          - guide/scale-color-fill.qmd
+          - guide/scale-misc.qmd
+    - id: dummy
+
+

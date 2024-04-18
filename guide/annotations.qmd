@@ -1,0 +1,8 @@
+---
+title: Annotations
+---
+
+
+* geom text marking points
+* info box and arrow
+* annotate function
