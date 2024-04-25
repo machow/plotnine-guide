@@ -4,7 +4,11 @@ project:
 
 format:
   html:
+    css: styles.css
     toc: true
+    # For proper retina (similar to what we get in the notebook),
+    # double the default dpi, then using CSS maintain the default size
+    fig-dpi: 200
 
 website:
   navbar:
@@ -16,20 +20,19 @@ website:
     - title: Guide
       contents:
         - guide/intro.qmd
+        - guide/overview.qmd
         - section: "Basics"
           contents:
-          - guide/overview.qmd
           - guide/aesthetic-mappings.qmd
           - guide/geometric-objects.qmd
-          - guide/facets.qmd
+          - guide/scale-basics.qmd
           - guide/position-adjustments.qmd
+          - guide/facets.qmd
           - guide/labels.qmd
           - guide/annotations.qmd
-          - guide/scale-basics.qmd
         - section: "Scales"
           contents:
           - guide/scale-x-and-y.qmd
-          - guide/scale-breaks-labels.qmd
           - guide/scale-color-fill.qmd
           - guide/scale-misc.qmd
     - id: dummy

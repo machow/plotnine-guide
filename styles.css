@@ -1,0 +1,10 @@
+.small-img .cell-output figure img {
+    width: 240px;
+    height: 160px;
+}
+
+
+.cell-output figure img {
+    width: 640px;
+    height: 480px;
+}

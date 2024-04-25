@@ -1,3 +1,105 @@
 ---
 title: Overview
 ---
+
+```{python}
+from plotnine import *
+from plotnine.data import mpg
+```
+
+## Data
+
+```{python}
+#| output: false
+ggplot(data=mpg)
+```
+
+## `aes()` mapping
+
+```{python}
+#| output: false
+ggplot(data=mpg, mapping = aes(x = "cty", y = "hwy"))
+```
+
+## `geom_*()` objects
+
+```{python}
+(
+    ggplot(mpg, aes("cty", "hwy")) +
+    # to create a scatterplot
+    geom_point() +
+    # to fit and overlay a loess trendline
+    geom_smooth(method = "lm", color="blue")
+)
+```
+
+## `scale_*()` translations
+
+```{python}
+(
+    ggplot(mpg, aes("cty", "hwy", color = "class")) +
+    geom_point() +
+    scale_color_brewer(type="qual", palette = "Dark2")
+)
+```
+
+## `position_*()` adjustments
+
+```{python}
+(
+    ggplot(mpg, aes("cty", "hwy", color = "class")) +
+    geom_point(position=position_jitter())
+)
+```
+
+## `facet_*()` subplots
+
+```{python}
+(
+    ggplot(mpg, aes("cty", "hwy")) +
+    geom_point() +
+    facet_grid("year ~ drv")
+)
+```
+
+## `coord_*()` projections
+
+```{python}
+(
+    ggplot(mpg, aes("cty", "hwy")) +
+    geom_point() +
+    coord_fixed(xlim=[0, 40], ylim=[0, 40])
+)
+```
+
+## `theme_*()` styling
+
+
+```{python}
+(
+    ggplot(mpg, aes("cty", "hwy", colour = "class")) +
+    geom_point() +
+    theme_minimal() +
+    theme(
+        legend_position = "top",
+        axis_line = element_line(linewidth = 0.75),
+        axis_line_x = element_line(colour = "blue"),
+    )
+)
+```
+
+## Putting it together
+
+
+```{python}
+(
+    ggplot(mpg, aes("cty", "hwy")) +
+    geom_point(mapping = aes(colour = "displ")) +
+    geom_smooth(method = "lm", color="blue") +
+    scale_color_continuous(cmap_name="viridis") +
+    facet_grid("year ~ drv") +
+    coord_fixed() +
+    theme_minimal() +
+    theme(panel_grid_minor = element_blank())
+)
+```

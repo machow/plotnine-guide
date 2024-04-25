@@ -1,3 +1,21 @@
 ---
 title: Scales and legends
+jupyter: python3
 ---
+
+
+```{python}
+from plotnine import *
+```
+
+## Scale basics
+
+## Types of scales
+
+## `name=` to set legend label
+
+## `breaks=` for axis ticks, color bins
+
+## `labels=` for break labels
+
+## Legend merging

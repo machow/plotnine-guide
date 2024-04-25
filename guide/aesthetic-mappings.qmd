@@ -1,5 +1,6 @@
 ---
 title: Aesthetic mappings
+jupyter: python3
 ---
 
 ```{python}
@@ -8,6 +9,14 @@ from palmerpenguins import load_penguins
 
 penguins = load_penguins()
 ```
+
+Key points:
+
+* aes() maps variables (columns) to chart dimensions (e.g. x, y, or color).
+* literal mappings (e.g. hard-code color to "red") can be passed directly to geoms.
+* aes() can be used in the initial `ggplot()` call, or inside specific `geoms()`.
+* variable mappings in `aes()` can be simple names (e.g. `"somecol"`) or expressions (e.g. `"somecol / 10"`).
+* mappings for an aesthetic can be tweaked using a scale function
 
 ## Basics
 
@@ -21,7 +30,7 @@ penguins = load_penguins()
 )
 ```
 
-## Common mappings
+## Variable mappings
 
 ::: {.panel-tabset}
 
@@ -90,18 +99,13 @@ Unlike
 * draw a point over an outlier (a la R4DS)
 
 ```{python}
-penguin_counts = penguins.value_counts(["species", "island"]).reset_index()
-
 (
-    ggplot(penguin_counts, aes(x="species", y="count"))
-    + geom_col()
-)
-```
-
-```{python}
-(
-    ggplot(penguins, aes(x="species", fill="island"))
-    + geom_bar()
+    ggplot(
+        penguins,
+        aes(x="flipper_length_mm", y="body_mass_g"),
+    )
+    + geom_point(aes(color="species"), size=5)   # big circle points
+    + geom_point(aes(shape="species"))           # shape points
 )
 ```
 
@@ -147,9 +151,9 @@ penguin_counts = penguins.value_counts(["species", "island"]).reset_index()
 )
 ```
 
-## Mappings with expressions
+## Mappings allow expressions
 
-## Mappings and variable types
+## Mappings result in scales
 
 * numeric
 * categorical
