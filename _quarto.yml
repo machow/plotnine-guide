@@ -28,13 +28,20 @@ website:
           - guide/scale-basics.qmd
           - guide/position-adjustments.qmd
           - guide/facets.qmd
+          - guide/coordinate-systems.qmd
+        - section: "Polishing"
+          contents:
           - guide/labels.qmd
           - guide/annotations.qmd
+          - guide/themes.qmd
         - section: "Scales"
           contents:
           - guide/scale-x-and-y.qmd
           - guide/scale-color-fill.qmd
           - guide/scale-misc.qmd
+        - section: "Export"
+          contents:
+          - guide/export.qmd
     - id: dummy
 
 

@@ -7,6 +7,19 @@ from plotnine import *
 from plotnine.data import mpg
 ```
 
+```{python}
+(
+    ggplot(mpg, aes("cty", "hwy")) +
+    geom_point(mapping = aes(colour = "displ")) +
+    geom_smooth(method = "lm", color="blue") +
+    scale_color_continuous(cmap_name="viridis") +
+    facet_grid("year ~ drv") +
+    coord_fixed() +
+    theme_minimal() +
+    theme(panel_grid_minor = element_blank())
+)
+```
+
 ## Data
 
 ```{python}

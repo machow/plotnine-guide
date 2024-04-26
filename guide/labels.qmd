@@ -1,5 +1,5 @@
 ---
-title: Labels
+title: Labels and titles
 ---
 
 * labs

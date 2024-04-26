@@ -1,21 +1,90 @@
 ---
 title: Scales and legends
 jupyter: python3
+ipynb-shell-interactivity: all
 ---
 
 
 ```{python}
 from plotnine import *
+from plotnine.data import mpg
 ```
 
 ## Scale basics
 
 ## Types of scales
 
-## `name=` to set legend label
+## `name=` to set guide (legend) labels
+
+```{python}
+(
+    ggplot(mpg, aes("displ", "hwy", color="class"))
+    + geom_point()
+    + scale_x_continuous(name="Engine displacement (litres)")
+    + scale_y_continuous(name="Highway miles per gallon")
+    + scale_color_discrete(name="Car class")
+)
+```
+
+```{python}
+(
+    ggplot(mpg, aes("displ", "hwy", color="class"))
+    + geom_point()
+    + labs(
+        title = "Use labs() to quickly set labels",
+        x = "Engine displacement (litres)",
+        y = "Highway miles per gallon",
+        color = "Car class"
+    )
+)
+```
+
+## `limits=` for restricting data range
+
+```{python}
+#| layout-nrow: 1
+from plotnine.data import huron
+
+
+p = ggplot(huron, aes("year", "level")) + geom_line() 
+
+p + labs(title = "default")
+p + scale_x_continuous(limits=[1950, 1960]) + labs(title="zoom in")
+p + scale_x_continuous(limits=[1800, 2000]) + labs(title="zoom out")
+```
+
+```{python}
+#| layout-nrow: 1
+p = ggplot(huron, aes("year", "level", color="year")) + geom_line() 
+
+p
+p + scale_color_continuous(limits=[None, 1900])
+```
 
 ## `breaks=` for axis ticks, color bins
 
+```{python}
+from plotnine.data import huron
+
+p = ggplot(mpg, aes("displ", "hwy", color="class")) + geom_point()
+
+p + scale_x_continuous(breaks = [4, 4.5, 5, 5.5])
+```
+
+```{python}
+#| layout-nrow: 1
+p = ggplot(mpg, aes("displ", "hwy", color="class")) + geom_point(size=4)
+
+p + scale_color_discrete(breaks = ["2seater", "compact"]) + labs(title="Setting breaks")
+p + scale_color_discrete(limits = ["2seater", "compact"]) + labs(title="Setting limits")
+```
+
 ## `labels=` for break labels
+
+```{python}
+p = ggplot(mpg, aes("displ", "hwy", color="class")) + geom_point(size=4)
+
+p + scale_color_discrete(labels=lambda breaks: [s.upper() for s in breaks])
+```
 
 ## Legend merging

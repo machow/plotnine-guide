@@ -1,15 +1,38 @@
 ---
 title: "Geometric objects"
 jupyter: python3
+ipynb-shell-interactivity: all
 ---
 
 ```{python}
 from plotnine import *
-from plotnine.data import diamonds, mpg
-from palmerpenguins import load_penguins
-
-penguins = load_penguins()
+from plotnine.data import mpg
 ```
+
+Key Points:
+
+* Geoms use aesthetic mappings to draw plot elements.
+* Individual geoms draws one observation (row) with one element.
+* Collective geoms draws multiple observations (rows) with one element (e.g. a boxplot).
+* Collective geoms include lines (since a line is drawn between observations).
+* Use the `position=` argument to adjust the position of overlapping elements.
+* Use the `stat=` argument to run calculations before plotting.
+
+
+## Basic use
+
+```{python}
+#| layout-nrow: 1
+(
+    ggplot(mpg, aes("displ", "hwy"))
+    + geom_point(aes(fill="class"), size=5)
+    + geom_point(aes(shape="class"))
+)
+```
+
+* Geoms drawn in order
+* Manual mappings
+* Legend might have guides for multiple geoms
 
 ## Kinds of geoms
 
@@ -64,32 +87,40 @@ p3
 :::
 
 
-## Individual: points and text
+## Individual: points, bars, and text
+
+### Scatterplot with text
+
+```{python}
+highest_mpg = mpg[(mpg["hwy"] == mpg["hwy"].max()) & (mpg["cty"] == mpg["cty"].max())]
+
+(
+    ggplot(mpg, aes("cty", "hwy")) 
+    + geom_point() 
+    + geom_text(
+        aes(label="model"),
+        nudge_y=-2,
+        nudge_x = -1,
+        data = highest_mpg
+    )
+)
+```
+
+### Barchart on counts
+
+```{python}
+ttl_mpg_class = mpg.value_counts(["class", "drv"]).reset_index()
+ttl_mpg_class.head(3)
+```
+
+```{python}
+ggplot(ttl_mpg_class, aes("class", "count", fill = "drv")) + geom_col()
+```
+
+### Rect
+
 
 ## Collective: distributions
-
-## Collective: lines and fills
-
-## Manually set color
-
-## `position=` for placement tweaks
-
-## `na_rm=` to silence missing value warnings
-
-## `stat=` for statistical calculations
-
-
-
-
-
-individual:
-
-* area chart
-* barchart
-* line
-* point
-* rect, tile, raster
-* text
 
 collective:
 
@@ -98,3 +129,71 @@ collective:
 * density
 * boxplots
 * combined (e.g. boxplots and lines)
+
+### Boxplots and violins
+
+```{python}
+p = ggplot(mpg, aes("class", "cty"))
+
+p + geom_boxplot()
+p + geom_violin()
+```
+
+### Histograms and densities
+
+```{python}
+p = ggplot(mpg, aes("cty"))
+p + geom_histogram()
+p + geom_density(fill="lightblue")
+```
+
+### Smoothing
+
+```{python}
+(
+    ggplot(mpg, aes("displ", "hwy"))
+    + geom_point()
+    + geom_smooth(method="lm", color="blue", fill="orange")
+)
+
+```
+
+## Collective: lines and fills
+
+```{python}
+from plotnine import *
+from plotnine.data import huron
+
+(
+    ggplot(huron, aes("year", "level"))
+    + geom_line()
+    + geom_point()
+)
+```
+
+* TODO: use economics data to show with color?
+
+## `position=` for placement tweaks
+
+```{python}
+#| layout-nrow: 1
+p = ggplot(mpg, aes("cty", "hwy"))
+
+p + geom_point(alpha=.2)
+p + geom_point(position=position_jitter())
+```
+
+```{python}
+#| layout-nrow: 1
+# TODO: can we find a better example, or a fast way to do a tidyr::complete?
+p = ggplot(mpg, aes("class", fill="drv"))
+
+p + geom_bar()
+p + geom_bar(position=position_dodge(preserve="single"))
+```
+
+## `stat=` for statistical calculations
+
+
+
+

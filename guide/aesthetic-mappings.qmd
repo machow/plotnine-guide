@@ -15,7 +15,7 @@ Key points:
 * aes() maps variables (columns) to chart dimensions (e.g. x, y, or color).
 * literal mappings (e.g. hard-code color to "red") can be passed directly to geoms.
 * aes() can be used in the initial `ggplot()` call, or inside specific `geoms()`.
-* variable mappings in `aes()` can be simple names (e.g. `"somecol"`) or expressions (e.g. `"somecol / 10"`).
+* variable mappings in `aes()` can be simple names or expressions (e.g. `"somecol / 10"`).
 * mappings for an aesthetic can be tweaked using a scale function
 
 ## Basics
