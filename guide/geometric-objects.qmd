@@ -12,9 +12,9 @@ from plotnine.data import mpg
 Key Points:
 
 * Geoms use aesthetic mappings to draw plot elements.
-* Individual geoms draws one observation (row) with one element.
-* Collective geoms draws multiple observations (rows) with one element (e.g. a boxplot).
-* Collective geoms include lines (since a line is drawn between observations).
+* Individual geoms draw one observation (row) with one element.
+* Collective geoms draw multiple observations (rows) with one element (e.g. a boxplot).
+* Collective geoms include lines, which are drawn between observations.
 * Use the `position=` argument to adjust the position of overlapping elements.
 * Use the `stat=` argument to run calculations before plotting.
 
@@ -41,10 +41,9 @@ Geoms come in two varieties:
 * Individual geoms: draw each row of data independently on the chart.
 * Collective geoms: draw based on groups of rows, or relationships between them.
 
-::: {.small-img}
-
 ```{python}
 #| echo: false
+#| layout-nrow: 1
 small_mpg = (
     mpg[mpg["class"].isin(["2seater", "compact", "midsize"])]
     .assign(**{"class": lambda d: d["class"].cat.remove_unused_categories()})
@@ -62,7 +61,7 @@ p1 = ggplot(small_mpg, aes("class", "hwy")) + geom_boxplot() + labs(title="colle
 p2 = ggplot(small_mpg, aes("class", "hwy")) + geom_point(position = position_jitter(height=0, width=0.1)) + labs(title="individual: point") + big_text
 p3 = (
     ggplot(model_avg_hwy, aes("year", "hwy", color="class", group="class")) 
-    + geom_line()
+    + geom_line(size=1)
     + geom_point()
     + labs(title = "collective: line")
     + big_text
@@ -71,20 +70,10 @@ p3 = (
 )
 
 p2
-```
-
-
-```{python}
-#| echo: false
 p1
-```
-
-```{python}
-#| echo: false
 p3
 ```
 
-:::
 
 
 ## Individual: points, bars, and text

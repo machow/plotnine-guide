@@ -82,9 +82,14 @@ p + scale_color_discrete(limits = ["2seater", "compact"]) + labs(title="Setting 
 ## `labels=` for break labels
 
 ```{python}
-p = ggplot(mpg, aes("displ", "hwy", color="class")) + geom_point(size=4)
+p = ggplot(mpg, aes("displ", "hwy", color="class")) + geom_point()
 
 p + scale_color_discrete(labels=lambda breaks: [s.upper() for s in breaks])
+```
+
+```{python}
+p + scale_x_continuous(breaks = [2, 4, 6], labels = ["TWO", "FOUR", "SIX"])
+
 ```
 
 ## Legend merging
