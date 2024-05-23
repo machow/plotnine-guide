@@ -31,6 +31,7 @@ website:
           - guide/coordinate-systems.qmd
         - section: "Polishing"
           contents:
+          - guide/export.qmd
           - guide/labels.qmd
           - guide/annotations.qmd
           - guide/themes.qmd
@@ -39,9 +40,13 @@ website:
           - guide/scale-x-and-y.qmd
           - guide/scale-color-fill.qmd
           - guide/scale-misc.qmd
-        - section: "Export"
+        - section: "Extra"
           contents:
-          - guide/export.qmd
+          - guide/shortcuts.qmd
+          - guide/misc.qmd
+          - guide/feature-coverage.qmd
+          - guide/aesthetic-specification.qmd
+        - section: "Case studies"
     - id: dummy
 
 

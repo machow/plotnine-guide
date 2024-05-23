@@ -6,7 +6,12 @@ title: Position adjustments
 from plotnine import *
 ```
 
-* geom_point jittering
-* barcharts side-by-side
-* stacking
-* error bar example?
+## Jittering points
+
+## Dodging bars
+
+## Stacking fills
+
+## Filling bars
+
+## Error bars

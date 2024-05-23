@@ -1,0 +1,100 @@
+---
+title: Aesthetic specifications
+jupyter: python3
+---
+
+This document is a translation of https://ggplot2.tidyverse.org/articles/ggplot2-specs.html
+
+
+## Color and fill
+
+Almost every geom has either color, fill, or both. Colors and fills can be specified in the following ways:
+
+* A **name**, e.g., `"red"`. **TODO: how do you list colors?**.
+* An __rgb specification__, with a string of the form `"#RRGGBB"` where each of 
+    the pairs `RR`, `GG`, `BB` consists of two hexadecimal digits giving a value 
+    in the range `00` to `FF`
+
+    You can optionally make the color transparent by using the form 
+    `"#RRGGBBAA"`.
+* An __NA__, for a completely transparent colour. **TODO: how do you do this with plotnine?**
+
+
+## Lines
+
+As well as `colour`, the appearance of a line is affected by `linewidth`, `linetype`, `linejoin` and `lineend`.
+
+### Line type {#sec:line-type-spec}
+
+Line types can be specified with:
+
+*   An __integer__ or __name__: 0 = blank, 1 = solid, 2 = dashed, 3 = dotted, 
+    4 = dotdash, 5 = longdash, 6 = twodash, as shown below:
+
+    ```{python}
+    #| fig-alt: "A series of 6 horizontal lines with different line types.
+    #|  From top-to-bottom they are titled 'solid', 'dashed', 'dotted',
+    #|  'dotdash', 'longdash', 'twodash'."
+    #| echo: false
+    import pandas as pd
+    from plotnine import *
+
+    lty = [
+        "solid",
+        "dashed",
+        "dotted",
+        #"dotdash",
+        #"longdash",
+        #"twodash",
+        ]
+    linetypes = pd.DataFrame({
+      "y": list(range(len(lty))),
+      "lty": lty
+    }) 
+
+    (ggplot(linetypes, aes(0, "y")) + 
+      geom_segment(aes(xend = 5, yend = "y", linetype = "lty")) + 
+      scale_linetype_identity() + 
+      geom_text(aes(label = "lty"), nudge_y = 0.2) +
+      scale_x_continuous(name=None, breaks = None) + 
+      scale_y_reverse(name=None, breaks = None)
+    )
+    ```
+
+* The lengths of on/off stretches of line. This is done with a string 
+  containing 2, 4, 6, or 8 hexadecimal digits which give the lengths of
+  consecutive lengths. For example, the string `"33"` specifies three units 
+  on followed by three off and `"3313"` specifies three units on followed by 
+  three off followed by one on and finally three off. 
+    ```{python}
+    #| fig-alt: 
+    #|   A series of 9 horizontal lines with different line types.
+    #|   Each line is titled by two hexadecimal digits that determined the
+    #|   lengths of dashes and gaps."
+    #| echo: false
+    #| eval: false
+    lty = ["11", "18", "1f", "81", "88", "8f", "f1", "f8", "ff"]
+    linetypes = pd.DataFrame({
+      "y": list(range(len(lty))),
+      "lty": lty
+    }) 
+
+    (
+        ggplot(linetypes, aes(0, "y")) + 
+        geom_segment(aes(xend = 5, yend = "y", linetype = "lty")) + 
+        scale_linetype_identity() + 
+        # TODO: no hjust argument?
+        geom_text(aes(label = "lty"), nudge_y = 0.2) +
+        scale_x_continuous(name=None, breaks = None) + 
+        scale_y_reverse(name=None, breaks = None)
+    )
+    ```
+
+
+The five standard dash-dot line types described above correspond to 44, 13, 1343, 73, and 2262.
+
+### Linewidth
+
+### Line end/join parameters
+
+## Polygons

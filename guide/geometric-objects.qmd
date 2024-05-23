@@ -162,7 +162,22 @@ from plotnine.data import huron
 
 * TODO: use economics data to show with color?
 
+```{python}
+from plotnine import *
+from plotnine.data import huron
+
+(
+    ggplot(huron, aes("year", "level"))
+    + geom_ribbon(aes(ymax="level"), ymin=0, fill="lightblue")
+    + geom_point()
+)
+```
+
+* mention geom_area
+
 ## `position=` for placement tweaks
+
+### Jitter with random noise
 
 ```{python}
 #| layout-nrow: 1
@@ -172,17 +187,41 @@ p + geom_point(alpha=.2)
 p + geom_point(position=position_jitter())
 ```
 
+### Dodge to side-by-side
+
+```{python}
+ttl_class_drv = (
+    mpg.groupby(["class", "drv"], observed=False)
+    .size()
+    .rename("n")
+    .reset_index()
+)
+
+ttl_class_drv.head()
+```
+
 ```{python}
 #| layout-nrow: 1
-# TODO: can we find a better example, or a fast way to do a tidyr::complete?
-p = ggplot(mpg, aes("class", fill="drv"))
+# TODO: can we find an example with fewer 0 counts? 
+p = ggplot(ttl_class_drv, aes("class", y = "n", fill="drv"))
 
-p + geom_bar()
-p + geom_bar(position=position_dodge(preserve="single"))
+p + geom_col()
+p + geom_col(position=position_dodge())
 ```
+
 
 ## `stat=` for statistical calculations
 
 
+```{python}
+(
+    ggplot(mpg, aes("trans", "cty"))
+    + geom_point()
+    + geom_point(
+        color="red",
+        size=3,
+        stat="summary",
+        fun_y=lambda x: x.mean())
+)
 
-
+```

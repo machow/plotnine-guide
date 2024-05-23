@@ -1,5 +1,5 @@
 ---
-title: Scales and legends
+title: Scales, legends, and guides
 jupyter: python3
 ipynb-shell-interactivity: all
 ---
@@ -93,3 +93,17 @@ p + scale_x_continuous(breaks = [2, 4, 6], labels = ["TWO", "FOUR", "SIX"])
 ```
 
 ## Legend merging
+
+* Aesthetics mapped to the same variable sometimes have their guides merged.
+* To split a merged legend, give the scales their own names.
+
+```{python}
+#| layout-nrow: 1
+p = (
+    ggplot(mpg, aes("displ", "hwy", color="factor(cyl)", shape="factor(cyl)"))
+    + geom_point()
+)
+
+p
+p + scale_shape_discrete(name= "Shape")
+```

@@ -1,0 +1,7 @@
+---
+title: Feature parity with ggplot2
+---
+
+## Missing
+
+* geom_text hjust argument
