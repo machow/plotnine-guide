@@ -4,4 +4,33 @@ title: Feature parity with ggplot2
 
 ## Missing
 
-* geom_text hjust argument
+* geom_text:
+  - no manual hjust argument
+  - no fontweight, fontstyle mappings (fontweight is fontface in ggplot; TODO upgrade and check)
+  - aes hjust, vjust don't accept numbers (only strings like center, top, etc..)
+* geom_path no linewidth option (uses size)
+* Shape names not supported (see aes spec)
+* `None` for do nothing not always supported
+  - shape aesthetic
+* Not all linetypes supported (and must be name)
+  - ggplot's dotdash is dashdot
+
+## Differences
+
+```python
+from plotnine import *
+from plotnine.data import huron
+ggplot(huron, aes("year", "level")) + geom_line(linetype=(0, (1, 5)),)
+```
+
+## Key syntax differences
+
+* replace `.` with `_`
+* funs and fun_y, etc..?
+* `where` clause
+* use quotes are mappings
+
+## Mapping differences
+
+* sans-serif vs sans, monospace vs mono
+

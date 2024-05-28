@@ -4,6 +4,10 @@ jupyter: python3
 ipynb-shell-interactivity: all
 ---
 
+* scale: 
+* legend: 
+* guide: 
+
 
 ```{python}
 from plotnine import *
@@ -106,4 +110,31 @@ p = (
 
 p
 p + scale_shape_discrete(name= "Shape")
+```
+
+## Legend position
+
+```{python}
+#| layout-nrow: 1
+p = (
+    ggplot(mpg, aes("displ", "hwy", color="factor(cyl)", shape="factor(cyl)"))
+    + geom_point()
+)
+
+p + theme(legend_position = "bottom")
+p + theme(legend_position = "none")
+```
+
+## Guide customization
+
+```{python}
+#| layout-nrow: 1
+p = (
+    ggplot(mpg, aes("displ", "hwy", color="cyl"))
+    + geom_point()
+    + theme(legend_key_size=24)
+)
+
+p
+p + guides(color = guide_colorbar(reverse = True))
 ```

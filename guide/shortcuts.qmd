@@ -37,4 +37,6 @@ from plotnine.data import mpg
 
 ## expand_limits() for data-based limits
 
+* ref coord_cartesion, scale limits argument, xlim, ylim
+
 ## annotate() for quick plot text

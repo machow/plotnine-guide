@@ -2,16 +2,41 @@
 title: Position adjustments
 ---
 
+TODO: change headings from -ing to match rest of guide (e.g. jitter)
+
 ```{python}
 from plotnine import *
+from siuba import *
+
 ```
 
 ## Jittering points
 
-## Dodging bars
+## Stacking, dodging, and filling bars
 
-## Stacking fills
+```{python}
+#| layout-nrow: 1
+from plotnine.data import diamonds
 
-## Filling bars
+# TODO: from https://ggplot2-book.org/layers.html#sec-position
+p = ggplot(diamonds, aes("color", fill="cut")) + theme(legend_position="none")
+
+p + geom_bar()
+p + geom_bar(position=position_fill())
+p + geom_bar(position=position_dodge())
+```
 
 ## Error bars
+
+```{python}
+## Create a simple example dataset
+#df = pd.DataFrame(
+#  trt = factor(c(1, 1, 2, 2)),
+#  resp = c(1, 5, 3, 4),
+#  group = factor(c(1, 2, 1, 2)),
+#  upper = c(1.1, 5.3, 3.3, 4.2),
+#  lower = c(0.8, 4.6, 2.4, 3.6)
+#)
+
+
+```

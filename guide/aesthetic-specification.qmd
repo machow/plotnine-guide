@@ -1,6 +1,7 @@
 ---
 title: Aesthetic specifications
 jupyter: python3
+ipynb-shell-interactivity: all
 ---
 
 This document is a translation of https://ggplot2.tidyverse.org/articles/ggplot2-specs.html
@@ -10,15 +11,15 @@ This document is a translation of https://ggplot2.tidyverse.org/articles/ggplot2
 
 Almost every geom has either color, fill, or both. Colors and fills can be specified in the following ways:
 
-* A **name**, e.g., `"red"`. **TODO: how do you list colors?**.
+* A **name**, e.g., `"red"`. **TODO: how do you list colors?**. https://matplotlib.org/stable/gallery/color/named_colors.html#css-colors
 * An __rgb specification__, with a string of the form `"#RRGGBB"` where each of 
     the pairs `RR`, `GG`, `BB` consists of two hexadecimal digits giving a value 
     in the range `00` to `FF`
 
     You can optionally make the color transparent by using the form 
     `"#RRGGBBAA"`.
-* An __NA__, for a completely transparent colour. **TODO: how do you do this with plotnine?**
-
+* A missing value (e.g. None, np.nan, pd.NA), for a completely transparent colour. 
+  - https://github.com/has2k1/plotnine/issues/791
 
 ## Lines
 
@@ -28,8 +29,8 @@ As well as `colour`, the appearance of a line is affected by `linewidth`, `linet
 
 Line types can be specified with:
 
-*   An __integer__ or __name__: 0 = blank, 1 = solid, 2 = dashed, 3 = dotted, 
-    4 = dotdash, 5 = longdash, 6 = twodash, as shown below:
+*   A __name__: solid, dashed, dotted, 
+    dashdot, as shown below:
 
     ```{python}
     #| fig-alt: "A series of 6 horizontal lines with different line types.
@@ -43,9 +44,7 @@ Line types can be specified with:
         "solid",
         "dashed",
         "dotted",
-        #"dotdash",
-        #"longdash",
-        #"twodash",
+        "dashdot",
         ]
     linetypes = pd.DataFrame({
       "y": list(range(len(lty))),
@@ -65,7 +64,7 @@ Line types can be specified with:
   containing 2, 4, 6, or 8 hexadecimal digits which give the lengths of
   consecutive lengths. For example, the string `"33"` specifies three units 
   on followed by three off and `"3313"` specifies three units on followed by 
-  three off followed by one on and finally three off. 
+  three off followed by one on and finally three off. TODO: this likely isn't implemented? (but tuple syntax is `(0, (1, 5))`)
     ```{python}
     #| fig-alt: 
     #|   A series of 9 horizontal lines with different line types.
@@ -95,6 +94,262 @@ The five standard dash-dot line types described above correspond to 44, 13, 1343
 
 ### Linewidth
 
+
+Due to a historical error, the unit of linewidth is roughly 0.75 mm. Making it 
+exactly 1 mm would change a very large number of existing plots, so we're stuck 
+with this mistake.
+
 ### Line end/join parameters
 
+*   The appearance of the line end is controlled by the `lineend` paramter,
+    and can be one of "round", "butt" (the default), or "square".
+
+    ```{python}
+    #| fig-alt: [
+    #| "A plot showing a line with an angle. A thinner red line is placed over
+    #|  a thicker black line. The black line ends where the red line ends.",
+    #| "A plot showing a line with an angle. A thinner red line is placed over
+    #|  a thicker black line. The black line ends past where the red line ends,
+    #|  and ends in a semicircle.",
+    #| "A plot showing a line with an angle. A thinner red line is placed over
+    #|  a thicker black line. The black line ends past where the red line ends,
+    #|  and ends in a square shape."
+    #| ]
+    #| layout-nrow: 1
+    df = pd.DataFrame({"x": [1,2,3], "y": [4, 1, 9]})
+    base = ggplot(df, aes("x", "y")) + xlim(0.5, 3.5) + ylim(0, 10)
+    (
+      base + 
+      geom_path(size = 10) + 
+      geom_path(size = 1, colour = "red")
+    )
+    
+    (
+      base + 
+      geom_path(size = 10, lineend = "round") + 
+      geom_path(size = 1, colour = "red")
+    )
+    
+    (
+      base + 
+      geom_path(size = 10, lineend = "square") + 
+      geom_path(size = 1, colour = "red")
+    )
+    ```
+
+*   The appearance of line joins is controlled by `linejoin` and can be one of 
+    "round" (the default), "mitre", or "bevel".
+
+    ```{python}
+    #| layout-nrow: 1
+    #| fig-alt: [
+    #|   "A plot showing a thin red line on top of a thick black line shaped like   the letter 'V'. The corner in the black V-shape is rounded.",
+    #|   "A plot showing a thin red line on top of a thick black line shaped like the letter 'V'. The corner in the black V-shape is sharp.",
+    #|   "A plot showing a thin red line on top of a thick black line shaped like the letter 'V'. A piece of the corner is cut off so that the two straight parts are connected by a horizontal part."
+    #| ]
+    df = pd.DataFrame({"x": [1,2,3], "y": [9, 1, 9]})
+    base = ggplot(df, aes("x", "y")) + ylim(0, 10)
+    (
+      base + 
+      geom_path(size = 10) + 
+      geom_path(size = 1, colour = "red")
+    )
+    
+
+    (
+      base + 
+      geom_path(size = 10, linejoin = "mitre") + 
+      geom_path(size = 1, colour = "red")
+    )
+    
+    (
+      base + 
+      geom_path(size = 10, linejoin = "bevel") + 
+      geom_path(size = 1, colour = "red")
+    )
+    ```
+
+Mitre joins are automatically converted to bevel joins whenever the angle is too small (which would create a very long bevel). This is controlled by the `linemitre` parameter which specifies the maximum ratio between the line width and the length of the mitre.
+
+
 ## Polygons
+
+The border of the polygon is controlled by the `colour`, `linetype`, and `linewidth` aesthetics as described above. The inside is controlled by `fill`.
+
+## Point
+
+### Shape {#sec:shape-spec}
+
+Shapes take five types of values:
+
+*   A string for a point type, as specified in [matplotlib.markers](https://matplotlib.org/stable/api/markers_api.html#):
+
+    ```{python}
+    #| echo: false
+    #| fig-alt: "A 5-by-5 grid of point symbols annotated by the numbers
+    #|  that can be used to represent the symbols. From left to right, the
+    #|  first 15 symbols are lines or open shapes, the next 5 symbols are solid 
+    #|  shapes and the last 5 symbols are filled shaped."
+
+    shape_points = [
+        (".", "point"),
+        (",", "pixel"),
+        ("o", "circle"),
+        ("v", "triangle_down"),
+        ("^", "triangle_up"),
+        ("<", "triangle_left"),
+        (">", "triangle_right"),
+        ("1", "tri_down"),
+        ("2", "tri_up"),
+        ("3", "tri_left"),
+        ("4", "tri_right"),
+        ("8", "octagon"),
+        ("s", "square"),
+        ("p", "pentagon"),
+        ("P", "plus (filled)"),
+        ("*", "star"),
+        ("h", "hexagon1"),
+        ("H", "hexagon2"),
+        ("+", "plus"),
+        ("x", "x"),
+        ("X", "x (filled)"),
+        ("D", "diamond"),
+        ("d", "thin_diamond"),
+        ("|", "vline"),
+        (pd.NA, "None"),
+         #("_", "hline"),
+        # TODO: how to use these?
+        #(0, "tickleft"),
+        #(1, "tickright"),
+        #(2, "tickup"),
+        #(3, "tickdown"),
+        #(4, "caretleft"),
+        #(5, "caretright"),
+        #(6, "caretup"),
+        #(7, "caretdown"),
+        #(8, "caretleft (centered at base)"),
+        #(9, "caretright (centered at base)"),
+        #(10, "caretup (centered at base)"),
+        #(11, "caretdown (centered at base)")
+    ]
+    n_shapes = len(shape_points)
+    shapes = pd.DataFrame({
+      "shape": [entry[0] for entry in shape_points],
+      "x": [x // 5 for x in range(n_shapes)],
+      "y": [-x % 5 for x in range(n_shapes)]
+    })
+
+    (
+      ggplot(shapes, aes("x", "y")) + 
+      geom_point(aes(shape = "shape"), size = 5, fill = "red") +
+      geom_text(aes(label = "shape"), nudge_x = 0.15) +
+      scale_shape_identity() +
+      expand_limits(x = 4.1) +
+      theme_void()
+    )
+    ```
+
+* `None` to draw nothing. (TODO: does not work)
+
+### Colour and fill
+
+While `colour` applies to all shapes, `fill` only applies to shapes with red fill in the plot above. The size of the filled part is controlled by `size`, the size of the stroke is controlled by `stroke`. Each is measured in mm, and the total size of the point is the sum of the two. Note that the size is constant along the diagonal in the following figure.
+
+```{python}
+#| fig-alt: "A plot showing a 4-by-4 grid of red points, the top 12 points with
+#|  black outlines. The size of the points increases horizontally. The stroke of 
+#|  the outlines of the points increases vertically. A white diagonal line with
+#|  a negative slope marks that the 'stroke' versus 'size' trade-off has 
+#|  similar total sizes."
+sizes = (
+  pd.DataFrame({"size": [0, 2, 4, 6]})
+  .merge(
+    pd.DataFrame({"stroke": [0, 2, 4, 6]}), how="cross"
+  )
+)
+
+(
+  ggplot(sizes, aes("size", "stroke", size = "size", stroke = "stroke")) + 
+  geom_abline(slope = -1, intercept = 6, colour = "white", size = 6) + 
+  geom_point(shape = "o", fill = "red") +
+  scale_size_identity()
+)
+```
+
+
+
+## Text
+
+### Font family
+
+There are only three fonts that are guaranteed to work everywhere: "sans" (the default), "serif", or "mono" (TODO: this doesn't work):
+
+```{python}
+#| fig-alt: "A plot showing three text labels arranged vertically. The top 
+#|  label is 'sans' and is displayed in a sans-serif font. The middle label is
+#|  'serif' and is displayed in a serif font. The bottom label is 'mono' and
+#|  is displayed in a monospaced font."
+
+
+# TODO: add cursive and 🧚‍♀️ fantasy  
+df = pd.DataFrame({"x": 1, "y": [3, 2, 1], "family": ["sans-serif", "serif", "monospace"]})
+
+(
+  ggplot(df, aes("x", "y")) + 
+  geom_text(aes(label = "family", family="family"), size=20)
+)
+```
+
+You should be able to use any fonts installed on your system.
+TODO: find something to link out to for installing new fonts.
+
+* `showtext` makes GD-independent plots by rendering all text as polygons. (TODO: svg_usefont; trade-off, paths are hard to edit quickly vs fonts eg in inkscape)
+
+
+### Font face
+
+TODO: update plotnine and re-run; see geom_text docs
+
+```{python}
+#| fig-alt: "A plot showing four text labels arranged vertically. The top 
+#|  label is 'bold.italic' and is displayed in bold and italic. The next three
+#|  labels are 'italic', 'bold' and 'plain' and are displayed in their 
+#|  respective styles."
+df = pd.DataFrame({"x": [1, 2, 3, 4], "fontweight": ["plain", "bold", "italic", "bold.italic"]})
+
+(
+  ggplot(df, aes(1, "x")) + 
+  geom_text(aes(label = "fontweight", fontweight = "fontweight"))
+)
+```
+
+### Font size
+
+The `size` of text is measured in mm by default. This is unusual, but makes the size of text consistent with the size of lines and points. Typically you specify font size using points (or pt for short), where 1 pt = 0.35mm. In `geom_text()` and `geom_label()`, you can set `size.unit = "pt"` to use points instead of millimeters. In addition,
+ggplot2 provides a conversion factor as the variable `.pt`, so if you want to draw 12pt text, you can also set `size = 12 / .pt`.
+
+### Justification
+
+Horizontal and vertical justification have the same parameterisation, either a string ("top", "middle", "bottom", "left", "center", "right") or a number between 0 and 1:
+
+* top = 1, middle = 0.5, bottom = 0
+* left = 0, center = 0.5, right = 1
+
+```{python}
+#| fig-alt: "A 3-by-3 grid of text on top of points, with horizontal text
+#|  justification increasing from 0 to 1 on the x-axis and vertical 
+#|  justification increasing from 0 to 1 on the y-axis. The points make it
+#|  easier to see the relative placement of text."
+just = pd.DataFrame({"hjust": ["center", "right", "left"], "x": [0, 1, 2]}).merge(pd.DataFrame({"vjust": ["center", "top", "bottom"], "y": [0, 1, 2]}), how="cross")
+
+just["label"] = just["hjust"].astype(str).str.cat(just["vjust"].astype(str), sep=", ")
+
+(
+  ggplot(just, aes("x", "y")) +
+  geom_point(colour = "grey", size = 5) + 
+  geom_text(aes(label = "label", hjust = "hjust", vjust = "vjust"))
+  + expand_limits(x = [-.5, 2.5], y = [-.5, 2.5])
+)
+```
+
+Note that you can use numbers outside the range (0, 1), but it's not recommended. 

@@ -1,0 +1,52 @@
+from https://ggplot2-book.org/layers.html#sec-position
+
+* Graphical primitives:
+  - geom_blank(): display nothing. Most useful for adjusting axes limits using data.
+  - geom_point(): points.
+  - geom_path(): paths.
+  - geom_ribbon(): ribbons, a path with vertical thickness.
+  - geom_segment(): a line segment, specified by start and end position.
+  - geom_rect(): rectangles.
+  - geom_polygon(): filled polygons.
+  - geom_text(): text.
+* One variable:
+  * Discrete:
+    - geom_bar(): display distribution of discrete variable.
+  * Continuous:
+    - geom_histogram(): bin and count continuous variable, display with bars.
+    - geom_density(): smoothed density estimate.
+    - geom_dotplot(): stack individual points into a dot plot.
+    - geom_freqpoly(): bin and count continuous variable, display with lines.
+* Two variables:
+  * Both continuous:
+    - geom_point(): scatterplot.
+    - geom_quantile(): smoothed quantile regression.
+    - geom_rug(): marginal rug plots.
+    - geom_smooth(): smoothed line of best fit.
+    - geom_text(): text labels.
+    - Show distribution:
+    - geom_bin2d(): bin into rectangles and count.
+    - geom_density2d(): smoothed 2d density estimate.
+    - geom_hex(): bin into hexagons and count.
+  * At least one discrete:
+    - geom_count(): count number of point at distinct locations
+    - geom_jitter(): randomly jitter overlapping points.
+    - One continuous, one discrete:
+    - geom_bar(stat = "identity"): a bar chart of precomputed summaries.
+    - geom_boxplot(): boxplots.
+    - geom_violin(): show density of values in each group.
+  * One time, one continuous:
+    - geom_area(): area plot.
+    - geom_line(): line plot.
+    - geom_step(): step plot.
+* Display uncertainty:
+  * geom_crossbar(): vertical bar with center.
+  * geom_errorbar(): error bars.
+  * geom_linerange(): vertical line.
+  * geom_pointrange(): vertical line with center.
+* Spatial:
+  * geom_map(): fast version of geom_polygon() for map data.
+* Three variables:
+  * geom_contour(): contours.
+  * geom_tile(): tile the plane with rectangles.
+  * geom_raster(): fast version of geom_tile() for equal sized tiles.

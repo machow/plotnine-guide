@@ -190,23 +190,27 @@ p + geom_point(position=position_jitter())
 ### Dodge to side-by-side
 
 ```{python}
-ttl_class_drv = (
-    mpg.groupby(["class", "drv"], observed=False)
-    .size()
-    .rename("n")
-    .reset_index()
-)
-
-ttl_class_drv.head()
+#ttl_class_drv = (
+#    mpg.groupby(["class", "drv"], observed=False)
+#    .size()
+#    .rename("n")
+#    .reset_index()
+#)
+#
+#ttl_class_drv.head()
 ```
 
 ```{python}
 #| layout-nrow: 1
-# TODO: can we find an example with fewer 0 counts? 
-p = ggplot(ttl_class_drv, aes("class", y = "n", fill="drv"))
 
-p + geom_col()
-p + geom_col(position=position_dodge())
+from plotnine.data import diamonds
+
+# TODO: from https://ggplot2-book.org/layers.html#sec-position
+p = ggplot(diamonds, aes("color", fill="cut")) + theme(legend_position="none")
+
+p + geom_bar()
+p + geom_bar(position=position_fill())
+p + geom_bar(position=position_dodge())
 ```
 
 

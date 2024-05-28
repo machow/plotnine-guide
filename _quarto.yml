@@ -1,6 +1,9 @@
 project:
   type: website
 
+execute:
+  ipynb-shell-interactivity: all
+  
 
 format:
   html:
