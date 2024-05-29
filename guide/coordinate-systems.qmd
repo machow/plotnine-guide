@@ -1,11 +1,94 @@
 ---
 title: Coordinate systems
+jupyter: python3
 ---
+
+```{python}
+from plotnine import *
+from plotnine.data import diamonds, mpg
+```
 
 ## coord_flip()
 
+Use `coord_flip()` to switch the x- and y-axes of your plot.
+
+```{python}
+#| layout-nrow: 1
+
+p = ggplot(diamonds, aes("cut")) + geom_bar()
+
+p
+p + coord_flip()
+```
+
+Notice that cut is the x-axis on the default plot (left), but the y-axis of the flipped one (right). This can be helpful for barplots with many individually labeled bars, since the labels won't overlap with eachother. It can also be useful for taking advantage of wider plots.
+
+Flipped plots use the original axis names for setting titles and scales, but the final plot axis names for theme options.
+
+```{python}
+(
+    ggplot(diamonds, aes("cut"))
+    + geom_bar()
+    + coord_flip()
+
+    # labs and scales are based on original, non-flipped plot
+    + labs(x = "Diamond Cut", y = "Count")
+    + scale_y_continuous(breaks = [0, 10_000, 20_000])
+
+    # theme options are based on the flipped plot
+    + theme(axis_line_x=element_line(color="purple"))
+)
+
+```
+
+
+
 ## coord_cartesian()
+
+Use `coord_cartesian()` to zoom in on a plot.
+
+```{python}
+#| layout-nrow: 1
+p = ggplot(diamonds, aes("cut", "price")) + geom_boxplot()
+
+p
+p + coord_cartesian(ylim = [5000, None])
+```
+
+Notice that the second plot is zoomed in, so the y-axis starts at the top of the boxplots.  Importantly, `coord_cartesian()` doesn't affect any statistical calculations.
+
+By contrast, setting limits in scales excludes any data outside those limits.
+
+```{python}
+p + scale_y_continuous(limits = [5000, None])
+```
+
+Notice that in the plot above, `scale_y_continuous` excluded y-values under 5,000 from being used in calculating the boxplot.
+
 
 ## coord_fixed()
 
+```{python}
+(
+    ggplot(mpg, aes("cty", "hwy"))
+    + coord_fixed(xlim=[0, None], ylim=[0,None])
+    + geom_point()
+)
+```
+
 ## geom_map()
+
+
+```{python}
+import geopandas as gp
+import geodatasets
+
+chicago = gp.read_file(geodatasets.get_path("geoda.chicago_commpop"))
+#groceries = gp.read_file(geodatasets.get_path("geoda.groceries"))
+
+(
+    ggplot(chicago, aes(fill="POP2010")) +
+    geom_map() 
+)
+```
+

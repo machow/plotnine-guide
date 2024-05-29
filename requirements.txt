@@ -1,3 +1,5 @@
 plotnine
 jupyter
 palmerpenguins
+geopandas
+geodatasets

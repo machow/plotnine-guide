@@ -12,7 +12,7 @@ from siuba import *
 
 ## Jittering points
 
-## Stacking, dodging, and filling bars
+## Stacking, filling, and dodging bars
 
 ```{python}
 #| layout-nrow: 1
@@ -26,7 +26,49 @@ p + geom_bar(position=position_fill())
 p + geom_bar(position=position_dodge())
 ```
 
-## Error bars
+### Reversing order
+
+```{python}
+#| layout-nrow: 1
+p = ggplot(diamonds, aes("color", fill="cut"))
+
+p + geom_bar(position=position_fill())
+p + geom_bar(position=position_fill(reverse=True))
+```
+
+### Spacing between dodged bars
+
+```{python}
+#| layout-nrow: 1
+import pandas as pd
+df = pd.DataFrame({"x": [1, 1, 2, 2], "n": [1, 2, 3, 4], "fill": ["A", "B"]*2})
+
+ggplot(df, aes("x", "n", fill="fill")) + geom_col(position=position_dodge(width=.6), width=.5)
+```
+
+### Labelling bars
+
+## Dodging lines
+
+```{python}
+df = pd.DataFrame({
+    "group": ["A"]*2 + ["B"]*2,
+    "condition": ["treatment", "control"]*2,
+    "measure": [3, 1, 2, 1]
+})
+
+
+dodge = position_dodge(width=.1)
+
+(
+    ggplot(df, aes("condition", "measure", fill="group", group="group"))
+    + geom_line(position=dodge)
+    + geom_point(size=4, position=dodge)
+)
+```
+
+
+## Case study: error bars
 
 ```{python}
 ## Create a simple example dataset
