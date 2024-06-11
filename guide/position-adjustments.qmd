@@ -6,8 +6,6 @@ TODO: change headings from -ing to match rest of guide (e.g. jitter)
 
 ```{python}
 from plotnine import *
-from siuba import *
-
 ```
 
 ## Jittering points

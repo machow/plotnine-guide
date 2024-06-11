@@ -1,3 +1,66 @@
 ---
 title: Save and display
+jupyter: python3
 ---
+
+
+```{python}
+from plotnine import *
+from plotnine.data import penguins
+```
+
+
+```{python}
+p = (
+    ggplot(penguins, aes("bill_length_mm", "bill_depth_mm", color="species"))
+    + geom_point()
+    + labs(
+        title = "Palmer Penguins Bill Depth vs Length",
+        x = "Bill length (mm)",
+        y = "Bill depth (mm)",
+    )
+)
+
+p
+```
+
+
+## Showing plots
+
+```{python}
+p.show()
+```
+
+## Saving plots
+
+```{python}
+#| eval: false
+p.save()
+
+```
+
+
+## Changing plot format
+
+```{python}
+from plotnine.options import set_option
+
+set_option("figure_format", "svg")
+
+p
+```
+
+
+```{python}
+#| echo: false
+set_option("figure_format", None);
+```
+
+## Handling fonts in svg
+
+```{python}
+#| eval: false
+p + theme(svg_usefonts=False)
+```
+
+

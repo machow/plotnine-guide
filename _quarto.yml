@@ -45,6 +45,7 @@ website:
           - guide/scale-misc.qmd
         - section: "Extra"
           contents:
+          - guide/maps.qmd
           - guide/shortcuts.qmd
           - guide/misc.qmd
           - guide/feature-coverage.qmd

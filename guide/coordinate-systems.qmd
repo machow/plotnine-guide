@@ -76,19 +76,31 @@ Notice that in the plot above, `scale_y_continuous` excluded y-values under 5,00
 )
 ```
 
-## geom_map()
-
+## Cartographic maps
 
 ```{python}
 import geopandas as gp
 import geodatasets
 
 chicago = gp.read_file(geodatasets.get_path("geoda.chicago_commpop"))
-#groceries = gp.read_file(geodatasets.get_path("geoda.groceries"))
+groceries = gp.read_file(geodatasets.get_path("geoda.groceries"))
 
 (
-    ggplot(chicago, aes(fill="POP2010")) +
-    geom_map() 
+    ggplot(chicago)
+    + geom_map(fill=None)
+    + theme_void()
+    + coord_fixed()
 )
 ```
 
+```{python}
+crs_groceries = groceries.to_crs(chicago.crs)
+
+(
+    ggplot()
+    + geom_map(data=chicago, fill=None)
+    + geom_map(data=crs_groceries, color="green")
+    + theme_void()
+    + coord_fixed()
+)
+```

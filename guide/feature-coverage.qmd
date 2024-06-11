@@ -14,6 +14,7 @@ title: Feature parity with ggplot2
   - shape aesthetic
 * Not all linetypes supported (and must be name)
   - ggplot's dotdash is dashdot
+* geom_sf: would be geom_carto in plotnine. Handles crs conversions for you.
 
 ## Differences
 

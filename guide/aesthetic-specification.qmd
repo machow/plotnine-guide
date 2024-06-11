@@ -21,6 +21,9 @@ Almost every geom has either color, fill, or both. Colors and fills can be speci
 * A missing value (e.g. None, np.nan, pd.NA), for a completely transparent colour. 
   - https://github.com/has2k1/plotnine/issues/791
 
+
+TODO: continuous colormaps -- https://matplotlib.org/stable/users/explain/colors/colormaps.html
+
 ## Lines
 
 As well as `colour`, the appearance of a line is affected by `linewidth`, `linetype`, `linejoin` and `lineend`.
