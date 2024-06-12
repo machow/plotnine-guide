@@ -1,10 +1,11 @@
 ---
 title: Facets (subplots)
+jupyter: python3
 ---
 
 ```{python}
 from plotnine import *
-from plotnine.data import mpg
+from plotnine.data import mpg, penguins
 ```
 
 ```{python}
@@ -42,4 +43,19 @@ from plotnine.data import mpg
 
 ## `scales=` for freeing axes
 
-## `???=`
+## `labeller=` for facet names
+
+By default, facets label each subplot based on values in the data. For example, facetting on `species` uses each of the three species types (e.g. Adelie) to label the subplots:
+
+```{python}
+p = (
+    ggplot(penguins, aes("flipper_length_mm", "body_mass_g", color="species"))
+    + geom_point()
+)
+
+p + facet_wrap("~species + year")
+```
+
+```{python}
+p + facet_wrap("~species + year", labeller="label_both")
+```

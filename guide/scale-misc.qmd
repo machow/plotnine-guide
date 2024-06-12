@@ -1,3 +1,42 @@
 ---
 title: Scale linetype, shapes, sizes
 ---
+
+TODO: this page could be reworked or deleted
+
+## Linetype and shape
+
+```{python}
+import pandas as pd
+
+from plotnine.data import huron
+from plotnine import *
+
+df = pd.DataFrame(
+    {
+        "group": ["A"] * 2 + ["B"] * 2,
+        "condition": ["treatment", "control"] * 2,
+        "measure": [3, 1, 2, 1],
+    }
+)
+
+
+(
+    ggplot(df, aes("condition", "measure", group="group"))
+    + geom_line(aes(linetype="group"))
+    + geom_point(aes(fill="group", shape="group"), size=4)
+)
+```
+
+## Linetype and size
+
+
+```{python}
+p = (
+    ggplot(df, aes("condition", "measure", group="group", size="measure"))
+    + geom_line(aes(linetype="group"))
+    + geom_point(aes(size="measure"))
+)
+
+p
+```

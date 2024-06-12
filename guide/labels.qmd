@@ -1,11 +1,82 @@
 ---
 title: Labels and titles
+jupyter: python3
 ---
 
-* labs
-* renaming scales
-* theme (mention e.g. to remove axis text)
-* facet funcs have label argument
+
+```{python}
+from plotnine import *
+from plotnine.data import penguins
+
+p = (
+    ggplot(penguins, aes("flipper_length_mm", "body_mass_g", color="species"))
+    + geom_point()
+)
+
+```
 
 
-* Diagram of graph with all labellable things marked
+## Labelling title and axes
+
+```{python}
+p + labs(
+    title="Penguin flipper length vs body mass",
+    x="Flipper length (mm)",
+    y="Body mass (g)",
+)
+```
+
+## Labeling scale guides (e.g. color)
+
+
+
+```{python}
+p + labs(color="COLOR")
+```
+
+```{python}
+p + scale_color_discrete(name="COLOR")
+```
+
+## Removing scale guides
+
+
+```{python}
+# TODO: how to make disappear in labs?
+p + guides(color="none")
+```
+
+
+## Scales for labelling and removing
+
+
+```{python}
+# | eval: false
+# Thorough: scales
+(p + scale_color_discrete(guide=None) + scale_x_continuous(name="Flipper Length (mm)"))
+
+# Quick: labs and guides
+p + labs(x="Flipper Length (mm)") + guides(color="none")
+```
+
+```{python}
+# | echo: false
+p + labs(x="Flipper Length (mm)") + guides(color="none")
+```
+
+
+
+## Styling labels with theme()
+
+```{python}
+(
+    ggplot(penguins, aes("flipper_length_mm", "body_mass_g"))
+    + geom_point()
+    + theme(
+        axis_text_x=element_text(color="orange"),
+        axis_title_x=element_text(color="blue", size=16),
+    )
+)
+```
+
+## diagram of labelable things

@@ -1,3 +1,86 @@
 ---
 title: Scale x and y
+jupyter: python3
 ---
+
+* continuous
+* discrete
+* date, datetime, timedelta
+* log10, sqrt, symlog
+* reverse
+
+Common formatting:
+
+* percentages
+* dates
+
+```{python}
+from plotnine import *
+from plotnine.data import economics
+
+p = ggplot(economics, aes("date", "pop")) + geom_line()
+```
+
+## Full example
+
+```{python}
+from mizani.labels import percent_format
+
+(
+    ggplot(economics, aes("date", "psavert"))
+    + geom_line()
+    + labs(title="")
+    + scale_y_continuous(
+        name="Personal savings rate",
+        limits=[0, None],
+        labels=percent_format(scale=1),
+    )
+    + scale_x_date(
+        name="Date",
+        date_breaks="10 years",
+        date_minor_breaks="5 year",
+    )
+)
+```
+
+## Expanding limits to include zero
+
+```{python}
+p + scale_y_continuous(limits=[0, None])
+```
+
+## Applying log scale
+
+```{python}
+ggplot(economics, aes("date", "pce")) + geom_line() + scale_y_log10()
+```
+
+## Labelling percentages
+
+```{python}
+(
+    ggplot(economics, aes("date", "psavert"))
+    + geom_line()
+    + scale_y_continuous(labels=lambda arr: [f"{x}%" for x in arr])
+)
+```
+
+```{python}
+from mizani.labels import percent_format
+
+(
+    ggplot(economics, aes("date", "psavert"))
+    + geom_line()
+    + scale_y_continuous(labels=percent_format(scale=1))
+)
+```
+
+## Specifying date breaks
+
+```{python}
+(
+    ggplot(economics, aes("date", "psavert"))
+    + geom_line()
+    + scale_x_date(date_breaks="10 years", date_minor_breaks="5 year")
+)
+```

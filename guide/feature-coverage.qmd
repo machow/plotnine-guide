@@ -2,6 +2,10 @@
 title: Feature parity with ggplot2
 ---
 
+## Questions
+
+* How to separate guides (e.g. linetype size and shape size?)
+
 ## Missing
 
 * geom_text:

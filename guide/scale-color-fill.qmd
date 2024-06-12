@@ -1,3 +1,11 @@
 ---
 title: Scale color and fill
 ---
+
+## Specifying a continuous palette
+
+## Specifying a discrete palette
+
+## Ordering levels
+
+## Grouping levels
