@@ -1,5 +1,6 @@
 plotnine
 jupyter
 palmerpenguins
+polars
 geopandas
 geodatasets
