@@ -14,6 +14,10 @@ from plotnine import *
 from plotnine.data import mpg
 ```
 
+`scale_{aesthetic}_{type}`
+
+TODO: type vs style?
+
 ## Scale basics
 
 ## Types of scales
@@ -137,4 +141,24 @@ p = (
 
 p
 p + guides(color = guide_colorbar(reverse = True))
+```
+
+
+
+```{python}
+
+import pandas as pd
+from plotnine import *
+
+ser = list(map(str, range(5)))
+df = pd.DataFrame({"x": ser, "y": ser, "p": ser, "q": ser, "r": ser})
+
+p = ggplot(df, aes("x", "y", colour="p", size="q", shape="r")) + geom_point()
+
+p + guides(
+    colour=guide_legend("title"),
+    size=guide_legend("title"),
+    shape=guide_legend("title"),
+)
+
 ```

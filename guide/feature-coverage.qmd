@@ -5,6 +5,7 @@ title: Feature parity with ggplot2
 ## Questions
 
 * How to separate guides (e.g. linetype size and shape size?)
+* Should people use scale_color_cmap or scale_color_continuous?
 
 ## Missing
 

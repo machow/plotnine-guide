@@ -2,23 +2,45 @@
 title: Overview
 ---
 
+This page covers the basics of coding plots with Plotnine.
+We'll focus on producing the plot below, which looks at city (cty) versus highway (hwy) mileage across different years of cars:
+
 ```{python}
 from plotnine import *
 from plotnine.data import mpg
 ```
 
 ```{python}
+# | code-fold: true
 (
-    ggplot(mpg, aes("cty", "hwy")) +
-    geom_point(mapping = aes(colour = "displ")) +
-    geom_smooth(method = "lm", color="blue") +
-    scale_color_continuous(cmap_name="viridis") +
-    facet_grid("year ~ drv") +
-    coord_fixed() +
-    theme_minimal() +
-    theme(panel_grid_minor = element_blank())
+    ggplot(mpg, aes("cty", "hwy"))
+    + geom_point(mapping=aes(colour="displ"))
+    + geom_smooth(method="lm", color="blue")
+    + scale_color_continuous(cmap_name="viridis")
+    + facet_grid("year ~ drv")
+    + coord_fixed()
+    + theme_minimal()
+    + theme(panel_grid_minor=element_blank())
 )
 ```
+
+Note these pieces of the plot above:
+
+* xxx
+
+We'll first cover 5 pieces used to create plots:
+
+* data: using `ggplot(mpg, ...)` to start a plot from a DataFrame.
+* `aes()` mapping: specify aspects like point color based on data.
+* `geom_*()` objects: specify graphical element, like points in a scatterplot.
+* `scale_*()` translations: specify how to map data to (e.g. a color palette).
+* `position_*()` adjustments: how to adjust elements (e.g. to see overlapping points).
+
+Finally, we'll look at 3 additional common pieces:
+
+* `facets_*()`: create a grid of plots based on a variable.
+* `coord_*()`: put elements on square grid, where x- and y- have same spacing.
+* `theme_*()`: tweak elements of plot, like grid lines.
 
 ## Data
 

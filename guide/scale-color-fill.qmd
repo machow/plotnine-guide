@@ -1,10 +1,50 @@
 ---
 title: Scale color and fill
+jupyter: python3
 ---
+
+```{python}
+from plotnine.data import penguins
+from plotnine import *
+
+p = (
+    ggplot(penguins, aes("bill_length_mm", "bill_depth_mm", color="species"))
+    + geom_point()
+)
+```
+
+## Choosing between color and fill
 
 ## Specifying a continuous palette
 
+
 ## Specifying a discrete palette
+
+```{python}
+p + scale_color_brewer("qualitative", palette="Dark2")
+```
+
+* qualitative
+* sequential
+* diverging
+
+(short codes)
+
+```{python}
+
+# p + scale_color_hue(=280 / 360, 1, .5)
+```
+
+```{python}
+(
+    p
+    + scale_color_manual(
+        breaks=["Adelie", "Gentoo", "Chinstrap"], values=["blue", "orange", "green"]
+    )
+)
+```
+
+## Setting alpha transparency
 
 ## Ordering levels
 

@@ -1,6 +1,19 @@
 ---
 title: Intro
+ipynb-shell-interactivity: all
 ---
+
+Plotnine is a Python package for data visualization, based on the grammar of graphics. It implements a wide range of plots---including barcharts, linegraphs, scatterplots, maps, and much more.
+
+The interface allows for extensive customization, including:
+
+* plot elements (geoms)
+* xxx (aesthetics)
+* coordinate systems
+* themes
+
+and much more.
+
 
 ## Installing
 
@@ -8,4 +21,75 @@ title: Intro
 pip install plotnine
 ```
 
-This is the intro.
+## Quickstart
+
+### Basic plot
+
+```{python}
+from plotnine import ggplot, aes, geom_point, labs
+from plotnine.data import penguins
+
+(
+    ggplot(penguins, aes("bill_length_mm", "bill_depth_mm", color="species"))
+    + geom_point()
+)
+```
+
+```{python}
+penguins
+```
+
+### Pandas and Polars DataFrames
+
+Plotnine supports both Pandas and Polars DataFrames.
+
+```{python}
+import polars as pl
+
+pl_penguins = pl.from_pandas(penguins)
+
+(
+    pl_penguins.filter(pl.col("species") == "Adelie")
+    >> ggplot(aes("bill_length_mm", "bill_depth_mm", fill="species"))
+    + geom_point()
+    + labs(title="Adelie penguins")
+)
+```
+
+* Filters data to keep only rows where species is Adelie.
+* Uses `>>` to create the ggplot from the filtered data.
+* Adds a title.
+
+### Theming
+
+```{python}
+# | layout-nrow: 1
+from plotnine import theme_xkcd
+
+p = ggplot(penguins, aes("bill_length_mm", "bill_depth_mm")) + geom_point()
+
+p
+p + theme_xkcd()
+```
+
+## Use cases
+
+There are two nice places to see various uses of plotnine:
+
+* The [35 entries](https://github.com/has2k1/plotnine/discussions/categories/2024-plotnine-contest?discussions_q=sort%3Atop) from the 2024 Plotnine Contest.
+* The [Plotnine gallery](https://plotnine.org/gallery/).
+
+Here are some notable entries in the Plotnine competition:
+
+* [Coal Production area chart](https://github.com/has2k1/plotnine/discussions/836)
+* [Creating a Plotnine Mondrian](https://github.com/has2k1/plotnine/discussions/848)
+* [Reproducing Rise of AI over 8 decades](https://github.com/has2k1/plotnine/discussions/827)
+
+
+## Next steps
+
+* next page (overview)
+* gallery
+* plotnine competition
+* plotnine reference
+* plotnine discussions

@@ -1,15 +1,18 @@
 ---
 title: Scale linetype, shapes, sizes
+jupyter: python3
 ---
 
-TODO: this page could be reworked or deleted
+* linetype and shape tend to be simple 
+* size supports a range of scale types
+* refer to aesthetics specification
 
-## Linetype and shape
+## Linetype: specifying values
 
 ```{python}
 import pandas as pd
 
-from plotnine.data import huron
+from plotnine.data import penguins
 from plotnine import *
 
 df = pd.DataFrame(
@@ -19,24 +22,45 @@ df = pd.DataFrame(
         "measure": [3, 1, 2, 1],
     }
 )
-
-
-(
-    ggplot(df, aes("condition", "measure", group="group"))
-    + geom_line(aes(linetype="group"))
-    + geom_point(aes(fill="group", shape="group"), size=4)
-)
 ```
 
-## Linetype and size
-
-
 ```{python}
+# | layout-nrow: 1
 p = (
-    ggplot(df, aes("condition", "measure", group="group", size="measure"))
-    + geom_line(aes(linetype="group"))
-    + geom_point(aes(size="measure"))
+    ggplot(df, aes("condition", "measure", group="group"))
+    + geom_line(aes(linetype="group"), size=1)
+    + geom_point(aes(fill="group", shape="group"), size=4)
 )
 
 p
+p + scale_linetype_manual(breaks=["A", "B"], values=["dotted", "dashdot"])
 ```
+
+## Shape: specifying values
+
+```{python}
+# | layout-nrow: 1
+p = (
+    ggplot(df, aes("condition", "measure", group="group"))
+    + geom_line(aes(linetype="group"), size=1)
+    + geom_point(aes(fill="group", shape="group"), size=4)
+)
+
+p
+p + scale_shape_manual(breaks=["A", "B"], values=["s", "o"])
+```
+
+## Size: choosing a style
+
+
+```{python}
+# | layout-nrow: 1
+p = ggplot(df, aes("condition", "measure", group="group", size="measure")) + geom_point(
+    aes(size="measure")
+)
+
+p + scale_size_radius()
+p + scale_size_area()
+
+```
+
