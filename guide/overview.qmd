@@ -6,12 +6,10 @@ This page covers the basics of coding plots with Plotnine.
 We'll focus on producing the plot below, which looks at city (cty) versus highway (hwy) mileage across different years of cars:
 
 ```{python}
+# | code-fold: true
 from plotnine import *
 from plotnine.data import mpg
-```
 
-```{python}
-# | code-fold: true
 (
     ggplot(mpg, aes("cty", "hwy"))
     + geom_point(mapping=aes(colour="displ"))
@@ -30,7 +28,10 @@ from plotnine.data import mpg
 Every plot in plotnine starts with passing data to the `ggplot()` function. The data can be a Pandas or Polars DataFrame. Plotnine works best when the data is in a [tidy format](https://aeturrell.github.io/python4DS/data-tidy.html), which tends to be longer--with more rows and fewer columns.
 
 ```{python}
-#| output: false
+# | output: false
+from plotnine import *
+from plotnine.data import mpg
+
 ggplot(data=mpg)
 ```
 
