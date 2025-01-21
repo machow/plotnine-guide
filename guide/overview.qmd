@@ -24,25 +24,10 @@ from plotnine.data import mpg
 )
 ```
 
-Note these pieces of the plot above:
-
-* xxx
-
-We'll first cover 5 pieces used to create plots:
-
-* data: using `ggplot(mpg, ...)` to start a plot from a DataFrame.
-* `aes()` mapping: specify aspects like point color based on data.
-* `geom_*()` objects: specify graphical element, like points in a scatterplot.
-* `scale_*()` translations: specify how to map data to (e.g. a color palette).
-* `position_*()` adjustments: how to adjust elements (e.g. to see overlapping points).
-
-Finally, we'll look at 3 additional common pieces:
-
-* `facets_*()`: create a grid of plots based on a variable.
-* `coord_*()`: put elements on square grid, where x- and y- have same spacing.
-* `theme_*()`: tweak elements of plot, like grid lines.
 
 ## Data
+
+Every plot in plotnine starts with passing data to the `ggplot()` function. The data can be a Pandas or Polars DataFrame. Plotnine works best when the data is in a [tidy format](https://aeturrell.github.io/python4DS/data-tidy.html), which tends to be longer--with more rows and fewer columns.
 
 ```{python}
 #| output: false
@@ -51,6 +36,10 @@ ggplot(data=mpg)
 
 ## `aes()` mapping
 
+The `aes()` function maps columns of data onto graphical attributes--such as colors, shapes, or x and y coordinates. (`aes()` is short for aesthetic).
+
+We can map the `cty` and `hwy` columns to the x- and y- coordinates in the plot using the code below:
+
 ```{python}
 #| output: false
 ggplot(data=mpg, mapping = aes(x = "cty", y = "hwy"))
@@ -58,83 +47,110 @@ ggplot(data=mpg, mapping = aes(x = "cty", y = "hwy"))
 
 ## `geom_*()` objects
 
+Functions starting with `geom_*()` specify geometric objects (geoms) to add to the plot. Geoms determine **how** to turn mapped data into visual elements--such as points, lines, or even boxplots.
+
+Here is how we can map the `cty` and `hwy` columns to points with a smooth trend line on top:
+
 ```{python}
 (
-    ggplot(mpg, aes("cty", "hwy")) +
+    ggplot(mpg, aes("cty", "hwy"))
     # to create a scatterplot
-    geom_point() +
+    + geom_point()
     # to fit and overlay a loess trendline
-    geom_smooth(method = "lm", color="blue")
+    + geom_smooth(method="lm", color="blue")
 )
 ```
 
 ## `scale_*()` translations
 
+The `scale_*()` functions customize the styling of visual elements from a data mapping. This includes color palettes, axis spacing (e.g. log scale), axis limits, and more. Scales can set the names on guides like axes, legends, and colorbars.
+
+The names of scales follow the pattern `scale_<aesthetic>_<type>`, where `<aesthetic>` is the name of an aesthetic attribute, like `x`, `y`, or `color`. If we want to use the `plasma` palette for color, we can use the code below:
+
 ```{python}
 (
-    ggplot(mpg, aes("cty", "hwy", color = "class")) +
-    geom_point() +
-    scale_color_brewer(type="qual", palette = "Dark2")
+    ggplot(mpg, aes("cty", "hwy", color="displ"))
+    + geom_point()
+    + scale_color_continuous(name="displ (VIRIDIS)", cmap_name="viridis")
 )
 ```
 
 ## `position_*()` adjustments
 
+The `position_*()` functions adjust the position of elements in the plot. For example, by adding a small amount of random noise (jitter) to the x- and y- coordinates of points, so they don't cover each other.
+
 ```{python}
 (
-    ggplot(mpg, aes("cty", "hwy", color = "class")) +
-    geom_point(position=position_jitter())
+    ggplot(mpg, aes("cty", "hwy", color="displ"))
+    # add a small amount of jitter
+    + geom_point(position=position_jitter())
 )
 ```
 
 ## `facet_*()` subplots
 
+Facets split a plot into multiple subplots. The two facet functions, `facet_grid()` and `facet_wrap()`, determine how to split the data. For example, we can create a grid of plots based on the `year` and `drv` columns:
+
 ```{python}
 (
-    ggplot(mpg, aes("cty", "hwy")) +
-    geom_point() +
-    facet_grid("year ~ drv")
+    ggplot(mpg, aes("cty", "hwy"))
+    + geom_point()
+    # facet into subplots
+    + facet_grid("year ~ drv")
 )
 ```
 
 ## `coord_*()` projections
 
+The `coord_*()` functions specify the coordinate system of the plot. Currently, only a few coordinate systems are available. However, in the future systmes like `coord_polar()` will allow for plotting using polar coordinates.
+
+The code below uses `coord_fixed()` to ensure that the x- and y- axes have the same spacing.
+
 ```{python}
 (
-    ggplot(mpg, aes("cty", "hwy")) +
-    geom_point() +
-    coord_fixed(xlim=[0, 40], ylim=[0, 40])
+    ggplot(mpg, aes("cty", "hwy"))
+    + geom_point()
+    + coord_fixed(xlim=[0, 40], ylim=[0, 40])
 )
 ```
 
 ## `theme_*()` styling
 
+Themes control the style of all aspects of the plot that not decided by the data.
+This includes the position of the legend, the color of the axes, the size of the text, and much more.
+
+Use the `theme_*()` functions to start with a pre-made theme, or the general `theme()` function to create a new custom theme. Use the `element_*()` functions to configure new theme settings.
 
 ```{python}
 (
-    ggplot(mpg, aes("cty", "hwy", colour = "class")) +
-    geom_point() +
-    theme_minimal() +
-    theme(
-        legend_position = "top",
-        axis_line = element_line(linewidth = 0.75),
-        axis_line_x = element_line(colour = "blue"),
+    ggplot(mpg, aes("cty", "hwy", colour="class"))
+    + geom_point()
+    + theme_minimal()
+    + theme(
+        legend_position="top",
+        axis_line=element_line(linewidth=0.75),
+        axis_line_x=element_line(colour="blue"),
     )
 )
 ```
 
 ## Putting it together
 
+Finally, we put all the pieces together into the original plot:
 
 ```{python}
 (
-    ggplot(mpg, aes("cty", "hwy")) +
-    geom_point(mapping = aes(colour = "displ")) +
-    geom_smooth(method = "lm", color="blue") +
-    scale_color_continuous(cmap_name="viridis") +
-    facet_grid("year ~ drv") +
-    coord_fixed() +
-    theme_minimal() +
-    theme(panel_grid_minor = element_blank())
+    ggplot(mpg, aes("cty", "hwy"))
+    + geom_point(mapping=aes(colour="displ"))
+    + geom_smooth(method="lm", color="blue")
+    + scale_color_continuous(cmap_name="viridis")
+    + facet_grid("year ~ drv")
+    + coord_fixed()
+    + theme_minimal()
+    + theme(panel_grid_minor=element_blank())
 )
 ```
+
+:::{.callout-note}
+This tutorial was adapted from the [ggplot2 "Getting Started" tutorial](https://ggplot2.tidyverse.org/articles/ggplot2.html)
+:::
