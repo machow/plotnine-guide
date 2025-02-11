@@ -38,11 +38,11 @@ website:
           - guide/labels.qmd
           - guide/annotations.qmd
           - guide/themes.qmd
-        - section: "Scales"
-          contents:
-          - guide/scale-x-and-y.qmd
-          - guide/scale-color-fill.qmd
-          - guide/scale-misc.qmd
+        # - section: "Scales"
+        #   contents:
+        #   - guide/scale-x-and-y.qmd
+        #   - guide/scale-color-fill.qmd
+        #   - guide/scale-misc.qmd
         - section: "Extra"
           contents:
           - guide/maps.qmd

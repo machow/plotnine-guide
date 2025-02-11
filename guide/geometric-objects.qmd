@@ -4,22 +4,37 @@ jupyter: python3
 ipynb-shell-interactivity: all
 ---
 
-```{python}
-from plotnine import *
-from plotnine.data import mpg
-```
+Geometric objects (geoms) determine how to turn mapped data into visual elements–such as points, lines, or even boxplots. There are two kinds of geoms: individual and collective.
 
-Key Points:
+:::{.callout-tip title="You will learn"}
+* What individual and collective geoms are.
+* How to make side-by-side bar charts.
+* How to avoid overlapping points.
+* How to run statistical calculations before plotting.
+:::
 
+:::{.callout-note title="Key points" collapse="true"}
 * Geoms use aesthetic mappings to draw plot elements.
 * Individual geoms draw one observation (row) with one element.
 * Collective geoms draw multiple observations (rows) with one element (e.g. a boxplot).
 * Collective geoms include lines, which are drawn between observations.
 * Use the `position=` argument to adjust the position of overlapping elements.
 * Use the `stat=` argument to run calculations before plotting.
+:::
 
+
+## Setup
+
+```{python}
+from plotnine import *
+from plotnine.data import mpg
+```
 
 ## Basic use
+
+Geom functions, like `geom_point()`, specify visual elements to draw on the plot. They're rendered in the order they're added to the plot. 
+
+For example, the plot below adds points will fill color corresponding to the `class` column, and then points with shape corresponding to the same column.
 
 ```{python}
 #| layout-nrow: 1
@@ -30,16 +45,16 @@ Key Points:
 )
 ```
 
-* Geoms drawn in order
-* Manual mappings
-* Legend might have guides for multiple geoms
+Notice that the legend includes a guide for both fill and shape, so it's clear what each corresponds to in the chart.
 
 ## Kinds of geoms
 
 Geoms come in two varieties:
 
-* Individual geoms: draw each row of data independently on the chart.
-* Collective geoms: draw based on groups of rows, or relationships between them.
+* **Individual geoms**: draw each row of data independently on the chart.
+* **Collective geoms**: draw based on groups of rows, or relationships between them.
+
+This is shown below for points, boxplots, and lines.
 
 ```{python}
 #| echo: false
@@ -74,9 +89,14 @@ p1
 p3
 ```
 
+Note that boxplots are collective because they draw the box based on all the data in a group. Lines are collective because they connect rows of data points.
+
 
 
 ## Individual: points, bars, and text
+
+This section illustrates individual geoms. 
+These range from simple points, to text, to bars and rectangles.
 
 ### Scatterplot with text
 
@@ -106,31 +126,52 @@ ttl_mpg_class.head(3)
 ggplot(ttl_mpg_class, aes("class", "count", fill = "drv")) + geom_col()
 ```
 
-### Rect
+### Rectangles
+
+Use `geom_rect()` to draw rectangles.
+
+```{python}
+import pandas as pd
+
+df_rect = pd.DataFrame(
+    {
+        "xmin": [1, 2, 3],
+        "ymin": [1, 2, 3],
+        "xmax": [2, 3, 4],
+        "ymax": [2, 3, 4],
+    }
+)
+
+(
+    ggplot(df_rect, aes(xmin="xmin", ymin="ymin", xmax="xmax", ymax="ymax"))
+    + geom_rect(fill="orange")
+)
+```
 
 
 ## Collective: distributions
 
-collective:
-
-* smooth
-* histogram
-* density
-* boxplots
-* combined (e.g. boxplots and lines)
+Collective geoms like `geom_boxplot()` and `geom_density()` can communicate the general shape and distribution of data.
 
 ### Boxplots and violins
 
-```{python}
-p = ggplot(mpg, aes("class", "cty"))
+Use `geom_boxplot()` and `geom_violin()` to create boxplots and violin plots, respectively.
 
-p + geom_boxplot()
-p + geom_violin()
+```{python}
+indx = mpg["class"].isin(["2seater", "compact", "midsize"])
+
+
+(
+    ggplot(aes("class", "cty"))
+    + geom_boxplot(data=mpg[indx], fill="orange")
+    + geom_violin(data=mpg[~indx], fill="lightblue")
+)
 ```
 
 ### Histograms and densities
 
 ```{python}
+# | layout-nrow: 1
 p = ggplot(mpg, aes("cty"))
 p + geom_histogram()
 p + geom_density(fill="lightblue")
@@ -149,6 +190,11 @@ p + geom_density(fill="lightblue")
 
 ## Collective: lines and fills
 
+Lines and fills are collective geoms because they connect or fill between data points. 
+
+For example, `geom_line()` connects points along the x-axis.
+This is especially useful when x is a time series.
+
 ```{python}
 from plotnine import *
 from plotnine.data import huron
@@ -160,7 +206,7 @@ from plotnine.data import huron
 )
 ```
 
-* TODO: use economics data to show with color?
+Similarly, `geom_ribbon()` draws a ribbon along the x-axis, based on minimum and maximum values for the y-axis.
 
 ```{python}
 from plotnine import *
@@ -173,32 +219,31 @@ from plotnine.data import huron
 )
 ```
 
-* mention geom_area
+
+* `geom_area()`: a special case of `geom_ribbon()` that always sets `ymin=0`.
+* `geom_path()`: connects points with a line by connecting subsequent rows of data, rather than along the x-axis.
 
 ## `position=` for placement tweaks
 
+Use the `position=` argument to geom functions to do things like apply a small amount of random jitter. This can be useful for avoiding overplotting, where elements cover each other. Position can also move stacked bars to be side-to-side, to make them easier to compare.
+
 ### Jitter with random noise
 
+Use `position_jitter()` to apply a small amount of random noise on the x- and y-axis. For example, the plots below show the same data with and without jitter.
+
 ```{python}
-#| layout-nrow: 1
+# | layout-nrow: 1
 p = ggplot(mpg, aes("cty", "hwy"))
 
-p + geom_point(alpha=.2)
+p + geom_point(alpha=0.2)
 p + geom_point(position=position_jitter())
 ```
 
+Notice that the first plot has points plotted on top of each other. It uses `alpha=0.2` to make overlapping points more visible. The second plot uses jitter to spread points out.
+
 ### Dodge to side-by-side
 
-```{python}
-#ttl_class_drv = (
-#    mpg.groupby(["class", "drv"], observed=False)
-#    .size()
-#    .rename("n")
-#    .reset_index()
-#)
-#
-#ttl_class_drv.head()
-```
+Use `position_fill()` to make stacked bars all the same height (set at 1), and `position_dodge()` to move bars side-by-side.
 
 ```{python}
 #| layout-nrow: 1
@@ -213,9 +258,11 @@ p + geom_bar(position=position_fill())
 p + geom_bar(position=position_dodge())
 ```
 
+Notice that the middle plot (position fill) makes it easy to compare the proportion of each fill across groups, while the right plot (position dodge) makes it easy to compare individual bars.
 
 ## `stat=` for statistical calculations
 
+Use the `stat=` argument to geom functions to run calculations before plotting. For example, the plot below uses `stat="summary"` with the `fun_y=` argument, to add a point for the mean of each group.
 
 ```{python}
 (
@@ -229,3 +276,19 @@ p + geom_bar(position=position_dodge())
 )
 
 ```
+
+Note that in practice it's often easier to just pass summarized data directly to a geom function. For example, the plot above could also be created with the following code.
+
+```{python}
+# | eval: false
+mean_mpg = mpg.groupby("trans")["cty"].mean().reset_index()
+
+(
+    ggplot(mpg, aes("trans", "cty"))
+    + geom_point()
+    + geom_point(data=mean_mpg, color="red", size=3)
+)
+
+```
+
+(TODO: note about `after_stat()`? I think this is basically impossible to use with the current reference, because there's no way to know the options for each geom.)

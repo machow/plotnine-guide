@@ -116,7 +116,7 @@ In order to set a mapping to a literal value, pass the value directly to the geo
 
 ## `aes()` inside a specific geom
 
-* draw a point over an outlier (a la R4DS)
+An `aes()` mapping can be applied to a single geom, by passing it directly to the geom call. For example, the code below sets color for one point, and shape for another.
 
 ```{python}
 (
