@@ -3,10 +3,30 @@ title: Facets (subplots)
 jupyter: python3
 ---
 
+Facets split a plot into multiple subplots, based on one or more variables. `facet_wrap()` creates a sequence of subplots, while `facet_grid()` creates a matrix of subplots.
+
+:::{.callout-tip title="You will learn"}
+* How to create a sequence of subplots.
+* How to create a matrix of subplots.
+* How to configure the x- and y-axis of subplots.
+* How to customize the labels of subplots.
+:::
+
+:::{.callout-note title="Key points" collapse="true"}
+* `facet_wrap()` creates a sequence of subplots.
+* The `ncol` or `nrow` arguments to `facet_wrap()` control the number of columns or rows.
+* `facet_grid()` creates a matrix of subplots based on two or more variables.
+* The `scales` argument can set a combination of the `x` and `y` axis to fixed for free.
+:::
+
+## Setup
+
 ```{python}
 from plotnine import *
 from plotnine.data import mpg, penguins
 ```
+
+Here is a single big plot that you might want to split into subplots.
 
 ```{python}
 (
@@ -14,7 +34,9 @@ from plotnine.data import mpg, penguins
 )
 ```
 
-## facet_wrap(): a sequence of subplots
+## facet_wrap(): subplot sequence
+
+Use `facet_wrap()` to create a sequence of subplots. It accepts as its first argument the name of the column that should be used to split the data for subplots.
 
 ```{python}
 (
@@ -24,24 +46,42 @@ from plotnine.data import mpg, penguins
 )
 ```
 
+Note that by default `facet_wrap()` fills row-by-row, with defaults for the number of subplots per row and column. Use either the `ncol=` or `nrow=` argument to fix the number of plots per column or row, respectively.
+
 ```{python}
 (
     ggplot(mpg, aes("displ", "hwy", color="class"))
     + geom_point(show_legend=False)
-    + facet_wrap("~class", ncol=2)
+    + facet_wrap("class", ncol=2)
 )
 ```
 
 
-## facet_grid(): a matrix of subplots
+## facet_grid(): subplot matrix
+
+Use `facet_grid()` to create a matrix of subplots. It accepts two column names as arguments, the first for the rows and the second for the columns.
 
 ```{python}
-(ggplot(mpg, aes("displ", "hwy")) + geom_point() + facet_grid("cyl ~ year")) 
+(ggplot(mpg, aes("displ", "hwy")) + geom_point() + facet_grid("cyl", "year"))
 ```
 
-## facetting on multiple variables
+## facetting syntax
+
+TODO: example of more complex facet grid and facet wrap.
+
+* `"cyl ~ year"`
+* `"cyl + year"`
+
 
 ## `scales=` for freeing axes
+
+```{python}
+(
+    ggplot(mpg, aes("displ", "hwy"))
+    + geom_point()
+    + facet_grid("cyl", "year", scales="free_y")
+)
+```
 
 ## `labeller=` for facet names
 
