@@ -1,0 +1,5 @@
+---
+title: Case study 2
+---
+
+Something similar to https://github.com/machow/coffee-sales-data, designed to show something compelling, that is a good intro to some facet of using plotnine.
