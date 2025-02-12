@@ -7,18 +7,28 @@ execute:
 
 format:
   html:
-    css: styles.css
+    theme:
+      - lumen
+      - styles.css
+      - plotnine.scss
     toc: true
     # For proper retina (similar to what we get in the notebook),
     # double the default dpi, then using CSS maintain the default size
     fig-dpi: 200
 
 website:
+  title: Plotnine
   navbar:
     left:
       - file: index.qmd
       - file: guide/intro.qmd
         text: "Guide"
+      - text: "Reference"
+        href: https://plotnine.org/reference/
+      - text: "Gallery"
+        href: https://plotnine.org/gallery/
+      - text: "Blog"
+        href: https://plotnine.org/blog.html
   sidebar:
     - title: Guide
       contents:

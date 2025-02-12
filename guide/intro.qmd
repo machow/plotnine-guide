@@ -1,6 +1,8 @@
 ---
-title: Intro
+title: Introduction
 ipynb-shell-interactivity: all
+aliases: 
+  - ../index.html
 ---
 
 :::{.callout-warning}
