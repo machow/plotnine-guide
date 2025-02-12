@@ -8,3 +8,45 @@
     width: 640px;
     height: 480px;
 }
+
+
+.sidebar a.nav-link {
+    font-size: 14.4px;
+    font-weight: 400;
+}
+
+
+.sidebar nav[role=doc-toc] ul>li>a.active, .sidebar nav[role=doc-toc] ul>li>ul>li>a.active
+{
+  color: black !important;
+  /*color: #4D9089 !important;*/
+  border-left: 2px solid #4D9089 !important;
+}
+
+.sidebar nav[role=doc-toc]>ul a {
+    border-left: 2px solid white;
+}
+
+
+
+.sidebar-item-container .text-start {
+  font-weight: 600;
+  font-size: 14.4px !important;
+}
+
+.sidebar-item-text {
+  /*color: rgba(60, 60, 60, 0.7);*/
+  font-weight: 400;
+  font-size: 14.4px;
+  line-height: 22px;
+}
+
+.sidebar-item-section {
+  padding-top: 16px;
+}
+
+.sidebar-section {
+  padding-left: 0px !important;
+}
+
+

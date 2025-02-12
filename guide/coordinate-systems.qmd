@@ -3,6 +3,25 @@ title: Coordinate systems
 jupyter: python3
 ---
 
+Coordinate systems determine how the x- and y-axes of a plot are drawn.
+For example, `coord_flip()` switches the x- and y-axes, while `coord_fixed()` ensures they have the same spacing.
+
+:::{.callout-tip title="you will learn"}
+* What coordinate systems are common for plots.
+* How to flip and fix axes.
+* The difference between scale and coordinate systems limits.
+:::
+
+:::{.callout-note title="Key points" collapse="true"}
+* Common coordinate systems include cartesian and polar.
+* Use `coord_flip()` to switch the x- and y-axes.
+* Use `coord_fixed()` to ensure the x- and y-axes have the same spacing.
+* Limits at the coordinate level zoom in or out, while limits at the scale level remove data.
+* Maps currently use `geom_map()`, but will later have a `coord_map()`.
+:::
+
+## Setup
+
 ```{python}
 from plotnine import *
 from plotnine.data import diamonds, mpg
@@ -68,6 +87,9 @@ Notice that in the plot above, `scale_y_continuous` excluded y-values under 5,00
 
 ## coord_fixed()
 
+Use `coord_fixed()` to ensure the x- and y-axes have the same spacing.
+
+
 ```{python}
 (
     ggplot(mpg, aes("cty", "hwy"))
@@ -77,6 +99,10 @@ Notice that in the plot above, `scale_y_continuous` excluded y-values under 5,00
 ```
 
 ## Cartographic maps
+
+While currently not available as a coordinate system, Plotnine supports maps using `geom_map()`. In the future, maps will have a `coord_map()` function.
+
+Here is an example which uses geopandas to plot grocery stores in Chicago.
 
 ```{python}
 import geopandas as gp
@@ -92,6 +118,10 @@ groceries = gp.read_file(geodatasets.get_path("geoda.groceries"))
     + coord_fixed()
 )
 ```
+
+Notice that `coord_fixed()` was used to avoid stretching the map along the x- or y-axis. In addition, `theme_void()` removed the x- and y- tick marks, and labels.
+
+You can plot multiple layers on the same map by using multiple `geom_map()` calls with different `data=` arguments.
 
 ```{python}
 crs_groceries = groceries.to_crs(chicago.crs)

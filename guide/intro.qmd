@@ -3,16 +3,13 @@ title: Intro
 ipynb-shell-interactivity: all
 ---
 
+:::{.callout-warning}
+This intro is a placeholder. Its content should be designed in tandem with the plotnine.org home page.
+
+See the https://react.dev/learn and https://vuejs.org/guide/introduction.html homepages for good examples.
+:::
+
 Plotnine is a Python package for data visualization, based on the grammar of graphics. It implements a wide range of plots---including barcharts, linegraphs, scatterplots, maps, and much more.
-
-The interface allows for extensive customization, including:
-
-* plot elements (geoms)
-* xxx (aesthetics)
-* coordinate systems
-* themes
-
-and much more.
 
 
 ## Installing
@@ -33,10 +30,6 @@ from plotnine.data import penguins
     ggplot(penguins, aes("bill_length_mm", "bill_depth_mm", color="species"))
     + geom_point()
 )
-```
-
-```{python}
-penguins
 ```
 
 ### Pandas and Polars DataFrames
@@ -64,12 +57,19 @@ pl_penguins = pl.from_pandas(penguins)
 
 ```{python}
 # | layout-nrow: 1
-from plotnine import theme_xkcd
+from plotnine import theme_538
 
-p = ggplot(penguins, aes("bill_length_mm", "bill_depth_mm")) + geom_point()
-
-p
-p + theme_xkcd()
+(
+    ggplot(penguins, aes("bill_length_mm", "bill_depth_mm", color="species"))
+    + geom_point()
+    + labs(
+        title="Palmers penguins dataset",
+        subtitle="Bill depth vs length",
+        x="Bill length (mm)",
+        y="Bill depth (mm)",
+    )
+    + theme_538()
+)
 ```
 
 ## Use cases

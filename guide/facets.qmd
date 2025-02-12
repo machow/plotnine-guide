@@ -6,10 +6,9 @@ jupyter: python3
 Facets split a plot into multiple subplots, based on one or more variables. `facet_wrap()` creates a sequence of subplots, while `facet_grid()` creates a matrix of subplots.
 
 :::{.callout-tip title="You will learn"}
-* How to create a sequence of subplots.
-* How to create a matrix of subplots.
+* How to create a sequence or matrix of subplots.
+* How to use a special facetting syntax to define subplots.
 * How to configure the x- and y-axis of subplots.
-* How to customize the labels of subplots.
 :::
 
 :::{.callout-note title="Key points" collapse="true"}
@@ -67,35 +66,25 @@ Use `facet_grid()` to create a matrix of subplots. It accepts two column names a
 
 ## facetting syntax
 
-TODO: example of more complex facet grid and facet wrap.
+Both `facet_wrap()` and `facet_grid()` support a special syntax for defining subplots. It takes the form `"var1 ~ var2 + var3"`
 
-* `"cyl ~ year"`
-* `"cyl + year"`
+```{python}
+(ggplot(mpg, aes("displ", "hwy")) + geom_point() + facet_grid("cyl ~ year"))
+```
+
+Notice that `cyl` values (e.g. 4, 5, 6, 8) are on the rows, while `year` values are on the columns.
+
+ The column names to the left of the tilde (`~`) define subplot rows, while those to the right define subplot columns. The plus sign (`+`) groups variables for creating subplots (TODO: is there a reasonable example that includes `+`?).
 
 
 ## `scales=` for freeing axes
+
+By default, the x- and y-axes of each subplot have the same range. Use the `scales=` argument to allow each row or column to have its own range.
 
 ```{python}
 (
     ggplot(mpg, aes("displ", "hwy"))
     + geom_point()
-    + facet_grid("cyl", "year", scales="free_y")
+    + facet_grid("cyl ~ year", scales="free_y")
 )
-```
-
-## `labeller=` for facet names
-
-By default, facets label each subplot based on values in the data. For example, facetting on `species` uses each of the three species types (e.g. Adelie) to label the subplots:
-
-```{python}
-p = (
-    ggplot(penguins, aes("flipper_length_mm", "body_mass_g", color="species"))
-    + geom_point()
-)
-
-p + facet_wrap("~species + year")
-```
-
-```{python}
-p + facet_wrap("~species + year", labeller="label_both")
 ```

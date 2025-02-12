@@ -12,6 +12,19 @@ Plotnine produces a legend automatically, which tells viewers how to map scale v
 
 TODO: a graphic with annotations around scales, legends, and guides
 
+:::{.callout-tip title="you will learn"}
+* How to apply a custom color palette.
+* How to choose between discrete, continuous, and manual scales.
+* How to log transform x- and y-axes.
+* How to customize x- and y-axis, and legend names.
+* How to restrict the range of axes and color palettes.
+* How to customize guide boxes in legends.
+:::
+
+:::{.callout-note title="Key points" collapse="true"}
+TODO
+:::
+
 ## Setup
 
 ```{python}
