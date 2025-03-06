@@ -82,7 +82,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          env_url: 'https://${{ steps.deployment.outputs.env }}--plotnine-docs-demo.netlify.app'
+          env_url: 'https://${{ steps.deployment.outputs.env }}--helpful-monstera-4bc9c3.netlify.app'
           logs: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
 #      - uses: peaceiris/actions-gh-pages@v3
 #        with:
