@@ -1,0 +1,15 @@
+[project]
+name = "plotnine-guide"
+version = "0.1.0"
+description = "Plotnine Guide"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "geodatasets>=2024.8.0",
+    "geopandas>=1.0.1",
+    "jupyter>=1.1.1",
+    "palmerpenguins>=0.1.4",
+    "plotnine>=0.14.5",
+    "polars>=1.24.0",
+    "pyarrow>=19.0.1",
+]

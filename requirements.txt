@@ -1,7 +1,0 @@
-plotnine
-jupyter
-palmerpenguins
-polars
-pyarrow
-geopandas
-geodatasets
