@@ -20,7 +20,6 @@ website:
   title: Plotnine
   navbar:
     left:
-      - file: index.qmd
       - file: guide/intro.qmd
         text: "Guide"
       - text: "Reference"
