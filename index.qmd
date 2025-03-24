@@ -1,61 +1,109 @@
 ---
-title: Plotnine
-banner:
-  items:
-  - one
-  - two
-  - three
+pagetitle: Plotnine
+title: "Plotnine: A Grammar of Graphics for Python"
+toc: false
 ---
 
-## A Grammar of Graphics for Python
+
+```{=html}
+<div id="section-banner" class="column-screen">
+  <div class="grid gap-2 column-page my-4 p-2">
+    <div class="thumbnail g-col-2">
+      <a href="gallery/anscombes-quartet.html">
+        <img src="gallery/thumbnails/anscombes-quartet.png">
+      </a>
+    </div>
+    <div class="thumbnail g-col-2">
+      <a href="gallery/anscombes-quartet.html">
+        <img src="gallery/thumbnails/coal-production-since-1900.png">
+      </a>
+    </div>
+    <div class="thumbnail g-col-2">
+      <a href="gallery/anscombes-quartet.html">
+        <img src="gallery/thumbnails/dimensionality-reduction-animated.png">
+      </a>
+    </div>
+    <div class="thumbnail g-col-2">
+      <a href="gallery/anscombes-quartet.html">
+        <img src="gallery/thumbnails/weather-forecast-plot.png">
+      </a>
+    </div>
+    <div class="thumbnail g-col-2">
+      <a href="gallery/anscombes-quartet.html">
+        <img src="gallery/thumbnails/heatmap.png">
+      </a>
+    </div>
+    <div class="thumbnail g-col-2">
+      <a href="gallery/anscombes-quartet.html">
+        <img src="gallery/thumbnails/womens-soccer.png">
+        </a>
+    </div>
+    <div class="thumbnail g-col-2">
+      <a href="gallery/anscombes-quartet.html">
+        <img src="gallery/thumbnails/stations.png">
+      </a>
+    </div>
+    <div class="thumbnail g-col-2">
+      <a href="gallery/anscombes-quartet.html">
+        <img src="gallery/thumbnails/netflix.png">
+      </a>
+    </div>
+    <div class="thumbnail g-col-2">
+      <a href="gallery/anscombes-quartet.html">
+        <img src="gallery/thumbnails/language.png">
+      </a>
+    </div>
+    <div class="thumbnail g-col-2">
+      <a href="gallery/anscombes-quartet.html">
+        <img src="gallery/thumbnails/clock.png">
+      </a>
+    </div>
+    <div class="thumbnail g-col-2">
+      <a href="gallery/anscombes-quartet.html">
+        <img src="gallery/thumbnails/bar.png">
+      </a>
+    </div>
+    <div class="thumbnail g-col-2">
+      <a href="gallery/anscombes-quartet.html">
+        <img src="gallery/thumbnails/dutch.png">
+      </a>
+    </div>
+  </div>
+</div>
+```
+
+
+::: {#section-intro}
+:::: {.column-body}
+
+::::: {layout="[ 30, 70 ]"}
+
+::: {#first-column}
+
+<img src="https://plotnine.org/images/logo-512.png">
+
+:::
+
+::: {#second-column}
 
 plotnine is an implementation of a grammar of graphics in Python based on ggplot2. The grammar allows you to compose plots by explicitly mapping variables in a dataframe to the visual objects that make up the plot.
 
 Plotting with a grammar of graphics is powerful. Custom (and otherwise complex) plots are easy to think about and build incremently, while the simple plots remain simple to create.
 
+:::
 
-{{< partial _thumbnail.md banner.items >}}
+:::::
+
+::::
+:::
 
 
 
-<div class="grid gap-0 column-page">
-<div class="thumbnail g-col-2">
-  <a href="gallery/anscombes-quartet.html">
-  <img src="gallery/thumbnails/anscombes-quartet.png">
-  </a>
-</div>
-<div class="thumbnail g-col-2">
-  <img src="gallery/thumbnails/coal-production-since-1900.png">
-</div>
-<div class="thumbnail g-col-2">
-  <img src="gallery/thumbnails/dimensionality-reduction-animated.png">
-</div>
-<div class="thumbnail g-col-2">
-  <img src="gallery/thumbnails/weather-forecast-plot.png">
-</div>
-<div class="thumbnail g-col-2">
-  <img src="gallery/thumbnails/heatmap.png">
-</div>
-<div class="thumbnail g-col-2">
-  <img src="gallery/thumbnails/womens-soccer.png">
-</div>
-<div class="thumbnail g-col-2">
-  <img src="gallery/thumbnails/stations.png">
-</div>
-<div class="thumbnail g-col-2">
-  <img src="gallery/thumbnails/netflix.png">
-</div>
-<div class="thumbnail g-col-2">
-  <img src="gallery/thumbnails/language.png">
-</div>
-<div class="thumbnail g-col-2">
-  <img src="gallery/thumbnails/clock.png">
-</div>
-<div class="thumbnail g-col-2">
-  <img src="gallery/thumbnails/bar.png">
-</div>
-<div class="thumbnail g-col-2">
-  <img src="gallery/thumbnails/dutch.png">
-</div>
-</div>
+::: {#section-demo}
+
+## From Ad-Hoc Visualizations to Publication-Ready Figures
+
+{{< revealjs "demo/demo.html" full-screen-link="false" class="column-page ratio ratio-21x9" >}}
+
+:::
 

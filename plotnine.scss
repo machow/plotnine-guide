@@ -1,16 +1,88 @@
 // Ref:
 // - https://getbootstrap.com/docs/5.3/utilities/spacing/
 // - https://github.com/twbs/bootstrap/blob/main/scss/_variables.scss
+// - https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/formats/html/bootstrap/_bootstrap-variables.scss
+// - https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/formats/html/bootstrap/themes/lumen.scss
 
 /*-- scss:defaults --*/
-$primary: #9E2F68;
 $enable-cssgrid: true;
+
+
+$purple-50: #FAF5F7;
+$purple-100: #E2C1D2;
+$purple-200: #CA8DAC;
+$purple-300: #B15986;
+$purple-400: #962D63;
+$purple-500: #832756;
+$purple-600: #70214A;
+$purple-700: #5D1C3D;
+$purple-800: #4A1631;
+$purple-900: #371024;
+$purple-950: #240B18;
+$purple: $purple-500;
+
+
+$blue-50: #F4F4F7;
+$blue-100: #BEBDCE;
+$blue-200: #8887A5;
+$blue-300: #51507C;
+$blue-400: #242256;
+$blue-500: #201E4C;
+$blue-600: #1B1A41;
+$blue-700: #161536;
+$blue-800: #12112B;
+$blue-900: #0D0D20;
+$blue-950: #090815;
+$blue: $blue-500;
+
+
+$green-50: #F4FAF8;
+$green-100: #BBE2D7;
+$green-200: #82CAB5;
+$green-300: #49B193;
+$green-400: #1B9672;
+$green-500: #178364;
+$green-600: #147055;
+$green-700: #115D47;
+$green-800: #0D4A38;
+$green-900: #0A372A;
+$green-950: #06241C;
+$green: $green-500;
+
+$orange-50: #FDF7F2;
+$orange-100: #F4CFB3;
+$orange-200: #EAA773;
+$orange-300: #E17F34;
+$orange-400: #CE5A01;
+$orange-500: #B44F01;
+$orange-600: #9A4301;
+$orange-700: #803801;
+$orange-800: #662D00;
+$orange-900: #4C2100;
+$orange-950: #321600;
+$orange: $orange-500;
+
+$indigo-50: #F8F8FB;
+$indigo-100: #D6D4E8;
+$indigo-200: #B3B0D5;
+$indigo-300: #918DC2;
+$indigo-400: #6F6AAA;
+$indigo-500: #615D95;
+$indigo-600: #53507F;
+$indigo-700: #45426A;
+$indigo-800: #373554;
+$indigo-900: #29273F;
+$indigo-950: #1B1A29;
+$indigo: $indigo-500;
+
+$primary: $purple;
+$secondary: $green;
 
 /*-- scss:mixins --*/
 
 /*-- scss:rules --*/
-$signature-border-color: tint-color($primary, 25%);
-
+// $signature-border-color: tint-color($primary, 25%);
+$signature-border-color: $primary;
 
 .doc-signature.doc-module > div:first-child,
 .doc-signature.doc-class > div:first-child {
@@ -36,6 +108,87 @@ $signature-border-color: tint-color($primary, 25%);
   margin-right: .5rem;
 }
 
+
+.page-section {
+  @extend .column-screen;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+#section-intro {
+  @extend .page-section;
+  background-color: $green-500;
+  color: $white;
+  font-size: 1.2em;
+}
+
+#section-banner {
+  @extend .column-screen;
+  background-color: $white;
+}
+
+#section-demo {
+  @extend .page-section;
+
+  & h2 {
+    @extend .mx-auto;
+    margin-bottom: 1em;
+    border: none;
+  }
+}
+
+
+.quarto-title-block, .quarto-title, h1.title {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+img#plotnine-logo {
+  width: 200px;
+  float: left;
+  margin-right: 2em;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s ease;
+  background-color: $white;
+  border: solid 1px $gray-600;
+  border-radius: 10px;
+
+  transition: border 0.5s ease;
+  &:hover {
+    border: solid 1px $black;
+  }
+}
+
+
+.thumbnail img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+  transition: object-position 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+  filter: grayscale(70%) contrast(100%) opacity(80%);
+}
+
+.thumbnail:hover img {
+  object-position: bottom right;
+  transform: scale(1.03);
+  filter: grayscale(0%) contrast(100%) opacity(100);
+}
+
+
 /*-- scss:functions --*/
 
+
 /*-- scss:uses --*/
+
+

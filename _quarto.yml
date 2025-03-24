@@ -1,10 +1,15 @@
 project:
   type: website
+  render:
+    - "index.qmd"
+    - "!demo/"
+    - "guide/"
+  post-render:
+    - "cp -r demo _site/"
 
 execute:
   ipynb-shell-interactivity: all
   
-
 format:
   html:
     theme:
