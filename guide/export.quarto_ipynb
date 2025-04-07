@@ -1,0 +1,196 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: Save and display\n",
+        "jupyter: python3\n",
+        "---\n",
+        "\n",
+        "\n",
+        ":::{.callout-tip title=\"you will learn\"}\n",
+        "* How to display plots in Jupyter notebooks, Quarto documents, and the console.\n",
+        "* How to save plots to different formats.\n",
+        "* How to change plot size and resolution.\n",
+        "* How to ensure fonts in SVGs are self-contained.\n",
+        ":::\n",
+        "\n",
+        ":::{.callout-note title=\"Key points\" collapse=\"true\"}\n",
+        "* Plots should display automatically in Jupyter and Quarto.\n",
+        "* Use the `.show()` method to explicitly display a plot (including while in the console).\n",
+        "* Use the `.save()` method to save a plot to a file.\n",
+        "* Plot size and resolution can be set in the `.save()` method, `theme()`, or globally.\n",
+        "* The `theme(svg_usefonts=False)` argument ensures fonts are self-contained in SVGs.\n",
+        ":::\n",
+        "\n",
+        "## Setup\n"
+      ],
+      "id": "cd943e3b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine import *\n",
+        "from plotnine.data import penguins"
+      ],
+      "id": "0800f415",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Displaying plots\n",
+        "\n",
+        "By default, plots in Jupyter and Quarto should be displayed automatically.\n",
+        "\n",
+        "For example, this website is built with Quarto, but the code below should also cause a plot to appear in a Jupyter notebook.\n"
+      ],
+      "id": "0039b394"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p = (\n",
+        "    ggplot(penguins, aes(\"bill_length_mm\", \"bill_depth_mm\", color=\"species\"))\n",
+        "    + geom_point()\n",
+        "    + labs(\n",
+        "        title = \"Palmer Penguins Bill Depth vs Length\",\n",
+        "        x = \"Bill length (mm)\",\n",
+        "        y = \"Bill depth (mm)\",\n",
+        "    )\n",
+        ")\n",
+        "\n",
+        "p"
+      ],
+      "id": "63e60627",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "If you want to explicitly display a plot, use the `.show()` method.\n"
+      ],
+      "id": "ea431794"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p.show()"
+      ],
+      "id": "cf034e8b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Customizing display\n",
+        "\n",
+        "See the following documentation pages for customizing plot display:\n",
+        "\n",
+        "* Quarto: [documentation on computed figures](https://quarto.org/docs/authoring/figures.html#computations) and [figure options page](https://quarto.org/docs/computations/execution-options.html#figure-options).\n",
+        "* Jupyter notebooks: [\"Integrating your objects with IPython\"](https://ipython.readthedocs.io/en/stable/config/integrating.html).\n",
+        "\n",
+        "## Saving plots\n",
+        "\n",
+        "Use the `.save()` method to save a plot to a file. It takes as its first argument the name of the file to save the plot to. \n"
+      ],
+      "id": "5b012dfe"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "p.save(\"my_plot.png\")"
+      ],
+      "id": "8deda591",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "By default, Plotnine tries to infer the file format from its name. For example, in the code above, Plotnine would save the plot in PNG format.\n",
+        "\n",
+        "## Setting size, resolution, and format\n",
+        "\n",
+        "Plotnine supports customizing plot size, resolution, and format in three ways, in order of precedence:\n",
+        "\n",
+        "* `.save()` method arguments.\n",
+        "* `theme()` settings.\n",
+        "* `plotnine.options.set_option()` global options.\n"
+      ],
+      "id": "3016744f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# | eval: false\n",
+        "p = ggplot(penguins, aes(\"bill_length_mm\", \"bill_depth_mm\", color=\"species\"))\n",
+        "\n",
+        "\n",
+        "# Customize in save method ---\n",
+        "p.save(\"my_plot.png\", width=6, height=4, dpi=100)\n",
+        "\n",
+        "\n",
+        "# Display or save with custom theme ---\n",
+        "my_theme = theme(figure_size=(6, 4), dpi=100)\n",
+        "p + my_theme\n",
+        "\n",
+        "\n",
+        "# Save using global option ---\n",
+        "from plotnine.options import set_option\n",
+        "\n",
+        "set_option(\"figure_size\", (6, 4))\n",
+        "\n",
+        "p.save()"
+      ],
+      "id": "e20312f0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Handling fonts in svg\n",
+        "\n",
+        "When plots using custom fonts are saved as an SVG, it may not display correctly on computers that do not have the fonts installed. Use the `svg_usefonts` argument in the `theme()` function to ensure that fonts are self-contained in the SVG file.\n"
+      ],
+      "id": "b3c0bcb8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "p + theme(svg_usefonts=False)"
+      ],
+      "id": "7383c7ca",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

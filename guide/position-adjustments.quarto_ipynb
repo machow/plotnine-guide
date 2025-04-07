@@ -1,0 +1,313 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: Position adjustments\n",
+        "---\n",
+        "\n",
+        "\n",
+        "Position adjustments determine the placement of overlapping geoms. For example, they can jitter points by applying a small amount of noise, or dodge bars to put them side-by-side.\n",
+        "Use the `position=` argument to geoms to specify adjustments.\n",
+        "\n",
+        ":::{.callout-tip title=\"you will learn\"}\n",
+        "* How to avoid overplotting by jittering points.\n",
+        "* How to make side-by-side bar charts.\n",
+        "* How to make stacked bar charts with equal heights.\n",
+        "* How to apply the same position adjustment to multiple geoms.\n",
+        ":::\n",
+        "\n",
+        ":::{.callout-note title=\"Key points\" collapse=\"true\"}\n",
+        "* Use the `position=` argument to geoms to specify position adjustments.\n",
+        "* `position_jitter()` adds a small amount of noise to points.\n",
+        "* `position_dodge()` places bars side-by-side.\n",
+        "* `position_fill()` stacks bars to the same height.\n",
+        "* Explicitly add rows for missing data when dodging bars.\n",
+        "* Often, setting parameters like `position_dodge(width=...)` is necessary to align adjustments across geoms.\n",
+        ":::\n",
+        "\n",
+        "\n",
+        "## Setup\n"
+      ],
+      "id": "9bde63d4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine import *\n",
+        "from plotnine.data import diamonds"
+      ],
+      "id": "94d1132f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Jittering points\n",
+        "\n",
+        "Use `position_jitter()` to add a small amount of noise to the x- and y-axis for geoms like points. This enables viewers to see overlapping items on dense plots.\n",
+        "\n",
+        "The plots below show points before and after applying jitter.\n"
+      ],
+      "id": "d46aea25"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# | layout-nrow: 1\n",
+        "p = ggplot(diamonds.head(1000), aes(\"cut\", \"carat\", fill=\"clarity\"))\n",
+        "\n",
+        "p + geom_point()\n",
+        "p + geom_point(position=position_jitter())"
+      ],
+      "id": "0b68f0e9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Stacking, filling, and dodging bars\n",
+        "\n",
+        "By default, geoms like `geom_bar()` stack bars on top of each other (`position_stack()`). Use `position_fill()` to make the stacked bars all together the same height (set at 1), and `position_dodge()` to move bars side-by-side.\n"
+      ],
+      "id": "17ffe816"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# | layout-nrow: 1\n",
+        "from plotnine.data import diamonds\n",
+        "\n",
+        "# TODO: from https://ggplot2-book.org/layers.html#sec-position\n",
+        "p = ggplot(diamonds, aes(\"color\", fill=\"cut\")) + theme(legend_position=\"none\")\n",
+        "\n",
+        "p + geom_bar(position=position_stack())  # default\n",
+        "p + geom_bar(position=position_fill())\n",
+        "p + geom_bar(position=position_dodge())"
+      ],
+      "id": "03162bdf",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Reversing order\n",
+        "\n",
+        "The `position_stack()` and `position_fill()` functions supports a `reverse` argument. This reverses the order within stacked bars.\n"
+      ],
+      "id": "95938bb8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| layout-nrow: 1\n",
+        "p = ggplot(diamonds, aes(\"color\", fill=\"cut\"))\n",
+        "\n",
+        "p + geom_bar(position=position_fill())\n",
+        "p + geom_bar(position=position_fill(reverse=True))"
+      ],
+      "id": "3c3a0f18",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Spacing between dodged bars\n",
+        "\n",
+        "Use the `width` argument to `position_dodge()` to increase or decrease the spacing between dodged bars.\n"
+      ],
+      "id": "788a05a2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| layout-nrow: 1\n",
+        "import pandas as pd\n",
+        "df = pd.DataFrame({\"x\": [1, 1, 2, 2], \"n\": [1, 2, 3, 4], \"fill\": [\"A\", \"B\"]*2})\n",
+        "\n",
+        "ggplot(df, aes(\"x\", \"n\", fill=\"fill\")) + geom_col(position=position_dodge(width=.6), width=.5)"
+      ],
+      "id": "593f8bc5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Labelling bars\n",
+        "\n",
+        "If you want to add a label to dodged bars, it's often necessary to set the dodge width for both the bars and the text.\n"
+      ],
+      "id": "43e01358"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "dodge = position_dodge(width=0.6)\n",
+        "(\n",
+        "    ggplot(df, aes(\"x\", \"n\", fill=\"fill\", label=\"n\"))\n",
+        "    + geom_col(position=dodge, width=0.5)\n",
+        "    + geom_text(position=dodge)\n",
+        ")"
+      ],
+      "id": "3bbdd2d9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Jitterdodging\n",
+        "\n",
+        "If you want to combine jittering and dodging, use `position_jitterdodge()`. (TODO: just link to API Reference, add example there.)\n",
+        "\n",
+        "## Dodging with missing bars\n",
+        "\n",
+        "When dodging bars, if missing data leads to a missing bar, it often shows up by making another bar especially wide.\n"
+      ],
+      "id": "7c7cb438"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine.data import mpg\n",
+        "\n",
+        "ggplot(mpg, aes(\"class\", fill=\"factor(cyl)\")) + geom_bar(position=position_dodge())"
+      ],
+      "id": "bed49bc8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Notice that 2seater on the left has only a single bar that's as wide as car classes with 4 bars. This is because bars occupy the same amount of room within an x-axis grouping.\n",
+        "\n",
+        "In order to preserve space within a grouping for missing bars, you can calculate counts yourself, and add explicit rows for missing combinations in the data.\n"
+      ],
+      "id": "e68f2e10"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df_crossed = mpg[[\"cyl\"]].merge(mpg[[\"class\"]], how=\"cross\")\n",
+        "\n",
+        "# TODO: only works because class is a categorical\n",
+        "# also is this section is pretty cumbersome\n",
+        "full_counts = mpg.groupby([\"cyl\", \"class\"]).size().reset_index(name=\"n\")\n",
+        "\n",
+        "(\n",
+        "    ggplot(full_counts, aes(\"class\", \"n\", fill=\"factor(cyl)\"))\n",
+        "    + geom_col(position=position_dodge())\n",
+        ")"
+      ],
+      "id": "9b1791f8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Dodging lines and points\n",
+        "\n",
+        "When dodging lines and points, the `width=` argument to `position_dodge()` is necessary.\n"
+      ],
+      "id": "600d44da"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df = pd.DataFrame(\n",
+        "    {\n",
+        "        \"group\": [\"A\"] * 2 + [\"B\"] * 2,\n",
+        "        \"condition\": [\"treatment\", \"control\"] * 2,\n",
+        "        \"measure\": [3, 1, 2, 1],\n",
+        "    }\n",
+        ")\n",
+        "\n",
+        "\n",
+        "dodge = position_dodge(width=0.1)\n",
+        "\n",
+        "(\n",
+        "    ggplot(df, aes(\"condition\", \"measure\", fill=\"group\", group=\"group\"))\n",
+        "    + geom_line(position=dodge)\n",
+        "    + geom_point(size=4, position=dodge)\n",
+        "    + expand_limits(y=0)\n",
+        ")"
+      ],
+      "id": "704c882c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Nudge a fixed amount\n",
+        "\n",
+        "Use `position_nudge()` to move points or text a fixed amount in the x- and y-directions.\n"
+      ],
+      "id": "99c83531"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "highest_mpg = mpg[(mpg[\"hwy\"] == mpg[\"hwy\"].max()) & (mpg[\"cty\"] == mpg[\"cty\"].max())]\n",
+        "\n",
+        "(\n",
+        "    ggplot(mpg, aes(\"cty\", \"hwy\"))\n",
+        "    + geom_point()\n",
+        "    + geom_text(\n",
+        "        aes(label=\"model\"),\n",
+        "        position=position_nudge(x=-1, y=-2),\n",
+        "        data=highest_mpg,\n",
+        "    )\n",
+        ")"
+      ],
+      "id": "8ba0ef3a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Note however that geoms like `geom_text()` provide `nudge_x` and `nudge_y` arguments that are more convenient for nudging text."
+      ],
+      "id": "61ccda66"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

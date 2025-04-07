@@ -1,0 +1,496 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Geometric objects\"\n",
+        "jupyter: python3\n",
+        "ipynb-shell-interactivity: all\n",
+        "---\n",
+        "\n",
+        "\n",
+        "Geometric objects (geoms) determine how to turn mapped data into visual elements–such as points, lines, or even boxplots. There are two kinds of geoms: individual and collective.\n",
+        "\n",
+        ":::{.callout-tip title=\"You will learn\"}\n",
+        "* What individual and collective geoms are.\n",
+        "* How to make side-by-side bar charts.\n",
+        "* How to avoid overlapping points.\n",
+        "* How to run statistical calculations before plotting.\n",
+        ":::\n",
+        "\n",
+        ":::{.callout-note title=\"Key points\" collapse=\"true\"}\n",
+        "* Geoms use aesthetic mappings to draw plot elements.\n",
+        "* Individual geoms draw one observation (row) with one element.\n",
+        "* Collective geoms draw multiple observations (rows) with one element (e.g. a boxplot).\n",
+        "* Collective geoms include lines, which are drawn between observations.\n",
+        "* Use the `position=` argument to adjust the position of overlapping elements.\n",
+        "* Use the `stat=` argument to run calculations before plotting.\n",
+        ":::\n",
+        "\n",
+        "\n",
+        "## Setup\n"
+      ],
+      "id": "e10dea46"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine import *\n",
+        "from plotnine.data import mpg"
+      ],
+      "id": "c50f1f17",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Basic use\n",
+        "\n",
+        "Geom functions, like `geom_point()`, specify visual elements to draw on the plot. They're rendered in the order they're added to the plot. \n",
+        "\n",
+        "For example, the plot below adds points will fill color corresponding to the `class` column, and then points with shape corresponding to the same column.\n"
+      ],
+      "id": "da971f0c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| layout-nrow: 1\n",
+        "(\n",
+        "    ggplot(mpg, aes(\"displ\", \"hwy\"))\n",
+        "    + geom_point(aes(fill=\"class\"), size=5)\n",
+        "    + geom_point(aes(shape=\"class\"))\n",
+        ")"
+      ],
+      "id": "267a6358",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Notice that the legend includes a guide for both fill and shape, so it's clear what each corresponds to in the chart.\n",
+        "\n",
+        "## Kinds of geoms\n",
+        "\n",
+        "Geoms come in two varieties:\n",
+        "\n",
+        "* **Individual geoms**: draw each row of data independently on the chart.\n",
+        "* **Collective geoms**: draw based on groups of rows, or relationships between them.\n",
+        "\n",
+        "This is shown below for points, boxplots, and lines.\n"
+      ],
+      "id": "e81ff9e6"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "#| layout-nrow: 1\n",
+        "small_mpg = (\n",
+        "    mpg[mpg[\"class\"].isin([\"2seater\", \"compact\", \"midsize\"])]\n",
+        "    .assign(**{\"class\": lambda d: d[\"class\"].cat.remove_unused_categories()})\n",
+        ")\n",
+        "model_avg_hwy = (\n",
+        "    small_mpg\n",
+        "    .groupby([\"year\", \"class\"])[\"hwy\"]\n",
+        "    .agg(\"mean\")\n",
+        "    .reset_index()\n",
+        ")\n",
+        "\n",
+        "big_text = theme_grey(base_size=24)\n",
+        "\n",
+        "p1 = ggplot(small_mpg, aes(\"class\", \"hwy\")) + geom_boxplot() + labs(title=\"collective: boxplot\") + big_text\n",
+        "p2 = ggplot(small_mpg, aes(\"class\", \"hwy\")) + geom_point(position = position_jitter(height=0, width=0.1)) + labs(title=\"individual: point\") + big_text\n",
+        "p3 = (\n",
+        "    ggplot(model_avg_hwy, aes(\"year\", \"hwy\", color=\"class\", group=\"class\")) \n",
+        "    + geom_line(size=1)\n",
+        "    + geom_point()\n",
+        "    + labs(title = \"collective: line\")\n",
+        "    + big_text\n",
+        "    + theme(legend_position=\"bottom\")\n",
+        "    + scale_color_discrete(drop=True)\n",
+        ")\n",
+        "\n",
+        "p2\n",
+        "p1\n",
+        "p3"
+      ],
+      "id": "9c518877",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Note that boxplots are collective because they draw the box based on all the data in a group. Lines are collective because they connect rows of data points.\n",
+        "\n",
+        "\n",
+        "\n",
+        "## Individual: points, bars, and text\n",
+        "\n",
+        "This section illustrates individual geoms. \n",
+        "These range from simple points, to text, to bars and rectangles.\n",
+        "\n",
+        "### Scatterplot with text\n"
+      ],
+      "id": "ece1aae3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "highest_mpg = mpg[(mpg[\"hwy\"] == mpg[\"hwy\"].max()) & (mpg[\"cty\"] == mpg[\"cty\"].max())]\n",
+        "\n",
+        "(\n",
+        "    ggplot(mpg, aes(\"cty\", \"hwy\")) \n",
+        "    + geom_point() \n",
+        "    + geom_text(\n",
+        "        aes(label=\"model\"),\n",
+        "        nudge_y=-2,\n",
+        "        nudge_x = -1,\n",
+        "        data = highest_mpg\n",
+        "    )\n",
+        ")"
+      ],
+      "id": "0b7d1a7f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Barchart on counts\n"
+      ],
+      "id": "f5023b06"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ttl_mpg_class = mpg.value_counts([\"class\", \"drv\"]).reset_index()\n",
+        "ttl_mpg_class.head(3)"
+      ],
+      "id": "a51ffcf9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ggplot(ttl_mpg_class, aes(\"class\", \"count\", fill = \"drv\")) + geom_col()"
+      ],
+      "id": "4e937fee",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Rectangles\n",
+        "\n",
+        "Use `geom_rect()` to draw rectangles.\n"
+      ],
+      "id": "f74124a7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "df_rect = pd.DataFrame(\n",
+        "    {\n",
+        "        \"xmin\": [1, 2, 3],\n",
+        "        \"ymin\": [1, 2, 3],\n",
+        "        \"xmax\": [2, 3, 4],\n",
+        "        \"ymax\": [2, 3, 4],\n",
+        "    }\n",
+        ")\n",
+        "\n",
+        "(\n",
+        "    ggplot(df_rect, aes(xmin=\"xmin\", ymin=\"ymin\", xmax=\"xmax\", ymax=\"ymax\"))\n",
+        "    + geom_rect(fill=\"orange\")\n",
+        ")"
+      ],
+      "id": "f377cacd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Collective: distributions\n",
+        "\n",
+        "Collective geoms like `geom_boxplot()` and `geom_density()` can communicate the general shape and distribution of data.\n",
+        "\n",
+        "### Boxplots and violins\n",
+        "\n",
+        "Use `geom_boxplot()` and `geom_violin()` to create boxplots and violin plots, respectively.\n"
+      ],
+      "id": "1a37af35"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "indx = mpg[\"class\"].isin([\"2seater\", \"compact\", \"midsize\"])\n",
+        "\n",
+        "\n",
+        "(\n",
+        "    ggplot(aes(\"class\", \"cty\"))\n",
+        "    + geom_boxplot(data=mpg[indx], fill=\"orange\")\n",
+        "    + geom_violin(data=mpg[~indx], fill=\"lightblue\")\n",
+        ")"
+      ],
+      "id": "67fed77f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Histograms and densities\n"
+      ],
+      "id": "21854618"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# | layout-nrow: 1\n",
+        "p = ggplot(mpg, aes(\"cty\"))\n",
+        "p + geom_histogram()\n",
+        "p + geom_density(fill=\"lightblue\")"
+      ],
+      "id": "f7b37f63",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Smoothing\n"
+      ],
+      "id": "24cb3778"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "(\n",
+        "    ggplot(mpg, aes(\"displ\", \"hwy\"))\n",
+        "    + geom_point()\n",
+        "    + geom_smooth(method=\"lm\", color=\"blue\", fill=\"orange\")\n",
+        ")"
+      ],
+      "id": "0831e29d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Collective: lines and fills\n",
+        "\n",
+        "Lines and fills are collective geoms because they connect or fill between data points. \n",
+        "\n",
+        "For example, `geom_line()` connects points along the x-axis.\n",
+        "This is especially useful when x is a time series.\n"
+      ],
+      "id": "bacb69ce"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine import *\n",
+        "from plotnine.data import huron\n",
+        "\n",
+        "(\n",
+        "    ggplot(huron, aes(\"year\", \"level\"))\n",
+        "    + geom_line()\n",
+        "    + geom_point()\n",
+        ")"
+      ],
+      "id": "06dedc14",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Similarly, `geom_ribbon()` draws a ribbon along the x-axis, based on minimum and maximum values for the y-axis.\n"
+      ],
+      "id": "f1d5b96d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine import *\n",
+        "from plotnine.data import huron\n",
+        "\n",
+        "(\n",
+        "    ggplot(huron, aes(\"year\", \"level\"))\n",
+        "    + geom_ribbon(aes(ymax=\"level\"), ymin=0, fill=\"lightblue\")\n",
+        "    + geom_point()\n",
+        ")"
+      ],
+      "id": "2dc3ae69",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "* `geom_area()`: a special case of `geom_ribbon()` that always sets `ymin=0`.\n",
+        "* `geom_path()`: connects points with a line by connecting subsequent rows of data, rather than along the x-axis.\n",
+        "\n",
+        "## `position=` for placement tweaks\n",
+        "\n",
+        "Use the `position=` argument to geom functions to do things like apply a small amount of random jitter. This can be useful for avoiding overplotting, where elements cover each other. Position can also move stacked bars to be side-to-side, to make them easier to compare.\n",
+        "\n",
+        "### Jitter with random noise\n",
+        "\n",
+        "Use `position_jitter()` to apply a small amount of random noise on the x- and y-axis. For example, the plots below show the same data with and without jitter.\n"
+      ],
+      "id": "803db04c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# | layout-nrow: 1\n",
+        "p = ggplot(mpg, aes(\"cty\", \"hwy\"))\n",
+        "\n",
+        "p + geom_point(alpha=0.2)\n",
+        "p + geom_point(position=position_jitter())"
+      ],
+      "id": "6d022b90",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Notice that the first plot has points plotted on top of each other. It uses `alpha=0.2` to make overlapping points more visible. The second plot uses jitter to spread points out.\n",
+        "\n",
+        "### Dodge to side-by-side\n",
+        "\n",
+        "Use `position_fill()` to make stacked bars all the same height (set at 1), and `position_dodge()` to move bars side-by-side.\n"
+      ],
+      "id": "50aa5688"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| layout-nrow: 1\n",
+        "\n",
+        "from plotnine.data import diamonds\n",
+        "\n",
+        "# TODO: from https://ggplot2-book.org/layers.html#sec-position\n",
+        "p = ggplot(diamonds, aes(\"color\", fill=\"cut\")) + theme(legend_position=\"none\")\n",
+        "\n",
+        "p + geom_bar()\n",
+        "p + geom_bar(position=position_fill())\n",
+        "p + geom_bar(position=position_dodge())"
+      ],
+      "id": "49226624",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Notice that the middle plot (position fill) makes it easy to compare the proportion of each fill across groups, while the right plot (position dodge) makes it easy to compare individual bars.\n",
+        "\n",
+        "## `stat=` for statistical calculations\n",
+        "\n",
+        "Use the `stat=` argument to geom functions to run calculations before plotting. For example, the plot below uses `stat=\"summary\"` with the `fun_y=` argument, to add a point for the mean of each group.\n"
+      ],
+      "id": "d3ab0029"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "(\n",
+        "    ggplot(mpg, aes(\"trans\", \"cty\"))\n",
+        "    + geom_point()\n",
+        "    + geom_point(\n",
+        "        color=\"red\",\n",
+        "        size=3,\n",
+        "        stat=\"summary\",\n",
+        "        fun_y=lambda x: x.mean())\n",
+        ")"
+      ],
+      "id": "b02d2584",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Note that in practice it's often easier to just pass summarized data directly to a geom function. For example, the plot above could also be created with the following code.\n"
+      ],
+      "id": "23c6adc4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# | eval: false\n",
+        "mean_mpg = mpg.groupby(\"trans\")[\"cty\"].mean().reset_index()\n",
+        "\n",
+        "(\n",
+        "    ggplot(mpg, aes(\"trans\", \"cty\"))\n",
+        "    + geom_point()\n",
+        "    + geom_point(data=mean_mpg, color=\"red\", size=3)\n",
+        ")"
+      ],
+      "id": "dfe50d74",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "(TODO: note about `after_stat()`? I think this is basically impossible to use with the current reference, because there's no way to know the options for each geom.)"
+      ],
+      "id": "0d66cda5"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

@@ -1,0 +1,92 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: Shortcut functions\n",
+        "jupyter: python3\n",
+        "---"
+      ],
+      "id": "99bf0cb8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine import *\n",
+        "from plotnine.data import mpg"
+      ],
+      "id": "123a092b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## labs() for titles, scale names\n"
+      ],
+      "id": "cdccc6a9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "(\n",
+        "    ggplot(mpg, aes(\"displ\", \"hwy\", color=\"class\"))\n",
+        "    + geom_point()\n",
+        "    + scale_x_continuous(name=\"Engine displacement (litres)\")\n",
+        "    + scale_y_continuous(name=\"Highway miles per gallon\")\n",
+        "    + scale_color_discrete(name=\"Car class\")\n",
+        ")"
+      ],
+      "id": "9dd8f8d1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "(\n",
+        "    ggplot(mpg, aes(\"displ\", \"hwy\", color=\"class\"))\n",
+        "    + geom_point()\n",
+        "    + labs(\n",
+        "        title = \"Use labs() to quickly set labels\",\n",
+        "        x = \"Engine displacement (litres)\",\n",
+        "        y = \"Highway miles per gallon\",\n",
+        "        color = \"Car class\"\n",
+        "    )\n",
+        ")"
+      ],
+      "id": "9fc89468",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## lims() for scale limits\n",
+        "\n",
+        "## expand_limits() for data-based limits\n",
+        "\n",
+        "* ref coord_cartesion, scale limits argument, xlim, ylim\n",
+        "\n",
+        "## annotate() for quick plot text"
+      ],
+      "id": "2c9ee365"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

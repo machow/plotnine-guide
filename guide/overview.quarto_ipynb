@@ -1,0 +1,297 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: Overview\n",
+        "---\n",
+        "\n",
+        "\n",
+        "This page covers the basics of coding plots with Plotnine.\n",
+        "We'll focus on producing the plot below, which looks at city (cty) versus highway (hwy) mileage across different years of cars:\n"
+      ],
+      "id": "a27b4fd0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# | code-fold: true\n",
+        "from plotnine import *\n",
+        "from plotnine.data import mpg\n",
+        "\n",
+        "(\n",
+        "    ggplot(mpg, aes(\"cty\", \"hwy\"))\n",
+        "    + geom_point(mapping=aes(colour=\"displ\"))\n",
+        "    + geom_smooth(method=\"lm\", color=\"blue\")\n",
+        "    + scale_color_continuous(cmap_name=\"viridis\")\n",
+        "    + facet_grid(\"year ~ drv\")\n",
+        "    + coord_fixed()\n",
+        "    + theme_minimal()\n",
+        "    + theme(panel_grid_minor=element_blank())\n",
+        ")"
+      ],
+      "id": "b58d7829",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Data\n",
+        "\n",
+        "Every plot in plotnine starts with passing data to the `ggplot()` function. The data can be a Pandas or Polars DataFrame. Plotnine works best when the data is in a [tidy format](https://aeturrell.github.io/python4DS/data-tidy.html), which tends to be longer--with more rows and fewer columns.\n"
+      ],
+      "id": "1fd6a4fb"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# | output: false\n",
+        "from plotnine import *\n",
+        "from plotnine.data import mpg\n",
+        "\n",
+        "ggplot(data=mpg)"
+      ],
+      "id": "513bbc60",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## `aes()` mapping\n",
+        "\n",
+        "The `aes()` function maps columns of data onto graphical attributes--such as colors, shapes, or x and y coordinates. (`aes()` is short for aesthetic).\n",
+        "\n",
+        "We can map the `cty` and `hwy` columns to the x- and y- coordinates in the plot using the code below:\n"
+      ],
+      "id": "2f085fa3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| output: false\n",
+        "ggplot(data=mpg, mapping = aes(x = \"cty\", y = \"hwy\"))"
+      ],
+      "id": "f2b4f116",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## `geom_*()` objects\n",
+        "\n",
+        "Functions starting with `geom_*()` specify geometric objects (geoms) to add to the plot. Geoms determine **how** to turn mapped data into visual elements--such as points, lines, or even boxplots.\n",
+        "\n",
+        "Here is how we can map the `cty` and `hwy` columns to points with a smooth trend line on top:\n"
+      ],
+      "id": "33bc4650"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "(\n",
+        "    ggplot(mpg, aes(\"cty\", \"hwy\"))\n",
+        "    # to create a scatterplot\n",
+        "    + geom_point()\n",
+        "    # to fit and overlay a loess trendline\n",
+        "    + geom_smooth(method=\"lm\", color=\"blue\")\n",
+        ")"
+      ],
+      "id": "32786231",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## `scale_*()` translations\n",
+        "\n",
+        "The `scale_*()` functions customize the styling of visual elements from a data mapping. This includes color palettes, axis spacing (e.g. log scale), axis limits, and more. Scales can set the names on guides like axes, legends, and colorbars.\n",
+        "\n",
+        "The names of scales follow the pattern `scale_<aesthetic>_<type>`, where `<aesthetic>` is the name of an aesthetic attribute, like `x`, `y`, or `color`. If we want to use the `plasma` palette for color, we can use the code below:\n"
+      ],
+      "id": "c72328cc"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "(\n",
+        "    ggplot(mpg, aes(\"cty\", \"hwy\", color=\"displ\"))\n",
+        "    + geom_point()\n",
+        "    + scale_color_continuous(name=\"displ (VIRIDIS)\", cmap_name=\"viridis\")\n",
+        ")"
+      ],
+      "id": "2bb0cc88",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## `position_*()` adjustments\n",
+        "\n",
+        "The `position_*()` functions adjust the position of elements in the plot. For example, by adding a small amount of random noise (jitter) to the x- and y- coordinates of points, so they don't cover each other.\n"
+      ],
+      "id": "402a9fb5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "(\n",
+        "    ggplot(mpg, aes(\"cty\", \"hwy\", color=\"displ\"))\n",
+        "    # add a small amount of jitter\n",
+        "    + geom_point(position=position_jitter())\n",
+        ")"
+      ],
+      "id": "bdf9e48c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## `facet_*()` subplots\n",
+        "\n",
+        "Facets split a plot into multiple subplots. The two facet functions, `facet_grid()` and `facet_wrap()`, determine how to split the data. For example, we can create a grid of plots based on the `year` and `drv` columns:\n"
+      ],
+      "id": "4df1fe62"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "(\n",
+        "    ggplot(mpg, aes(\"cty\", \"hwy\"))\n",
+        "    + geom_point()\n",
+        "    # facet into subplots\n",
+        "    + facet_grid(\"year ~ drv\")\n",
+        ")"
+      ],
+      "id": "bc37be3a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## `coord_*()` projections\n",
+        "\n",
+        "The `coord_*()` functions specify the coordinate system of the plot. Currently, only a few coordinate systems are available. However, in the future systmes like `coord_polar()` will allow for plotting using polar coordinates.\n",
+        "\n",
+        "The code below uses `coord_fixed()` to ensure that the x- and y- axes have the same spacing.\n"
+      ],
+      "id": "ce55dde7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "(\n",
+        "    ggplot(mpg, aes(\"cty\", \"hwy\"))\n",
+        "    + geom_point()\n",
+        "    + coord_fixed(xlim=[0, 40], ylim=[0, 40])\n",
+        ")"
+      ],
+      "id": "445ccd22",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## `theme_*()` styling\n",
+        "\n",
+        "Themes control the style of all aspects of the plot that not decided by the data.\n",
+        "This includes the position of the legend, the color of the axes, the size of the text, and much more.\n",
+        "\n",
+        "Use the `theme_*()` functions to start with a pre-made theme, or the general `theme()` function to create a new custom theme. Use the `element_*()` functions to configure new theme settings.\n"
+      ],
+      "id": "e65a2f40"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "(\n",
+        "    ggplot(mpg, aes(\"cty\", \"hwy\", colour=\"class\"))\n",
+        "    + geom_point()\n",
+        "    + theme_minimal()\n",
+        "    + theme(\n",
+        "        legend_position=\"top\",\n",
+        "        axis_line=element_line(linewidth=0.75),\n",
+        "        axis_line_x=element_line(colour=\"blue\"),\n",
+        "    )\n",
+        ")"
+      ],
+      "id": "ebf03f8f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Putting it together\n",
+        "\n",
+        "Finally, we put all the pieces together into the original plot:\n"
+      ],
+      "id": "a42608e9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "(\n",
+        "    ggplot(mpg, aes(\"cty\", \"hwy\"))\n",
+        "    + geom_point(mapping=aes(colour=\"displ\"))\n",
+        "    + geom_smooth(method=\"lm\", color=\"blue\")\n",
+        "    + scale_color_continuous(cmap_name=\"viridis\")\n",
+        "    + facet_grid(\"year ~ drv\")\n",
+        "    + coord_fixed()\n",
+        "    + theme_minimal()\n",
+        "    + theme(panel_grid_minor=element_blank())\n",
+        ")"
+      ],
+      "id": "6064d2fa",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::{.callout-note}\n",
+        "This tutorial was adapted from the [ggplot2 \"Getting Started\" tutorial](https://ggplot2.tidyverse.org/articles/ggplot2.html)\n",
+        ":::"
+      ],
+      "id": "a9a1c819"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

@@ -1,11 +1,16 @@
 project:
   type: website
+  pre-render:
+    - uv run homepage/bin/render.sh
   render:
     - "index.qmd"
+    - "gallery/*.qmd"
+    - "test.qmd"
     - "!demo/"
     - "guide/"
   post-render:
     - "cp -r demo _site/"
+    - "sed -e /bootstrap.*css/d -i.bak _site/index.html"
 
 execute:
   ipynb-shell-interactivity: all

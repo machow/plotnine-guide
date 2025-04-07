@@ -1,0 +1,160 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: Labels and titles\n",
+        "jupyter: python3\n",
+        "---\n",
+        "\n",
+        "\n",
+        ":::{.callout-tip title=\"you will learn\"}\n",
+        "* How to categorize the three kinds of labels in a plot.\n",
+        "* How to set each kind of label.\n",
+        "* How to style labels (e.g. with color).\n",
+        ":::\n",
+        "\n",
+        ":::{.callout-note title=\"Key points\" collapse=\"true\"}\n",
+        "* The three kinds of labels are plot labels, guide labels, and scale break labels.\n",
+        "* The `labs()` function quickly sets plot labels and guide names.\n",
+        "* The `scale_*()` functions can set scale break labels.\n",
+        "* The `theme()` function can style labels, by changing their color, size, or more.\n",
+        ":::\n",
+        "\n",
+        "## Setup\n"
+      ],
+      "id": "51615887"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine import *\n",
+        "from plotnine.data import penguins\n",
+        "\n",
+        "p = (\n",
+        "    ggplot(penguins, aes(\"flipper_length_mm\", \"body_mass_g\", color=\"species\"))\n",
+        "    + geom_point()\n",
+        ")"
+      ],
+      "id": "54af05f2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Three kinds of labels\n",
+        "\n",
+        "Here is a plot, with the three kinds of labels marked.\n",
+        "\n",
+        "![](./assets/plot-labels-marked.png)\n",
+        "\n",
+        "\n",
+        "* **Plot labels**: titles, subtitles, captions. (Shown in purple).\n",
+        "* **Guide names**: axis labels, legend titles. (Shown in red).\n",
+        "* **Scale breaks**: tick labels, color glyph labels. (Shown in orange).\n",
+        "\n",
+        "\n",
+        "In the following sections, we'll cover how the first two kinds of labels can quickly be set with the `labs()` function, and how scale breaks can be labeled using `scale_*()` functions.\n",
+        "\n",
+        "\n",
+        "## Labelling quickly with `labs()`\n",
+        "\n",
+        "Use the `labs()` function to quickly set plot labels and guide names.\n"
+      ],
+      "id": "75ff76d3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p + labs(\n",
+        "    title=\"Penguin flipper length vs body mass\",\n",
+        "    x=\"Flipper length (mm)\",\n",
+        "    y=\"Body mass (g)\",\n",
+        "    color=\"SPECIES\",\n",
+        ")"
+      ],
+      "id": "d78e5c16",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Notice that the only piece it can't set is the break labels (e.g. the x-axis tick labels), which is often enough for most plots.\n",
+        "\n",
+        "## Styling labels with theme() \n",
+        "\n",
+        "Use the `theme()` function to style labels. For example, by changing their color or size.\n"
+      ],
+      "id": "ca2d671f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "(\n",
+        "    ggplot(penguins, aes(\"flipper_length_mm\", \"body_mass_g\"))\n",
+        "    + geom_point()\n",
+        "    + theme(\n",
+        "        axis_text_x=element_text(color=\"orange\"),\n",
+        "        axis_title_x=element_text(color=\"blue\", size=16),\n",
+        "    )\n",
+        ")"
+      ],
+      "id": "e7f64490",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Scale breaks labels\n",
+        "\n",
+        "Use the `labels=` arguments to the appropriate `scale_*()` function, in order to customize break labels.\n",
+        "\n",
+        "For example, the code below changes the y-axis labels from grams to kilograms.\n"
+      ],
+      "id": "26153ed6"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# TODO: how to make disappear in labs?\n",
+        "(\n",
+        "    p\n",
+        "    + scale_y_continuous(labels=lambda x: [val / 1_000 for val in x])\n",
+        "    + labs(y=\"Body mass (kg)\")\n",
+        ")"
+      ],
+      "id": "367f1558",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "See [Scale basics](./scale-basics.qmd#labels-for-break-labels) for more on setting break labels."
+      ],
+      "id": "56542d5c"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
