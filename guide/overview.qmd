@@ -103,7 +103,7 @@ Facets split a plot into multiple subplots. The two facet functions, `facet_grid
 
 ## `coord_*()` projections
 
-The `coord_*()` functions specify the coordinate system of the plot. Currently, only a few coordinate systems are available. However, in the future systmes like `coord_polar()` will allow for plotting using polar coordinates.
+The `coord_*()` functions specify the coordinate system of the plot. Currently, only a few coordinate systems are available. However, in the future systems like `coord_polar()` will allow for plotting using polar coordinates.
 
 The code below uses `coord_fixed()` to ensure that the x- and y- axes have the same spacing.
 
@@ -117,7 +117,7 @@ The code below uses `coord_fixed()` to ensure that the x- and y- axes have the s
 
 ## `theme_*()` styling
 
-Themes control the style of all aspects of the plot that not decided by the data.
+Themes control the style of all aspects of the plot that are not decided by the data.
 This includes the position of the legend, the color of the axes, the size of the text, and much more.
 
 Use the `theme_*()` functions to start with a pre-made theme, or the general `theme()` function to create a new custom theme. Use the `element_*()` functions to configure new theme settings.

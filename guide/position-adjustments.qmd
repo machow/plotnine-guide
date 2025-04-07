@@ -76,12 +76,15 @@ p + geom_bar(position=position_fill(reverse=True))
 Use the `width` argument to `position_dodge()` to increase or decrease the spacing between dodged bars.
 
 ```{python}
-#| layout-nrow: 1
+# | layout-nrow: 1
 import pandas as pd
-df = pd.DataFrame({"x": [1, 1, 2, 2], "n": [1, 2, 3, 4], "fill": ["A", "B"]*2})
 
-ggplot(df, aes("x", "n", fill="fill")) + geom_col(position=position_dodge(width=.6), width=.5)
+df = pd.DataFrame({"x": [1, 1, 2, 2], "n": [1, 2, 3, 4], "fill": ["A", "B"] * 2})
+
+ggplot(df, aes("x", "n", fill="fill")) + geom_col(position=position_dodge(width=0.5))
 ```
+
+Notice that setting `width=0.5` caused the bars to overlap. Setting width higher increases the distance between the center of the bars.
 
 ### Labelling bars
 
@@ -102,7 +105,7 @@ If you want to combine jittering and dodging, use `position_jitterdodge()`. (TOD
 
 ## Dodging with missing bars
 
-When dodging bars, if missing data leads to a missing bar, it often shows up by making another bar especially wide.
+When dodging bars, if a bar is missing from the plot (e.g. due to missing data), it often shows up by making another bar especially wide.
 
 ```{python}
 from plotnine.data import mpg
@@ -122,10 +125,15 @@ df_crossed = mpg[["cyl"]].merge(mpg[["class"]], how="cross")
 full_counts = mpg.groupby(["cyl", "class"]).size().reset_index(name="n")
 
 (
-    ggplot(full_counts, aes("class", "n", fill="factor(cyl)"))
+    ggplot(
+        full_counts,
+        aes("class", "n", color="factor(cyl)", fill="factor(cyl)"),
+    )
     + geom_col(position=position_dodge())
 )
 ```
+
+Note that setting the `color=` aesthetic makes the bars with height 0 visible (by setting the color of the rectangle border).
 
 ## Dodging lines and points
 

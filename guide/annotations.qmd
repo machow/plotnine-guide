@@ -3,6 +3,20 @@ title: Annotations
 ---
 
 
+
+:::{.callout-tip title="you will learn"}
+:::
+
+:::{.callout-note title="Key points" collapse="true"}
+:::
+
+
 * geom text marking points
+  - adjusttext for repelling
+* geom label
 * info box and arrow
 * annotate function
+
+* check geom_text patheffects
+
+summary from https://ggplot2-book.org/annotations#sec-custom-annotations

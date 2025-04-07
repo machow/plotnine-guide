@@ -1,3 +1,125 @@
 ---
 title: Theme basics
 ---
+
+:::{.callout-tip title="You will learn"}
+
+:::
+
+:::{.callout-note title="Key points" collapse="true"}
+::: 
+
+NOTES
+
+* unit (just pass a number)
+
+
+OUTLINE
+
+
+* `theme()`
+  - `element_*()`
+* main theme aspects
+  * axis
+  * legend
+  * panel
+  * plot
+  * strip
+* main element functions
+  * blank, line, rect, text
+* theme arguments and inheritance
+* premade: `theme_something()`
+* creating a new theme
+
+## Setup
+
+```{python}
+from plotnine import *
+from plotnine.data import penguins
+```
+
+## Big example
+
+## Basic use
+
+```{python}
+(
+    ggplot(penguins, aes(x="flipper_length_mm", y="body_mass_g"))
+    + geom_point()
+    + theme(
+        axis_text_x=element_text(angle=90, color="purple"),
+    )
+)
+```
+
+```{python}
+(
+    ggplot(penguins, aes(x="flipper_length_mm", y="body_mass_g"))
+    + geom_point()
+    + theme(
+        axis_ticks_major_y=element_line(color="red", size=5),
+        axis_ticks_length_major_y=10,
+    )
+)
+```
+
+## Premade themes
+
+```{python}
+# | layout-ncol: 2
+p = (
+    ggplot(penguins, aes(x="flipper_length_mm", y="body_mass_g", color="species"))
+    + labs(title="Penguins (538 Theme)", subtitle="Very cool")
+    + geom_point()
+)
+
+p
+p + theme_538()
+```
+
+## Five main theme areas
+
+```{python}
+(
+    ggplot(penguins, aes(x="flipper_length_mm", y="body_mass_g", shape="species"))
+    + geom_point()
+    + facet_wrap("~species")
+    + theme(
+        axis_title=element_text(size=20, color="purple"),
+        legend_background=element_rect(fill="lightblue"),
+        panel_background=element_rect(fill="lightgreen"),
+        plot_background=element_rect(fill="lightyellow"),
+        strip_background=element_rect(fill="lightpink"),
+    )
+)
+```
+
+## Blanking elements
+
+```{python}
+(
+    ggplot(penguins, aes(x="flipper_length_mm", y="body_mass_g"))
+    + geom_point()
+    + theme(
+        axis_text=element_blank(),
+        axis_ticks=element_blank(),
+    )
+)
+```
+
+## Creating a custom theme
+
+```{python}
+my_theme = theme(
+    panel_background=element_rect(fill="white"),
+    panel_grid_major=element_line(color="#F0F0F0"),
+)
+
+(
+    ggplot(penguins, aes(x="flipper_length_mm", y="body_mass_g"))
+    + geom_point()
+    + my_theme
+)
+```
+
+

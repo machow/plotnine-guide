@@ -1,3 +1,35 @@
 ---
 title: Custom themes
 ---
+
+
+* custom themes
+  - axis
+    - area: title, text, ticks, minor.ticks 
+    - sub-area: length
+    - loc: x[.top, bottom, left, right]
+  - legend
+    - area: spacing, key, ticks, axis, text, title, position, box
+    - big attr: background, margin, frame, direction, byrow, location
+    - sub attr:
+      - x, y
+      - size, height, width
+      - top, bottom, right, left, inside
+      - just, margin, background, spacing
+
+  - panel
+    - area: spacing, grid
+    - attrs: background, border, ontop
+  - plot
+    - area: title, subtitle, caption, tag
+    - attrs: background, position, location
+  - strip
+    - area: background, text
+    - attrs:
+      - x, y
+      - bottom, top
+      - left, right
+      - switch.pad.grid
+      - switch.pad.wrap
+
+  - complete, validate
