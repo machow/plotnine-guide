@@ -1,22 +1,22 @@
 ---
 title: Annotations
+jupyter: python3
 ---
 
+This page describes how to describe or emphasize data with annotations in plots. This includes labelling points, adding arrows, creating boxes, and highlighting areas of interest. It also describes how to tackle the common issue of overlapping text labels.
 
-
-:::{.callout-tip title="you will learn"}
+:::{.callout-tip title="You will learn"}
 :::
 
 :::{.callout-note title="Key points" collapse="true"}
 :::
 
+## `annotate()`
 
-* geom text marking points
-  - adjusttext for repelling
-* geom label
-* info box and arrow
-* annotate function
+## `geom_text(path_effects=...)`
 
-* check geom_text patheffects
+## `geom_text(adjust_text=...)`
 
-summary from https://ggplot2-book.org/annotations#sec-custom-annotations
+## Styling text
+
+## Boxes, arrows, shading

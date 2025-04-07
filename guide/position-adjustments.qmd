@@ -5,7 +5,7 @@ title: Position adjustments
 Position adjustments determine the placement of overlapping geoms. For example, they can jitter points by applying a small amount of noise, or dodge bars to put them side-by-side.
 Use the `position=` argument to geoms to specify adjustments.
 
-:::{.callout-tip title="you will learn"}
+:::{.callout-tip title="You will learn"}
 * How to avoid overplotting by jittering points.
 * How to make side-by-side bar charts.
 * How to make stacked bar charts with equal heights.

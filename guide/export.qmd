@@ -3,7 +3,7 @@ title: Save and display
 jupyter: python3
 ---
 
-:::{.callout-tip title="you will learn"}
+:::{.callout-tip title="You will learn"}
 * How to display plots in Jupyter notebooks, Quarto documents, and the console.
 * How to save plots to different formats.
 * How to change plot size and resolution.

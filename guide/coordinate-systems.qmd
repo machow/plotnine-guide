@@ -6,7 +6,7 @@ jupyter: python3
 Coordinate systems determine how the x- and y-axes of a plot are drawn.
 For example, `coord_flip()` switches the x- and y-axes, while `coord_fixed()` ensures they have the same spacing.
 
-:::{.callout-tip title="you will learn"}
+:::{.callout-tip title="You will learn"}
 * What coordinate systems are common for plots.
 * How to flip and fix axes.
 * The difference between scale and coordinate systems limits.
