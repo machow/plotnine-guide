@@ -69,9 +69,9 @@ website:
         - section: "UNSORTED"
           contents:
           - guide/maps.qmd
-          - guide/shortcuts.qmd
-          - guide/misc.qmd
-          - guide/feature-coverage.qmd
+          #- guide/shortcuts.qmd
+          #- guide/misc.qmd
+          #- guide/feature-coverage.qmd
           - guide/aesthetic-specification.qmd
     - id: dummy
 

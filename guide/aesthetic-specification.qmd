@@ -4,7 +4,7 @@ jupyter: python3
 ipynb-shell-interactivity: all
 ---
 
-This document is a translation of https://ggplot2.tidyverse.org/articles/ggplot2-specs.html
+This document is a translation of the [ggplot2 aesthetic specification](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html).
 
 
 ## Color and fill

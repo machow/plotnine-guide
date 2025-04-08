@@ -31,7 +31,7 @@ from plotnine.data import penguins
 
 ## Premade themes
 
-The quickest way to explore is themes is by applying a premade one.
+The quickest way to explore themes is by applying a premade one.
 These start with `theme_*()`, and include `theme_minimal()`, `theme_bw()`, and `theme_538()`.
 
 ```{python}
