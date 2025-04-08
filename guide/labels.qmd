@@ -3,7 +3,7 @@ title: Labels and titles
 jupyter: python3
 ---
 
-:::{.callout-tip title="you will learn"}
+:::{.callout-tip title="You will learn"}
 * How to categorize the three kinds of labels in a plot.
 * How to set each kind of label.
 * How to style labels (e.g. with color).

@@ -1,3 +1,80 @@
 ---
 title: Premade themes
+jupyter: python3
+execute:
+  warning: false
 ---
+
+Premade themes begin with `theme_*()`. For convenience, this page displays 10 premade themes that come with `plotnine`. By default, `plotnine` uses `theme_gray()`.
+
+## Setup
+
+
+```{python}
+from plotnine import *
+from plotnine.data import penguins
+
+p = (
+    ggplot(penguins, aes(x="flipper_length_mm", y="body_mass_g", color="species"))
+    + geom_point()
+    + scale_x_continuous(breaks=range(150, 250, 30))
+    + facet_wrap("~species")
+    + labs(subtitle="I am a subtitle")
+)
+```
+
+## BW
+
+```{python}
+p + theme_bw() + labs(title="theme_bw()")
+```
+
+## Classical
+
+```{python}
+p + theme_classic() + labs(title="theme_classic()")
+```
+
+## Gray
+
+```{python}
+p + theme_gray() + labs(title="theme_gray()")
+```
+
+## Light/Dark
+
+```{python}
+# | layout-ncol: 2
+p + theme_light() + labs(title="theme_light()")
+p + theme_dark() + labs(title="theme_dark()")
+```
+
+## Matplotlib
+
+```{python}
+p + theme_matplotlib() + labs(title="theme_matplotlib()")
+```
+
+## Minimal
+
+```{python}
+p + theme_minimal() + labs(title="theme_minimal()")
+```
+
+## Seaborn
+
+```{python}
+p + theme_seaborn() + labs(title="theme_seaborn()")
+```
+
+## Tufte
+
+```{python}
+p + theme_tufte() + labs(title="theme_tufte()")
+```
+
+## 538
+
+```{python}
+p + theme_538() + labs(title="theme_538()")
+```

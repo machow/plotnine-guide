@@ -12,7 +12,7 @@ Plotnine produces a legend automatically, which tells viewers how to map scale v
 
 TODO: a graphic with annotations around scales, legends, and guides
 
-:::{.callout-tip title="you will learn"}
+:::{.callout-tip title="You will learn"}
 * How to apply a custom color palette.
 * How to choose between discrete, continuous, and manual scales.
 * How to log transform x- and y-axes.
@@ -94,7 +94,7 @@ The **position scales** for the x- and y-axis also have many extra transformatio
 
 ### Identity type
 
-Finally, the scale **identity type** uses the values of the data as styles directly. For example, the code below sets the color of points to the values in the `color` column.
+Finally, the scale **identity type** uses the values of the data as styles directly. For example, the code below sets the color of points to the values in the `my_color` column.
 
 ```{python}
 import pandas as pd
@@ -103,13 +103,12 @@ df = pd.DataFrame(
     {
         "x": [1, 2, 3],
         "y": [1, 2, 3],
-        "color": ["red", "blue", "green"],
+        "my_color": ["red", "blue", "green"],
     }
 )
 
-(ggplot(df, aes("x", "y", color="color")) + geom_point(size=5))
+(ggplot(df, aes("x", "y", color="my_color")) + geom_point(size=5) + scale_color_identity())
 ```
-
 
 ## `name=` to set guide (legend) labels
 
@@ -127,6 +126,7 @@ Use the `name=` argument to scale functions to set the label of that scale's gui
 
 Notice that the x-axis, y-axis, and color guides all have names set. While the guide color is in the legend on the right, the x- and y-axis guides are on the bottom and left of the plot.
 
+:::{ .callout-tip title="labs() shortcut"}
 The `labs()` function is a convenient way to set names for guides in one place, along with other pieces like a title.
 
 ```{python}
@@ -141,6 +141,8 @@ The `labs()` function is a convenient way to set names for guides in one place, 
     )
 )
 ```
+
+:::
 
 ## `values=` for manual styles
 
@@ -231,8 +233,8 @@ p = (
     + theme_grey(base_size=20)
 )
 
-p
-p + scale_shape_discrete(name="Shape")
+p + labs(title="Unmerged")
+p + labs(title="Merged") + scale_shape_discrete(name="Shape")
 ```
 
 ## Legend position
@@ -281,10 +283,11 @@ df = pd.DataFrame({"x": ser, "y": ser, "p": ser, "q": ser, "r": ser})
 (
     ggplot(df, aes("x", "y", color="p", size="q", shape="r"))
     + geom_point()
+    + labs(title="Merged color, size, and shape guides")
     + guides(
-        colour=guide_legend("title"),
-        size=guide_legend("title"),
-        shape=guide_legend("title"),
+        color=guide_legend("THE GUIDE"),
+        size=guide_legend("THE GUIDE"),
+        shape=guide_legend("THE GUIDE"),
     )
 )
 

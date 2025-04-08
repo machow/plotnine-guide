@@ -27,9 +27,7 @@ This page will cover the basics of specifying mappings and how they interact wit
 
 ```{python}
 from plotnine import *
-from palmerpenguins import load_penguins
-
-penguins = load_penguins()
+from plotnine.data import penguins
 ```
 
 

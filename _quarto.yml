@@ -60,23 +60,23 @@ website:
           contents:
           - guide/themes-basics.qmd
           - guide/themes-premade.qmd
-          - guide/themes-custom.qmd
+        #  - guide/themes-custom.qmd
         # - section: "Scales"
         #   contents:
         #   - guide/scale-x-and-y.qmd
         #   - guide/scale-color-fill.qmd
         #   - guide/scale-misc.qmd
-        - section: "CASE STUDIES"
-          contents:
-          - guide/case-study1.qmd
-          - guide/case-study2.qmd
-          - guide/case-study3.qmd
+        # - section: "CASE STUDIES"
+        #   contents:
+        #   - guide/case-study1.qmd
+        #   - guide/case-study2.qmd
+        #   - guide/case-study3.qmd
         - section: "UNSORTED"
           contents:
           - guide/maps.qmd
-          - guide/shortcuts.qmd
-          - guide/misc.qmd
-          - guide/feature-coverage.qmd
+          #- guide/shortcuts.qmd
+          #- guide/misc.qmd
+          #- guide/feature-coverage.qmd
           - guide/aesthetic-specification.qmd
     - id: dummy
 
