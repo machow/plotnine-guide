@@ -22,10 +22,8 @@ $ conda install -c conda-forge plotnine
 ```
 
 ::: {.callout-note}
-
 For `uv` you need to have a virtual environment, which you can create using `uv venv`.
 Read [more information about installing and using `uv`](https://docs.astral.sh/uv/).
-
 :::
 
 For some functionality you may need to install extra packages.
