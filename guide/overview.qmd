@@ -5,6 +5,17 @@ title: Overview
 This page covers the basics of coding plots with Plotnine.
 We'll focus on producing the plot below, which looks at city (cty) versus highway (hwy) mileage across different years of cars:
 
+
+:::{.callout-note}
+
+If you haven't installed Plotnine, you can do so with:
+
+```bash
+pip install plotnine
+```
+:::
+
+
 ```{python}
 # | code-fold: true
 from plotnine import *

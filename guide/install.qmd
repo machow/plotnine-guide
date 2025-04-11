@@ -1,0 +1,16 @@
+---
+title: Installation
+ipynb-shell-interactivity: all
+---
+
+Plotnine is a Python package for data visualization, based on the grammar of graphics. It implements a wide range of plots---including barcharts, linegraphs, scatterplots, maps, and much more.
+
+
+## Installing
+
+You can install Plotnine using `pip`:
+
+```bash
+pip install plotnine
+```
+

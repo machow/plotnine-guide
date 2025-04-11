@@ -1,0 +1,146 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: Introduction\n",
+        "ipynb-shell-interactivity: all\n",
+        "---\n",
+        "\n",
+        "\n",
+        "Plotnine is a Python package for data visualization, based on the grammar of graphics. It implements a wide range of plots---including barcharts, linegraphs, scatterplots, maps, and much more.\n",
+        "\n",
+        "\n",
+        "## Installing\n",
+        "\n",
+        "```bash\n",
+        "pip install plotnine\n",
+        "```\n",
+        "\n",
+        "## Quickstart\n",
+        "\n",
+        "### Basic plot\n"
+      ],
+      "id": "36d60a65"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from plotnine import ggplot, aes, geom_point, labs\n",
+        "from plotnine.data import penguins\n",
+        "\n",
+        "(\n",
+        "    ggplot(penguins, aes(\"bill_length_mm\", \"bill_depth_mm\", color=\"species\"))\n",
+        "    + geom_point()\n",
+        ")"
+      ],
+      "id": "6a275f9c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Pandas and Polars DataFrames\n",
+        "\n",
+        "Plotnine supports both Pandas and Polars DataFrames.\n"
+      ],
+      "id": "3a2a2fe4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import polars as pl\n",
+        "\n",
+        "pl_penguins = pl.from_pandas(penguins)\n",
+        "\n",
+        "(\n",
+        "    pl_penguins.filter(pl.col(\"species\") == \"Adelie\")\n",
+        "    >> ggplot(aes(\"bill_length_mm\", \"bill_depth_mm\", fill=\"species\"))\n",
+        "    + geom_point()\n",
+        "    + labs(title=\"Adelie penguins\")\n",
+        ")"
+      ],
+      "id": "ac2d27ab",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "* Filters data to keep only rows where species is Adelie.\n",
+        "* Uses `>>` to create the ggplot from the filtered data.\n",
+        "* Adds a title.\n",
+        "\n",
+        "### Theming\n"
+      ],
+      "id": "bcd93bd2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# | layout-nrow: 1\n",
+        "from plotnine import theme_538\n",
+        "\n",
+        "(\n",
+        "    ggplot(penguins, aes(\"bill_length_mm\", \"bill_depth_mm\", color=\"species\"))\n",
+        "    + geom_point()\n",
+        "    + labs(\n",
+        "        title=\"Palmers penguins dataset\",\n",
+        "        subtitle=\"Bill depth vs length\",\n",
+        "        x=\"Bill length (mm)\",\n",
+        "        y=\"Bill depth (mm)\",\n",
+        "    )\n",
+        "    + theme_538()\n",
+        ")"
+      ],
+      "id": "a52ac8e2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Use cases\n",
+        "\n",
+        "There are two nice places to see various uses of plotnine:\n",
+        "\n",
+        "* The [35 entries](https://github.com/has2k1/plotnine/discussions/categories/2024-plotnine-contest?discussions_q=sort%3Atop) from the 2024 Plotnine Contest.\n",
+        "* The [Plotnine gallery](https://plotnine.org/gallery/).\n",
+        "\n",
+        "Here are some notable entries in the Plotnine competition:\n",
+        "\n",
+        "* [Coal Production area chart](https://github.com/has2k1/plotnine/discussions/836)\n",
+        "* [Creating a Plotnine Mondrian](https://github.com/has2k1/plotnine/discussions/848)\n",
+        "* [Reproducing Rise of AI over 8 decades](https://github.com/has2k1/plotnine/discussions/827)\n",
+        "\n",
+        "\n",
+        "## Next steps\n",
+        "\n",
+        "* next page (overview)\n",
+        "* gallery\n",
+        "* plotnine competition\n",
+        "* plotnine reference\n",
+        "* plotnine discussions"
+      ],
+      "id": "5d6fa62f"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

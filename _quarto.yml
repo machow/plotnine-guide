@@ -30,7 +30,7 @@ website:
   title: Plotnine
   navbar:
     left:
-      - file: guide/intro.qmd
+      - file: guide/install.qmd
         text: "Guide"
       - text: "Reference"
         href: https://plotnine.org/reference/
@@ -41,7 +41,7 @@ website:
   sidebar:
     - title: Guide
       contents:
-        - guide/intro.qmd
+        - guide/install.qmd
         - guide/overview.qmd
         - section: "BASICS"
           contents:
