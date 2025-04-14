@@ -197,14 +197,16 @@ header#title-block-header {
 }
 
 .button-primary {
-    @apply tw:py-4 tw:px-5 tw:bg-green-600 tw:text-white tw:rounded-full tw:font-semibold;
+    @apply tw:py-3 tw:px-4 tw:md:py-4 tw:md:px-5;
+    @apply tw:bg-green-600 tw:text-white tw:rounded-full tw:font-semibold;
     @apply tw:border tw:border-2 tw:border-green-600;
     @apply tw:no-underline;
     @apply tw:hover:bg-green-500 tw:hover:border-green-500;
 }
 
 .button-secondary {
-    @apply tw:py-4 tw:px-5 tw:bg-plum-950 tw:text-white tw:rounded-full tw:font-semibold;
+    @apply tw:py-3 tw:px-4 tw:md:py-4 tw:md:px-5;
+    @apply tw:bg-plum-950 tw:text-white tw:rounded-full tw:font-semibold;
     @apply tw:border tw:border-2 tw:border-white;
     @apply tw:no-underline;
     @apply tw:hover:bg-plum-900;
@@ -212,7 +214,7 @@ header#title-block-header {
 
 
 h3 {
-    @apply tw:tracking-tight tw:font-semibold tw:leading-[0.9] tw:text-[1.5rem] tw:md:text-[2rem] tw:lg:text-[2.5rem] tw:mb-4;
+    @apply tw:tracking-tight tw:font-semibold tw:leading-[0.9] tw:text-[1.5rem] tw:md:text-[2rem] tw:lg:text-[2.5rem];
 }
 
 h4 {
