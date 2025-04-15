@@ -3,6 +3,8 @@ title: Annotations
 jupyter: python3
 ---
 
+
+
 This page covers how to describe or emphasize data with annotations in plots. This includes labelling points, adding arrows, and highlighting areas of interest. It also describes how to tackle the common issue of overlapping text labels.
 
 :::{.callout-tip title="You will learn"}
