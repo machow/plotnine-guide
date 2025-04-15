@@ -44,8 +44,7 @@ from plotnine.data import mpg
 ggplot(data=mpg)
 ```
 
-
-## Mapping columns with `aes()`
+## `aes()` mapping
 
 The `aes()` function maps columns of data onto graphical attributes--such as colors, shapes, or x and y coordinates. (The name `aes()` is short for aesthetic.)
 
@@ -55,8 +54,7 @@ We can map the `cty` and `hwy` columns to the x- and y- coordinates in the plot 
 ggplot(data=mpg, mapping = aes(x = "cty", y = "hwy"))
 ```
 
-
-## Addings layers with `geom_*()`
+## `geom_*()` objects
 
 Functions starting with `geom_*()` specify geometric objects (geoms) to add to the plot.
 Geoms determine *how* to turn mapped data into visual elements--such as points, lines, or even boxplots.
@@ -73,8 +71,7 @@ Here is how we can map the `cty` and `hwy` columns to points with a smooth trend
 )
 ```
 
-
-## Translating values with `scale_*()`
+## `scale_*()` translations
 
 The `scale_*()` functions customize the styling of visual elements from a data mapping.
 This includes color palettes, axis spacing (e.g. log scale), axis limits, and more.
@@ -91,8 +88,7 @@ If we want to use the `plasma` palette for color, we can use the code below:
 )
 ```
 
-
-## Adjusting values with `position_*()`
+## `position_*()` adjustments
 
 The `position_*()` functions adjust the position of elements in the plot.
 For example, by adding a small amount of random noise (jitter) to the x- and y- coordinates of points, so they don't cover each other.
@@ -105,8 +101,7 @@ For example, by adding a small amount of random noise (jitter) to the x- and y- 
 )
 ```
 
-
-## Creating subplots with `facet_*()`
+## `facet_*()` subplots
 
 Facets split a plot into multiple subplots.
 The two facet functions, `facet_grid()` and `facet_wrap()`, determine how to split the data.
@@ -121,8 +116,7 @@ For example, we can create a grid of plots based on the `year` and `drv` columns
 )
 ```
 
-
-## Projecting data with `coord_*()`
+## `coord_*()` projections
 
 The `coord_*()` functions specify the coordinate system of the plot.
 Currently, only a few coordinate systems are available.
@@ -138,8 +132,7 @@ The code below uses `coord_fixed()` to ensure that the x- and y- axes have the s
 )
 ```
 
-
-## Styling with `theme_*()`
+## `theme_*()` styling
 
 Themes control the style of all aspects of the plot that are not decided by the data.
 This includes the position of the legend, the color of the axes, the size of the text, and much more.
