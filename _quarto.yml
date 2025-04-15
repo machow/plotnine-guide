@@ -43,7 +43,7 @@ website:
       contents:
         - guide/install.qmd
         - guide/overview.qmd
-        - section: "BASICS"
+        - section: "Basics"
           contents:
           - guide/aesthetic-mappings.qmd
           - guide/geometric-objects.qmd
@@ -51,12 +51,12 @@ website:
           - guide/position-adjustments.qmd
           - guide/facets.qmd
           - guide/coordinate-systems.qmd
-        - section: "POLISHING"
+        - section: "Polishing"
           contents:
           - guide/export.qmd
           - guide/labels.qmd
           - guide/annotations.qmd
-        - section: "THEMING"
+        - section: "Theming"
           contents:
           - guide/themes-basics.qmd
           - guide/themes-premade.qmd
@@ -71,7 +71,7 @@ website:
         #   - guide/case-study1.qmd
         #   - guide/case-study2.qmd
         #   - guide/case-study3.qmd
-        - section: "UNSORTED"
+        - section: "Miscellaneous"
           contents:
           - guide/maps.qmd
           #- guide/shortcuts.qmd

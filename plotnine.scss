@@ -137,6 +137,9 @@ $signature-border-color: $primary;
   }
 }
 
+.sidebar-item-container .text-start {
+  text-transform: uppercase;
+}
 
 .quarto-title-block, .quarto-title, h1.title {
   margin-left: auto !important;

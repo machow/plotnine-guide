@@ -3,14 +3,69 @@ title: Installation
 ipynb-shell-interactivity: all
 ---
 
-Plotnine is a Python package for data visualization, based on the grammar of graphics. It implements a wide range of plots---including barcharts, linegraphs, scatterplots, maps, and much more.
+For most users, we recommend installing the official release of Plotnine.
 
 
-## Installing
+### Installing the official release
 
-You can install Plotnine using `pip`:
+The official release can be installed from the command line using either `pip`, `uv`, or `conda`:
 
 ```bash
-pip install plotnine
+# Using pip:
+$ pip install plotnine
+
+# Using uv:
+$ uv pip install plotnine
+
+# Using conda:
+$ conda install -c conda-forge plotnine
 ```
 
+::: {.callout-note}
+For `uv` you need to have a virtual environment, which you can create using `uv venv`.
+Read [more information about installing and using `uv`](https://docs.astral.sh/uv/).
+:::
+
+For some functionality you may need to install extra packages.
+Those packages include:
+
+- [adjustText](https://github.com/Phlya/adjustText): For automatic label placement
+- [geopandas](https://geopandas.org/en/stable/): For working with for geographic data
+- [scikit-learn](http://scikit-learn.com): For Gaussian Process smoothing
+- [scikit-misc](https://has2k1.github.io/scikit-misc/): For LOESS smoothing
+
+These four packages can be installed in one go by specifying `'plotnine[extra]'` instead of `plotnine`:
+
+```bash
+# Using pip:
+$ pip install 'plotnine[extra]'
+
+# Using uv:
+$ uv pip install 'plotnine[extra]'
+
+# Using conda:
+$ conda install -c conda-forge 'plotnine[extra]'
+```
+
+
+### Installing the development version
+
+Plotnine is under active development.
+It may happen that a bugfix or new feature is not yet available in the official release. 
+In those cases you can install the latest development version from GitHub:
+
+```bash
+# Using pip:
+$ pip install git+https://github.com/has2k1/plotnine.git
+
+# Using uv:
+$ uv pip install git+https://github.com/has2k1/plotnine.git
+```
+
+To contribute to Plotnine's source code, you have to clone the [Plotnine source repository](https://github.com/has2k1/plotnine) and install the package in development mode:
+
+```bash
+$ git clone https://github.com/has2k1/plotnine.git
+$ cd plotnine
+$ pip install -e .
+```

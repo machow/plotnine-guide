@@ -1,11 +1,14 @@
-<div class="tw:mx-auto tw:max-w-7xl tw:px-4 tw:sm:px-8 tw:pt-16">
+<div class="tw:mx-auto tw:max-w-7xl tw:px-4 tw:sm:px-8 tw:pt-8 tw:md:pt-16">
     
     
 
         
     <div class="tw:md:flex tw:md:flex-row">
-        <div class="tw:md:w-3/5 -tw:border">
-            <h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:mr-[0.2em] tw:text-[1.05em] tw:icon-[mdi--language-python]"></span> A grammar of graphics for Python.</h3>
+        <div class="tw:md:w-3/5 tw:pb-4 tw:@container">
+            <div class="tw:flex tw:items-center tw:mb-4 tw:md:mb-6 tw:gap-2 tw:md:gap-3">
+                <div class="tw:flex-none"><h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:text-[1.05em] tw:icon-[mdi--language-python]"></span></h3></div>
+                <div class="tw:flex-auto"><h3> A grammar of graphics for Python.</h3></div>
+            </div>
             <p>
                 Plotnine is a data visualization package for Python based on the grammar of graphics, a coherent system for describing and building graphs. The syntax is similar to <a href="https://ggplot2.tidyverse.org">ggplot2</a>, a widely successful R package.</p><p>Let&rsquo;s explore Plotnine&rsquo;s features and walk through a typical workflow by visualizing Anscombe&rsquo;s Quartet&mdash;four small datasets with different distributions but nearly identical descriptive statistics. They&rsquo;re perhaps the best argument for visualizing data.</p><p>You can see the final result <span class="tw:md:hidden">below</span><span class="tw:hidden tw:md:inline">on the right</span>.</p><p>
             </p>
@@ -26,13 +29,16 @@
 
         
     <div class="tw:md:flex tw:md:flex-row tw:md:min-h-[50vh]">
-        <div class="tw:md:w-3/5 -tw:border">
-            <h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:mr-[0.2em] tw:text-[1.05em] tw:icon-[mdi--stopwatch-outline]"></span> Get started quickly.</h3>
+        <div class="tw:md:w-3/5 tw:pb-4 tw:@container">
+            <div class="tw:flex tw:items-center tw:mb-4 tw:md:mb-6 tw:gap-2 tw:md:gap-3">
+                <div class="tw:flex-none"><h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:text-[1.05em] tw:icon-[mdi--stopwatch-outline]"></span></h3></div>
+                <div class="tw:flex-auto"><h3> Get started quickly.</h3></div>
+            </div>
             <p>
                 With Plotnine you can create ad-hoc plots with just a single line of code.</p><p>
             </p>
             
-            <div class="tw:bg-blue-950 tw:rounded-xl tw:p-3 tw:mb-4">
+            <div class="tw:bg-blue-950 tw:rounded-xl tw:overflow-x-hidden tw:p-3 tw:mb-4 tw:text-[0.5rem] tw:@min-[345px]:tw:text-[0.55rem] tw:@min-[357px]:text-[0.58rem] tw:@min-[400px]:text-[0.66rem]  tw:@min-[430px]:text-[0.7rem]   tw:@min-[490px]:text-[0.8rem]   tw:@min-[560px]:text-[0.9rem]   tw:@min-[610px]:text-[1rem]">
                 
                 <div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">plotnine</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span> 
 <span class="kn">from</span><span class="w"> </span><span class="nn">plotnine.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">anscombes_quartet</span> 
@@ -66,13 +72,16 @@
 
         
     <div class="tw:md:flex tw:md:flex-row tw:md:min-h-[50vh]">
-        <div class="tw:md:w-3/5 -tw:border">
-            <h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:mr-[0.2em] tw:text-[1.05em] tw:icon-[mdi--auto-awesome-outline]"></span> Sensible defaults.</h3>
+        <div class="tw:md:w-3/5 tw:pb-4 tw:@container">
+            <div class="tw:flex tw:items-center tw:mb-4 tw:md:mb-6 tw:gap-2 tw:md:gap-3">
+                <div class="tw:flex-none"><h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:text-[1.05em] tw:icon-[mdi--auto-awesome-outline]"></span></h3></div>
+                <div class="tw:flex-auto"><h3> Sensible defaults.</h3></div>
+            </div>
             <p>
                 Legends, labels, breaks, color palettes. Many elements are added automatically based on the data.</p><p>
             </p>
             
-            <div class="tw:bg-blue-950 tw:rounded-xl tw:p-3 tw:mb-4">
+            <div class="tw:bg-blue-950 tw:rounded-xl tw:overflow-x-hidden tw:p-3 tw:mb-4 tw:text-[0.5rem] tw:@min-[345px]:tw:text-[0.55rem] tw:@min-[357px]:text-[0.58rem] tw:@min-[400px]:text-[0.66rem]  tw:@min-[430px]:text-[0.7rem]   tw:@min-[490px]:text-[0.8rem]   tw:@min-[560px]:text-[0.9rem]   tw:@min-[610px]:text-[1rem]">
                 
                 <div class="highlight"><pre><span></span><span class="tw:opacity-50"><span class="p">(</span>
     <span class="n">ggplot</span><span class="p">(</span><span class="n">anscombes_quartet</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span></span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;dataset&quot;</span><span class="tw:opacity-50"><span class="p">))</span>
@@ -106,13 +115,16 @@
 
         
     <div class="tw:md:flex tw:md:flex-row tw:md:min-h-[50vh]">
-        <div class="tw:md:w-3/5 -tw:border">
-            <h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:mr-[0.2em] tw:text-[1.05em] tw:icon-[mdi--view-grid-outline]"></span> Subset declaratively.</h3>
+        <div class="tw:md:w-3/5 tw:pb-4 tw:@container">
+            <div class="tw:flex tw:items-center tw:mb-4 tw:md:mb-6 tw:gap-2 tw:md:gap-3">
+                <div class="tw:flex-none"><h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:text-[1.05em] tw:icon-[mdi--view-grid-outline]"></span></h3></div>
+                <div class="tw:flex-auto"><h3> Subset declaratively.</h3></div>
+            </div>
             <p>
                 Any data visualization can be repeated across multiple panels without writing a for loop.</p><p>
             </p>
             
-            <div class="tw:bg-blue-950 tw:rounded-xl tw:p-3 tw:mb-4">
+            <div class="tw:bg-blue-950 tw:rounded-xl tw:overflow-x-hidden tw:p-3 tw:mb-4 tw:text-[0.5rem] tw:@min-[345px]:tw:text-[0.55rem] tw:@min-[357px]:text-[0.58rem] tw:@min-[400px]:text-[0.66rem]  tw:@min-[430px]:text-[0.7rem]   tw:@min-[490px]:text-[0.8rem]   tw:@min-[560px]:text-[0.9rem]   tw:@min-[610px]:text-[1rem]">
                 
                 <div class="highlight"><pre><span></span><span class="tw:opacity-50"><span class="p">(</span>
     <span class="n">ggplot</span><span class="p">(</span><span class="n">anscombes_quartet</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;dataset&quot;</span><span class="p">))</span>
@@ -147,13 +159,16 @@
 
         
     <div class="tw:md:flex tw:md:flex-row tw:md:min-h-[50vh]">
-        <div class="tw:md:w-3/5 -tw:border">
-            <h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:mr-[0.2em] tw:text-[1.05em] tw:icon-[mdi--layers-outline]"></span> Visualizations have layers.</h3>
+        <div class="tw:md:w-3/5 tw:pb-4 tw:@container">
+            <div class="tw:flex tw:items-center tw:mb-4 tw:md:mb-6 tw:gap-2 tw:md:gap-3">
+                <div class="tw:flex-none"><h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:text-[1.05em] tw:icon-[mdi--layers-outline]"></span></h3></div>
+                <div class="tw:flex-auto"><h3> Visualizations have layers.</h3></div>
+            </div>
             <p>
                 The data and the mapping of columns are inherited, but can be changed per layer.</p><p>
             </p>
             
-            <div class="tw:bg-blue-950 tw:rounded-xl tw:p-3 tw:mb-4">
+            <div class="tw:bg-blue-950 tw:rounded-xl tw:overflow-x-hidden tw:p-3 tw:mb-4 tw:text-[0.5rem] tw:@min-[345px]:tw:text-[0.55rem] tw:@min-[357px]:text-[0.58rem] tw:@min-[400px]:text-[0.66rem]  tw:@min-[430px]:text-[0.7rem]   tw:@min-[490px]:text-[0.8rem]   tw:@min-[560px]:text-[0.9rem]   tw:@min-[610px]:text-[1rem]">
                 
                 <div class="highlight"><pre><span></span><span class="tw:opacity-50"><span class="p">(</span>
     <span class="n">ggplot</span><span class="p">(</span><span class="n">anscombes_quartet</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;dataset&quot;</span><span class="p">))</span>
@@ -189,13 +204,16 @@
 
         
     <div class="tw:md:flex tw:md:flex-row tw:md:min-h-[50vh]">
-        <div class="tw:md:w-3/5 -tw:border">
-            <h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:mr-[0.2em] tw:text-[1.05em] tw:icon-[mdi--tune]"></span> Override any default.</h3>
+        <div class="tw:md:w-3/5 tw:pb-4 tw:@container">
+            <div class="tw:flex tw:items-center tw:mb-4 tw:md:mb-6 tw:gap-2 tw:md:gap-3">
+                <div class="tw:flex-none"><h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:text-[1.05em] tw:icon-[mdi--tune]"></span></h3></div>
+                <div class="tw:flex-auto"><h3> Override any default.</h3></div>
+            </div>
             <p>
                 Anything that you see, can be adjusted.</p><p>
             </p>
             
-            <div class="tw:bg-blue-950 tw:rounded-xl tw:p-3 tw:mb-4">
+            <div class="tw:bg-blue-950 tw:rounded-xl tw:overflow-x-hidden tw:p-3 tw:mb-4 tw:text-[0.5rem] tw:@min-[345px]:tw:text-[0.55rem] tw:@min-[357px]:text-[0.58rem] tw:@min-[400px]:text-[0.66rem]  tw:@min-[430px]:text-[0.7rem]   tw:@min-[490px]:text-[0.8rem]   tw:@min-[560px]:text-[0.9rem]   tw:@min-[610px]:text-[1rem]">
                 
                 <div class="highlight"><pre><span></span><span class="tw:opacity-50"><span class="p">(</span>
     <span class="n">ggplot</span><span class="p">(</span><span class="n">anscombes_quartet</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">))</span>
@@ -235,13 +253,16 @@
 
         
     <div class="tw:md:flex tw:md:flex-row">
-        <div class="tw:md:w-3/5 -tw:border">
-            <h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:mr-[0.2em] tw:text-[1.05em] tw:icon-[mdi--hexagon-slice-5]"></span> Plotnine goes to eleven.</h3>
+        <div class="tw:md:w-3/5 tw:pb-4 tw:@container">
+            <div class="tw:flex tw:items-center tw:mb-4 tw:md:mb-6 tw:gap-2 tw:md:gap-3">
+                <div class="tw:flex-none"><h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:text-[1.05em] tw:icon-[mdi--hexagon-slice-5]"></span></h3></div>
+                <div class="tw:flex-auto"><h3> Plotnine goes to eleven.</h3></div>
+            </div>
             <p>
                 Customize the theme to match your personal style or your organization&rsquo;s brand.</p><p>
             </p>
             
-            <div class="tw:bg-blue-950 tw:rounded-xl tw:p-3 tw:mb-4">
+            <div class="tw:bg-blue-950 tw:rounded-xl tw:overflow-x-hidden tw:p-3 tw:mb-4 tw:text-[0.5rem] tw:@min-[345px]:tw:text-[0.55rem] tw:@min-[357px]:text-[0.58rem] tw:@min-[400px]:text-[0.66rem]  tw:@min-[430px]:text-[0.7rem]   tw:@min-[490px]:text-[0.8rem]   tw:@min-[560px]:text-[0.9rem]   tw:@min-[610px]:text-[1rem]">
                 
                 <div class="highlight"><pre><span></span><span class="tw:opacity-50"><span class="p">(</span>
     <span class="n">ggplot</span><span class="p">(</span><span class="n">anscombes_quartet</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">))</span>
