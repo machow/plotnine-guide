@@ -23,8 +23,11 @@ from plotnine.data import mpg
 ```
 
 :::{.callout-note}
-We assume that you have Plotnine installed.
-If you haven't, please consult the [installation](/guide/install.qmd) for more information.
+If you haven't [installed Plotnine](./install.qmd), you can do so with:
+
+```bash
+pip install plotnine
+```
 :::
 
 
