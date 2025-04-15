@@ -41,10 +41,8 @@ website:
   sidebar:
     - title: Guide
       contents:
-        - section: "Start"
-          contents:
-          - guide/install.qmd
-          - guide/overview.qmd
+        - guide/install.qmd
+        - guide/overview.qmd
         - section: "Basics"
           contents:
           - guide/aesthetic-mappings.qmd
