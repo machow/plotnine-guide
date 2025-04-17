@@ -44,7 +44,7 @@ from plotnine.data import mpg
 ggplot(data=mpg)
 ```
 
-## `aes()` mapping
+## `aes()`{.qd-no-link} mapping
 
 The `aes()` function maps columns of data onto graphical attributes--such as colors, shapes, or x and y coordinates. (The name `aes()` is short for aesthetic.)
 

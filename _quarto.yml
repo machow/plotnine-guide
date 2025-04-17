@@ -12,9 +12,17 @@ project:
     - "cp -r demo _site/"
     - "sed -e /bootstrap.*css/d -i.bak _site/index.html"
 
+filters:
+  - interlinks
+
 execute:
   ipynb-shell-interactivity: all
   
+interlinks:
+  autolink: true
+  aliases:
+    plotnine: null
+
 format:
   html:
     theme:
