@@ -20,6 +20,10 @@ render:
 lab:
     uvx --from jupyter-core jupyter lab
 
+# Update quarto extensions
+extensions:
+  uv run quarto add machow/quartodoc@feat-interlinks-autolink
+
 # When you're down
 dance:
     open "https://www.youtube.com/watch?v=2Abk1jAONjw&t=56s"
