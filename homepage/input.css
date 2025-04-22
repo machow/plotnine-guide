@@ -164,6 +164,7 @@ header#title-block-header {
     @apply tw:hidden;
     @apply tw:md:block;
     @apply tw:h-full; 
+    @apply tw:w-auto;
 
     @apply tw:opacity-0;
     @apply tw:group-hover:opacity-100;
@@ -186,7 +187,7 @@ header#title-block-header {
 
 .item-highlight img {
     @apply tw:object-cover tw:object-left-top;
-    @apply tw:h-full tw:w-full; 
+    @apply tw:h-full;
 }
 
 #banner {

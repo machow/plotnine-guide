@@ -10,7 +10,7 @@
 items:
   - id: sneak
     icon: mdi--language-python
-    title: A grammar of graphics for Python.
+    title: A grammar of graphics for Python
     skip_code: true
     arrow: false
     text: |
@@ -20,7 +20,7 @@ items:
 
   - id: start 
     icon: mdi--stopwatch-outline
-    title: Get started quickly.
+    title: Get started quickly
     arrow: true
     text: |
       With Plotnine you can create ad-hoc plots with just a single line of code.
@@ -30,7 +30,7 @@ items:
 
   - id: auto
     icon: mdi--auto-awesome-outline
-    title: Sensible defaults.
+    title: Sensible defaults
     arrow: true
     text: |
       Legends, labels, breaks, color palettes. Many elements are added automatically based on the data.
@@ -40,7 +40,7 @@ items:
 
   - id: facet
     icon: mdi--view-grid-outline
-    title: Subset declaratively.
+    title: Subset declaratively
     arrow: true
     text: |
       Any data visualization can be repeated across multiple panels without writing a for loop.
@@ -49,7 +49,7 @@ items:
 
   - id: layer
     icon: mdi--layers-outline
-    title: Visualizations have layers.
+    title: Visualizations have layers
     arrow: true
     text: |
       The data and the mapping of columns are inherited, but can be changed per layer.
@@ -59,7 +59,7 @@ items:
 
   - id: adjust
     icon: mdi--tune
-    title: Override any default.
+    title: Override any default
     arrow: true
     text: |
       Anything that you see, can be adjusted.
@@ -68,13 +68,12 @@ items:
 
   - id: final
     icon: mdi--hexagon-slice-5
-    title: Plotnine goes to eleven. 
+    title: Plotnine goes to eleven
     arrow: false
     text: |
       Customize the theme to match your personal style or your organization's brand.
     post: |
       Curious how you can start creating these kinds of visualizations with your own data? In the next section we cover how to install Plotnine.
-
 
 # mdi--layers-outline
 # mdi--set-square

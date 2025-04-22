@@ -3,7 +3,7 @@
     {% for item in items %}
 
         {% set arrow = item.arrow and not loop.last %}
-    <div class="tw:md:flex tw:md:flex-row{% if arrow %} tw:md:min-h-[50vh]{% endif%}">
+    <div class="tw:md:flex tw:md:flex-row{% if arrow %} tw:md:min-h-[40vh]{% endif%}">
         <div class="tw:md:w-3/5 tw:pb-4 tw:@container">
             <div class="tw:flex tw:items-center tw:mb-4 tw:md:mb-6 tw:gap-2 tw:md:gap-3">
                 <div class="tw:flex-none"><h3><span class="tw:text-plum-800 tw:-mb-[0.2em] tw:text-[1.05em] tw:icon-[{{ item.icon }}]"></span></h3></div>
