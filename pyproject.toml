@@ -15,4 +15,5 @@ dependencies = [
     "polars>=1.24.0",
     "pyarrow>=19.0.1",
     "pygments>=2.19.1",
+    "quartodoc>=0.9.1",
 ]
