@@ -95,6 +95,8 @@ header#title-block-header {
 }
 
 .banner-thumbnail img {
+    image-rendering: smooth;
+
     @apply tw:object-cover;
     /* @apply tw:rounded-md; */
     @apply tw:h-full tw:w-full;
@@ -174,6 +176,25 @@ header#title-block-header {
     @apply tw:pointer-events-none;
 }
 
+
+.banner-thumbnail-hover {
+    @apply tw:border-green-500;
+}
+
+.banner-thumbnail-img-hover {
+    @apply tw:grayscale-0!;
+    @apply tw:opacity-100!;
+}
+
+.item-highlight-hover {
+    @apply tw:opacity-100!;
+}
+
+.item-highlight-div-hover {
+    @apply tw:-rotate-y-12!;
+}
+
+
 .item-highlight div {
     @apply tw:bg-white tw:rounded-xl;
     @apply tw:border-3 tw:border-green-500;
@@ -188,9 +209,6 @@ header#title-block-header {
 .item-highlight img {
     @apply tw:object-cover tw:object-left-top;
     @apply tw:h-full;
-}
-
-#banner {
 }
 
 .white-border {
