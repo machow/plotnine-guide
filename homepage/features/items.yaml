@@ -15,8 +15,7 @@ items:
     arrow: false
     text: |
       Plotnine is a data visualization package for Python based on the grammar of graphics, a coherent system for describing and building graphs. The syntax is similar to <a href="https://ggplot2.tidyverse.org">ggplot2</a>, a widely successful R package.
-      Let's explore Plotnine's features and walk through a typical workflow by visualizing Anscombe's Quartet&mdash;four small datasets with different distributions but nearly identical descriptive statistics. They're perhaps the best argument for visualizing data.
-      You can see the final result <span class="tw:md:hidden">below</span><span class="tw:hidden tw:md:inline">on the right</span>.
+      Let's explore Plotnine's features and walk through a typical workflow by visualizing Anscombe's Quartet&mdash;four small datasets with different distributions but nearly identical descriptive statistics. They're perhaps the best argument for visualizing data. You can see the final result <span class="tw:md:hidden">below</span><span class="tw:hidden tw:md:inline">on the right</span>.
 
   - id: start 
     icon: mdi--stopwatch-outline

@@ -85,13 +85,17 @@ header#title-block-header {
 
 .banner-thumbnail {
     @apply tw:h-full;
-    @apply tw:bg-green-50/25 tw:rounded-md;
-    @apply tw:border tw:border-2 tw:border-green-700;
+    @apply tw:bg-white tw:rounded-md;
+    @apply tw:border-2 tw:border-green-900;
     @apply tw:relative;
     @apply tw:overflow-hidden;
+    @apply tw:md:shadow-[0px_0px_2px_2px_rgba(0,0,0,0)];
+
+    @apply tw:md:duration-300 tw:md:ease-in-out;
 
     @apply tw:group-hover:border-green-500;
-    @apply tw:duration-300 tw:ease-in-out;
+    @apply tw:md:group-hover:-translate-1;
+    @apply tw:md:group-hover:shadow-[4px_4px_2px_2px_rgba(0,0,0,0.25)];
 }
 
 .banner-thumbnail img {
@@ -102,11 +106,10 @@ header#title-block-header {
     @apply tw:h-full tw:w-full;
     @apply tw:absolute;
     @apply tw:inset-0;
-
-    @apply tw:opacity-50 tw:grayscale-100;
-    @apply tw:group-hover:opacity-100 tw:group-hover:grayscale-0 tw:brightness-100;
-
     @apply tw:duration-300 tw:ease-in-out;
+
+    /* @apply tw:grayscale-50;
+    @apply tw:group-hover:grayscale-0; */
 }
 
 .banner-border-corner {
@@ -178,12 +181,13 @@ header#title-block-header {
 
 
 .banner-thumbnail-hover {
-    @apply tw:border-green-500;
+    @apply tw:md:border-green-500!;
+    @apply tw:md:-translate-1!;
+    @apply tw:md:shadow-[4px_4px_2px_2px_rgba(0,0,0,0.25)]!;
 }
 
 .banner-thumbnail-img-hover {
     @apply tw:grayscale-0!;
-    @apply tw:opacity-100!;
 }
 
 .item-highlight-hover {

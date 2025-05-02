@@ -19,3 +19,10 @@ for file in homepage/features/code/*.py; do
     sed 's|"err">!!!</span>|"tw:opacity-50">|g;s|<span class="err">???||g;' | \
     sed -re 's^(ggplot|aes|geom_smooth|geom_point|facet_wrap|scale_y_continuous|coord_fixed|labs|theme_tufte|theme)^<a style="color: inherit; text-underline-offset: 0.3em;" href="/reference/\1.html">\1</a>^g' > homepage/features/html/$(basename $file).html
 done
+
+# Create thumbnails
+for img in homepage/banner/img/highlights/*.png; do
+    filename="homepage/banner/img/thumbnails/$(basename $img)"
+    echo Processing $filename...;
+    magick "$img" -resize '228x140^>' $filename
+done

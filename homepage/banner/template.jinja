@@ -3,6 +3,7 @@
 <script>
 let pastIndices = [];
 let timerId = null;
+let delayId = null;
 
 let isMouseOutside = true;
 let isBannerVisible = false;
@@ -15,7 +16,7 @@ function highlightItem(item, highlight=true) {
     const highlightDivElement = item.querySelector('.item-highlight div');
 
     if (highlight) {
-        if (timerId !== null) {
+        if (isScreenWide && isBannerVisible && isMouseOutside && (timerId !== null)) {
             thumbnailElement.classList.add('banner-thumbnail-hover');
             imageElement.classList.add('banner-thumbnail-img-hover');
             highlightElement.classList.add('item-highlight-hover');
@@ -27,7 +28,6 @@ function highlightItem(item, highlight=true) {
         highlightElement.classList.remove('item-highlight-hover');
         highlightDivElement.classList.remove('item-highlight-div-hover');
     }
-
 }
 
 function visitItem(i) {
@@ -37,7 +37,6 @@ function visitItem(i) {
     if (pastIndices.length > 5) {
         pastIndices.shift()
     }
-    console.log(pastIndices);
 }
 
 function highlightRandomItem() {
@@ -58,12 +57,12 @@ function highlightRandomItem() {
     visitItem(randomIndex);
 
     const selectedItem = bannerItems[randomIndex];
-    setTimeout(highlightItem, 1000, selectedItem, true);
+    clearTimeout(delayId);
+    delayId = setTimeout(highlightItem, 1000, selectedItem, true);
 }
 
 function startRandomHighlighting() {
     if (timerId !== null) return;
-    console.log("Start!")
 
     highlightRandomItem();
     timerId = setInterval(highlightRandomItem, 5000);
@@ -71,8 +70,6 @@ function startRandomHighlighting() {
 
 function stopRandomHighlighting() {
     if (timerId === null) return;
-
-    console.log("Stop!")
 
     clearInterval(timerId);
     timerId = null;
@@ -88,14 +85,11 @@ function updateAnimation() {
     console.log({isScreenWide, isBannerVisible, isMouseOutside});
 
     if (isScreenWide && isBannerVisible && isMouseOutside) {
-        console.log("Maybe start")
         startRandomHighlighting();
     } else {
-        console.log("Maybe stop")
         stopRandomHighlighting();
     }
 }
-
 
 function handleBreakpoint(e) {
     isScreenWide = e.matches;
@@ -109,7 +103,6 @@ function handleVisibilityChange(entries, observer) {
     updateAnimation();
 }
 
-// Call the function every second once the document is ready
 document.addEventListener('DOMContentLoaded', () => {
     const mediaQuery = window.matchMedia("(min-width: 768px)");
     mediaQuery.addEventListener("change", handleBreakpoint);
@@ -169,14 +162,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         ">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/{{ item.img }}">
+                                <img src="homepage/banner/img/highlights/{{ item.img }}">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/{{ item.img }}" class="{% if item.position is defined %}tw:object-{{ item.position }}{% else %}tw:object-left-top{% endif %}">
+                                <img src="homepage/banner/img/thumbnails/{{ item.img }}" class="{% if item.position is defined %}tw:object-{{ item.position }}{% else %}tw:object-left-top{% endif %}">
                             </div>
                         </div>
                     </div>

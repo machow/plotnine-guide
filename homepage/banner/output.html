@@ -3,6 +3,7 @@
 <script>
 let pastIndices = [];
 let timerId = null;
+let delayId = null;
 
 let isMouseOutside = true;
 let isBannerVisible = false;
@@ -15,7 +16,7 @@ function highlightItem(item, highlight=true) {
     const highlightDivElement = item.querySelector('.item-highlight div');
 
     if (highlight) {
-        if (timerId !== null) {
+        if (isScreenWide && isBannerVisible && isMouseOutside && (timerId !== null)) {
             thumbnailElement.classList.add('banner-thumbnail-hover');
             imageElement.classList.add('banner-thumbnail-img-hover');
             highlightElement.classList.add('item-highlight-hover');
@@ -27,7 +28,6 @@ function highlightItem(item, highlight=true) {
         highlightElement.classList.remove('item-highlight-hover');
         highlightDivElement.classList.remove('item-highlight-div-hover');
     }
-
 }
 
 function visitItem(i) {
@@ -37,7 +37,6 @@ function visitItem(i) {
     if (pastIndices.length > 5) {
         pastIndices.shift()
     }
-    console.log(pastIndices);
 }
 
 function highlightRandomItem() {
@@ -58,12 +57,12 @@ function highlightRandomItem() {
     visitItem(randomIndex);
 
     const selectedItem = bannerItems[randomIndex];
-    setTimeout(highlightItem, 1000, selectedItem, true);
+    clearTimeout(delayId);
+    delayId = setTimeout(highlightItem, 1000, selectedItem, true);
 }
 
 function startRandomHighlighting() {
     if (timerId !== null) return;
-    console.log("Start!")
 
     highlightRandomItem();
     timerId = setInterval(highlightRandomItem, 5000);
@@ -71,8 +70,6 @@ function startRandomHighlighting() {
 
 function stopRandomHighlighting() {
     if (timerId === null) return;
-
-    console.log("Stop!")
 
     clearInterval(timerId);
     timerId = null;
@@ -88,14 +85,11 @@ function updateAnimation() {
     console.log({isScreenWide, isBannerVisible, isMouseOutside});
 
     if (isScreenWide && isBannerVisible && isMouseOutside) {
-        console.log("Maybe start")
         startRandomHighlighting();
     } else {
-        console.log("Maybe stop")
         stopRandomHighlighting();
     }
 }
-
 
 function handleBreakpoint(e) {
     isScreenWide = e.matches;
@@ -109,7 +103,6 @@ function handleVisibilityChange(entries, observer) {
     updateAnimation();
 }
 
-// Call the function every second once the document is ready
 document.addEventListener('DOMContentLoaded', () => {
     const mediaQuery = window.matchMedia("(min-width: 768px)");
     mediaQuery.addEventListener("change", handleBreakpoint);
@@ -163,14 +156,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="gallery/anscombes-quartet.html" onmouseenter="visitItem(0);" class="banner-item tw:group tw:xs:block! tw:sm:block! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/anscombes-quartet.png">
+                                <img src="homepage/banner/img/highlights/anscombes-quartet-small.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/anscombes-quartet.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/anscombes-quartet-small.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -179,14 +172,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(1);" class="banner-item tw:group tw:xs:block! tw:sm:block! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/clock.png">
+                                <img src="homepage/banner/img/highlights/clock.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/clock.png" class="tw:object-top">
+                                <img src="homepage/banner/img/thumbnails/clock.png" class="tw:object-top">
                             </div>
                         </div>
                     </div>
@@ -195,14 +188,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(2);" class="banner-item tw:group tw:xs:block! tw:sm:block! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/weather-forecast-plot.png">
+                                <img src="homepage/banner/img/highlights/weather-forecast-plot.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/weather-forecast-plot.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/weather-forecast-plot.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -211,14 +204,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(3);" class="banner-item tw:group tw:xs:block! tw:sm:block! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/dimensionality-reduction-animated.png">
+                                <img src="homepage/banner/img/highlights/dimensionality-reduction-animated.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/dimensionality-reduction-animated.png" class="tw:object-center">
+                                <img src="homepage/banner/img/thumbnails/dimensionality-reduction-animated.png" class="tw:object-center">
                             </div>
                         </div>
                     </div>
@@ -227,14 +220,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(4);" class="banner-item tw:group tw:xs:hidden! tw:sm:hidden! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/coal-production-since-1900.png">
+                                <img src="homepage/banner/img/highlights/coal-production-since-1900.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/coal-production-since-1900.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/coal-production-since-1900.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -243,14 +236,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(5);" class="banner-item tw:group tw:xs:hidden! tw:sm:hidden! tw:md:hidden! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/bar.png">
+                                <img src="homepage/banner/img/highlights/bar.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/bar.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/bar.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -259,14 +252,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(6);" class="banner-item tw:group tw:xs:block! tw:sm:block! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/dutch.png">
+                                <img src="homepage/banner/img/highlights/dutch.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/dutch.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/dutch.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -275,14 +268,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(7);" class="banner-item tw:group tw:xs:block! tw:sm:block! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/heatmap.png">
+                                <img src="homepage/banner/img/highlights/heatmap.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/heatmap.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/heatmap.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -291,14 +284,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(8);" class="banner-item tw:group tw:xs:block! tw:sm:block! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/language.png">
+                                <img src="homepage/banner/img/highlights/language.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/language.png" class="tw:object-right-top">
+                                <img src="homepage/banner/img/thumbnails/language.png" class="tw:object-right-top">
                             </div>
                         </div>
                     </div>
@@ -307,14 +300,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(9);" class="banner-item tw:group tw:xs:hidden! tw:sm:hidden! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/stations.png">
+                                <img src="homepage/banner/img/highlights/stations.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/stations.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/stations.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -323,14 +316,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(10);" class="banner-item tw:group tw:xs:hidden! tw:sm:hidden! tw:md:hidden! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/heatmap.png">
+                                <img src="homepage/banner/img/highlights/heatmap.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/heatmap.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/heatmap.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -339,14 +332,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(11);" class="banner-item tw:group tw:xs:block! tw:sm:block! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/womens-soccer.png">
+                                <img src="homepage/banner/img/highlights/womens-soccer.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/womens-soccer.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/womens-soccer.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -355,14 +348,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(12);" class="banner-item tw:group tw:xs:block! tw:sm:block! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/clock.png">
+                                <img src="homepage/banner/img/highlights/clock.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/clock.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/clock.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -371,14 +364,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(13);" class="banner-item tw:group tw:xs:block! tw:sm:block! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/anscombes-quartet.png">
+                                <img src="homepage/banner/img/highlights/anscombes-quartet.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/anscombes-quartet.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/anscombes-quartet.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -387,14 +380,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(14);" class="banner-item tw:group tw:xs:hidden! tw:sm:hidden! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/netflix.png">
+                                <img src="homepage/banner/img/highlights/netflix.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/netflix.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/netflix.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -403,14 +396,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(15);" class="banner-item tw:group tw:xs:hidden! tw:sm:hidden! tw:md:hidden! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/bar.png">
+                                <img src="homepage/banner/img/highlights/bar.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/bar.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/bar.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -419,14 +412,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(16);" class="banner-item tw:group tw:xs:block! tw:sm:block! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/netflix.png">
+                                <img src="homepage/banner/img/highlights/netflix.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/netflix.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/netflix.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
@@ -435,14 +428,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="" onmouseenter="visitItem(17);" class="banner-item tw:group tw:xs:block! tw:sm:block! tw:md:block! tw:lg:block!">
                         <div class="item-highlight">
                             <div>
-                                <img src="gallery/thumbnails/weather-forecast-plot.png">
+                                <img src="homepage/banner/img/highlights/weather-forecast-plot.png">
                             </div>
                         </div>
                         <div class="banner-cell">
                         <div class="banner-cell-back"><div></div><div></div><div></div><div></div></div>
                         <div class="banner-cell-front">
                             <div class="banner-thumbnail">
-                                <img src="gallery/thumbnails/weather-forecast-plot.png" class="tw:object-left-top">
+                                <img src="homepage/banner/img/thumbnails/weather-forecast-plot.png" class="tw:object-left-top">
                             </div>
                         </div>
                     </div>
