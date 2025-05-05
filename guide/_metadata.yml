@@ -1,0 +1,14 @@
+execute:
+  ipynb-shell-interactivity: all
+
+format:
+  html:
+    # NOTE: the class name below is guide, because when I used plotnine-guide
+    # it didn't work. Guessing it has to do with the hyphen :/
+    body-classes: "guide"
+    toc: true
+    # For proper retina (similar to what we get in the notebook),
+    # double the default dpi, then using CSS maintain the default size
+    fig-dpi: 200
+    theme:
+      - _styles.scss

@@ -1,6 +1,5 @@
 ---
 title: Installation
-ipynb-shell-interactivity: all
 ---
 
 For most users, we recommend installing the official release of Plotnine.
