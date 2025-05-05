@@ -6,7 +6,6 @@ ipynb-shell-interactivity: all
 
 This document is a translation of the [ggplot2 aesthetic specification](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html).
 
-
 ## Color and fill
 
 Almost every geom has either color, fill, or both. Colors and fills can be specified in the following ways:
@@ -56,10 +55,11 @@ Line types can be specified with:
 
     (ggplot(linetypes, aes(0, "y")) + 
       geom_segment(aes(xend = 5, yend = "y", linetype = "lty")) + 
-      scale_linetype_identity() + 
+      scale_linetype_identity(guide=None) + 
       geom_text(aes(label = "lty"), nudge_y = 0.2) +
       scale_x_continuous(name=None, breaks = None) + 
       scale_y_reverse(name=None, breaks = None)
+
     )
     ```
 
@@ -84,7 +84,7 @@ Line types can be specified with:
     (
         ggplot(linetypes, aes(0, "y")) + 
         geom_segment(aes(xend = 5, yend = "y", linetype = "lty")) + 
-        scale_linetype_identity() + 
+        scale_linetype_identity(guide=None) + 
         # TODO: no hjust argument?
         geom_text(aes(label = "lty"), nudge_y = 0.2) +
         scale_x_continuous(name=None, breaks = None) + 
@@ -219,7 +219,7 @@ Shapes take five types of values:
         ("D", "diamond"),
         ("d", "thin_diamond"),
         ("|", "vline"),
-        (pd.NA, "None"),
+        #(pd.NA, "None"),
          #("_", "hline"),
         # TODO: how to use these?
         #(0, "tickleft"),
@@ -246,7 +246,7 @@ Shapes take five types of values:
       ggplot(shapes, aes("x", "y")) + 
       geom_point(aes(shape = "shape"), size = 5, fill = "red") +
       geom_text(aes(label = "shape"), nudge_x = 0.15) +
-      scale_shape_identity() +
+      scale_shape_identity(guide=None) +
       expand_limits(x = 4.1) +
       theme_void()
     )
@@ -275,7 +275,7 @@ sizes = (
   ggplot(sizes, aes("size", "stroke", size = "size", stroke = "stroke")) + 
   geom_abline(slope = -1, intercept = 6, colour = "white", size = 6) + 
   geom_point(shape = "o", fill = "red") +
-  scale_size_identity()
+  scale_size_identity(guide=None)
 )
 ```
 
@@ -309,22 +309,24 @@ TODO: find something to link out to for installing new fonts.
 * `showtext` makes GD-independent plots by rendering all text as polygons. (TODO: svg_usefont; trade-off, paths are hard to edit quickly vs fonts eg in inkscape)
 
 
-### Font face
+### Font weight
 
 TODO: update plotnine and re-run; see geom_text docs
 
 ```{python}
 #| fig-alt: "A plot showing four text labels arranged vertically. The top 
 #|  label is 'bold.italic' and is displayed in bold and italic. The next three
-#|  labels are 'italic', 'bold' and 'plain' and are displayed in their 
+#|  labels are 'italic', 'bold' and 'normal' and are displayed in their 
 #|  respective styles."
-df = pd.DataFrame({"x": [1, 2, 3, 4], "fontweight": ["plain", "bold", "italic", "bold.italic"]})
+df = pd.DataFrame({"x": [1, 2, 3, 4], "fontweight": ["light", "normal", "bold", "extra bold"]})
 
 (
   ggplot(df, aes(1, "x")) + 
-  geom_text(aes(label = "fontweight", fontweight = "fontweight"))
+  geom_text(aes(label = "fontweight"), fontweight="bold")
 )
 ```
+
+### Font style
 
 ### Font size
 
