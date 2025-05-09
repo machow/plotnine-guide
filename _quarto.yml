@@ -12,9 +12,21 @@ project:
     - "cp -r demo _site/"
     - "sed -e /bootstrap.*css/d -i.bak _site/index.html"
 
+filters:
+  - interlinks
+
 execute:
   ipynb-shell-interactivity: all
   
+interlinks:
+  fast: true
+  autolink: true
+  aliases:
+    plotnine: null
+  sources:
+    plotnine:
+      url: https://plotnine.org/
+
 format:
   html:
     theme:

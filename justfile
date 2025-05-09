@@ -10,15 +10,21 @@ install:
 
 # Preview site with Quarto
 preview:
+    uv run quartodoc interlinks
     uv run quarto preview
 
 # Render site with Quarto
 render:
+    uv run quartodoc interlinks
     uv run quarto render
 
 # Open Jupyter Lab to experiment with notes
 lab:
     uvx --from jupyter-core jupyter lab
+
+# Update quarto extensions
+extensions:
+  uv run quarto add machow/quartodoc@feat-interlinks-autolink
 
 # When you're down
 dance:
