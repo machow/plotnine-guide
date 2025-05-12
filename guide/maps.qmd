@@ -5,8 +5,8 @@ jupyter: python3
 
 ```{python}
 from plotnine import *
-import geopandas as gp
 import geodatasets
+import geopandas as gp
 
 chicago = gp.read_file(geodatasets.get_path("geoda.chicago_commpop"))
 groceries = gp.read_file(geodatasets.get_path("geoda.groceries"))

@@ -61,7 +61,7 @@ This is shown below for points, boxplots, and lines.
 #| layout-nrow: 1
 small_mpg = (
     mpg[mpg["class"].isin(["2seater", "compact", "midsize"])]
-    .assign(**{"class": lambda d: d["class"].cat.remove_unused_categories()})
+    .assign(**{"class": lambda d: d["class"]})
 )
 model_avg_hwy = (
     small_mpg

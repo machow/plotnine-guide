@@ -90,7 +90,7 @@ from plotnine.data import mpg
 (
     ggplot(mpg.drop_duplicates("model"), aes("displ", "hwy", label="model"))
     + geom_point()
-    + geom_text(adjust_text={"arrowstyle": "-"})
+    + geom_text(adjust_text={"arrowprops": {"arrowstyle": "-"}})
 )
 ```
 
