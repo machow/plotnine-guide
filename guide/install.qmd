@@ -1,5 +1,7 @@
 ---
 title: Installation
+aliases: 
+  - ../index.html
 ---
 
 For most users, we recommend installing the official release of Plotnine.
