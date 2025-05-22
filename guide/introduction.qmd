@@ -130,6 +130,10 @@ from plotnine.data import anscombe_quartet
 
 TODO: check on using this plot before deploying.
 
+The plot below makes heavy use of annotation, in order to illustrate coal production over the past century. 
+The chart is largely Plotnine code, with matplotlib for some of the fancier text annotations.
+Learn more on in [this blog post](https://nrennie.rbind.io/2024-plotnine-contest/) by the author, Nicola Rennie.
+
 ![](./assets/nrennie-coal-production.png)
 
 ### Geospatial plots
