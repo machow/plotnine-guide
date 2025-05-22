@@ -118,12 +118,9 @@ The code below removes the x- and y-axis text and tick marks.
 
 ## Inherited elements
 
-TODO: https://github.com/has2k1/plotnine/issues/931
-
 Some arguments like `theme(axis_text=...)` set the default for multiple pieces (in this case `axis_text_x` and `axis_text_y`). For example, the code below blanks out the x- and y-axis text by default, but then sets the x-axis text to be purple.
 
 ```{python}
-# TODO: this doesn't seem to be the case (likely a bug?)
 (
     ggplot(penguins, aes(x="flipper_length_mm", y="body_mass_g"))
     + geom_point()

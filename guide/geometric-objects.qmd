@@ -246,11 +246,10 @@ Notice that the first plot has points plotted on top of each other. It uses `alp
 Use `position_fill()` to make stacked bars all the same height (set at 1), and `position_dodge()` to move bars side-by-side.
 
 ```{python}
-#| layout-nrow: 1
+# | layout-nrow: 1
 
 from plotnine.data import diamonds
 
-# TODO: from https://ggplot2-book.org/layers.html#sec-position
 p = ggplot(diamonds, aes("color", fill="cut")) + theme(legend_position="none")
 
 p + geom_bar()
@@ -290,5 +289,3 @@ mean_mpg = mpg.groupby("trans")["cty"].mean().reset_index()
 )
 
 ```
-
-(TODO: note about `after_stat()`? I think this is basically impossible to use with the current reference, because there's no way to know the options for each geom.)

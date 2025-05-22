@@ -82,7 +82,6 @@ Use the `labels=` arguments to the appropriate `scale_*()` function, in order to
 For example, the code below changes the y-axis labels from grams to kilograms.
 
 ```{python}
-# TODO: how to make disappear in labs?
 (
     p
     + scale_y_continuous(labels=lambda x: [val / 1_000 for val in x])

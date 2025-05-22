@@ -22,7 +22,19 @@ TODO: a graphic with annotations around scales, legends, and guides
 :::
 
 :::{.callout-note title="Key points" collapse="true"}
-TODO
+* Scale functions follow the pattern `scale_{aesthetic}_{type}` (e.g. `scale_color_continuous`)
+* Scales have default types based on the aesthetic and data.
+* Scales have an identity type that uses data values directly.
+* Position scale types include log and reverse.
+* Common scale arguments:
+  - `name=` sets guide names.
+  - `values=` sets manual styles (e.g. color or shape).
+  - `breaks=` sets pieces like axis ticks.
+  - `limits=` restricts the range of the scale.
+  - `labels=` sets custom labels for breaks.
+* Legends can be merged by giving scales the same name.
+* `theme(legend_position=...)` sets the position of the legend.
+* The `guide_*()` functions customize pieces like reversing a colorbar.
 :::
 
 ## Setup
@@ -65,7 +77,7 @@ Generally, when using scales you'll often want to use a scale that can automatic
 
 Notice that there are 7 colors in the plot, one for each level of the `class` column.
 
-## Types of scales
+## Varieties of scales
 
 ### Default scales
 
@@ -84,7 +96,7 @@ p + geom_point(aes(color="cyl"))
 p + geom_point(aes(color="factor(cyl)"))
 ```
 
-### Position types
+### Position scales
 
 The **position scales** for the x- and y-axis also have many extra transformations available. For example, reversing or log transforming.
 

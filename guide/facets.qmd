@@ -74,7 +74,7 @@ Both `facet_wrap()` and `facet_grid()` support a special syntax for defining sub
 
 Notice that `cyl` values (e.g. 4, 5, 6, 8) are on the rows, while `year` values are on the columns.
 
- The column names to the left of the tilde (`~`) define subplot rows, while those to the right define subplot columns. The plus sign (`+`) groups variables for creating subplots (TODO: is there a reasonable example that includes `+`?).
+ The column names to the left of the tilde (`~`) define subplot rows, while those to the right define subplot columns. The plus sign (`+`) groups variables for creating subplots.
 
 
 ## `scales=` for freeing axes
