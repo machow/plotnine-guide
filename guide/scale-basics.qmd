@@ -10,7 +10,6 @@ Scale functions follow the naming pattern `scale_{aesthetic}_{type}`, where aest
 
 Plotnine produces a legend automatically, which tells viewers how to map scale values back to the underlying data. These mappings back to data are called guides.
 
-TODO: a graphic with annotations around scales, legends, and guides
 
 :::{.callout-tip title="You will learn"}
 * How to apply a custom color palette.
@@ -77,7 +76,21 @@ Generally, when using scales you'll often want to use a scale that can automatic
 
 Notice that there are 7 colors in the plot, one for each level of the `class` column.
 
+## Scale parts
+
+Scales have many parts, including the overall guide, breaks, break labels, and break values (shown below).
+
+![](./assets/plot-guides-marked.png)
+
+Notice the pieces marked in the diagram above:
+
+* **Guide**: the x-axis, y-axis, and the color guide on the right.
+* **Breaks**: the data points where pieces like labels are applied.
+* **Break labels**: the text displayed for each break.
+* **Break values**: pieces like the position on the axis, or key color in the color guide for a break.
+
 ## Varieties of scales
+
 
 ### Default scales
 
