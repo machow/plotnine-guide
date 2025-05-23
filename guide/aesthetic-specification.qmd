@@ -6,11 +6,16 @@ ipynb-shell-interactivity: all
 
 This document is a translation of the [ggplot2 aesthetic specification](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html).
 
+```{python}
+import pandas as pd
+from plotnine import *
+```
+
 ## Color and fill
 
 Almost every geom has either color, fill, or both. Colors and fills can be specified in the following ways:
 
-* A **name**, e.g., `"red"`. **TODO: how do you list colors?**. https://matplotlib.org/stable/gallery/color/named_colors.html#css-colors
+* A **name**, e.g., `"red"`. These can be any color name or value supported by matplotlib. See the [matplotlib css colors documentation](https://matplotlib.org/stable/gallery/color/named_colors.html#css-colors) and the plot below for a list of colors.
 * An __rgb specification__, with a string of the form `"#RRGGBB"` where each of 
     the pairs `RR`, `GG`, `BB` consists of two hexadecimal digits giving a value 
     in the range `00` to `FF`
@@ -18,10 +23,32 @@ Almost every geom has either color, fill, or both. Colors and fills can be speci
     You can optionally make the color transparent by using the form 
     `"#RRGGBBAA"`.
 * A missing value (e.g. None, np.nan, pd.NA), for a completely transparent colour. 
-  - https://github.com/has2k1/plotnine/issues/791
 
+Here's an example of listing CSS color names matplotlib supports:
 
-TODO: continuous colormaps -- https://matplotlib.org/stable/users/explain/colors/colormaps.html
+```{python}
+from matplotlib import colors as mcolors
+
+n_colors = len(mcolors.CSS4_COLORS)
+colors = pd.DataFrame(
+    {
+        "name": [name for name in mcolors.CSS4_COLORS.keys()],
+        "x": [(x // 30) * 1.5 for x in range(n_colors)],
+        "y": [-(x % 30) for x in range(n_colors)],
+    }
+)
+
+(
+    ggplot(colors, aes("x", "y"))
+    + geom_point(aes(color="name"), size=5)
+    + geom_text(aes(label="name"), nudge_x=0.14, size=7.5, ha="left")
+    + scale_color_identity(guide=None)
+    + expand_limits(x=7)
+    + theme_void()
+    + labs(title="CSS4 colors")
+)
+```
+
 
 ## Lines
 
@@ -33,15 +60,11 @@ Line types can be specified with:
 
 *   A __name__: solid, dashed, dotted, 
     dashdot, as shown below:
-
+    
     ```{python}
     #| fig-alt: "A series of 6 horizontal lines with different line types.
     #|  From top-to-bottom they are titled 'solid', 'dashed', 'dotted',
     #|  'dotdash', 'longdash', 'twodash'."
-    #| echo: false
-    import pandas as pd
-    from plotnine import *
-
     lty = [
         "solid",
         "dashed",
@@ -56,44 +79,51 @@ Line types can be specified with:
     (ggplot(linetypes, aes(0, "y")) + 
       geom_segment(aes(xend = 5, yend = "y", linetype = "lty")) + 
       scale_linetype_identity(guide=None) + 
-      geom_text(aes(label = "lty"), nudge_y = 0.2) +
+      geom_text(aes(label = "lty"), nudge_y = 0.2, ha="left") +
       scale_x_continuous(name=None, breaks = None) + 
       scale_y_reverse(name=None, breaks = None)
 
     )
     ```
 
-* The lengths of on/off stretches of line. This is done with a string 
-  containing 2, 4, 6, or 8 hexadecimal digits which give the lengths of
-  consecutive lengths. For example, the string `"33"` specifies three units 
-  on followed by three off and `"3313"` specifies three units on followed by 
-  three off followed by one on and finally three off. TODO: this likely isn't implemented? (but tuple syntax is `(0, (1, 5))`)
-    ```{python}
-    #| fig-alt: 
-    #|   A series of 9 horizontal lines with different line types.
-    #|   Each line is titled by two hexadecimal digits that determined the
-    #|   lengths of dashes and gaps."
-    #| echo: false
-    #| eval: false
-    lty = ["11", "18", "1f", "81", "88", "8f", "f1", "f8", "ff"]
-    linetypes = pd.DataFrame({
-      "y": list(range(len(lty))),
-      "lty": lty
-    }) 
+*   The lengths of on/off stretches of line. This is done with a tuple of the form `(offset, (on, off, ...))`. 
 
+    ```{python}
+    # | fig-alt:
+    # |   A series of 9 horizontal lines with different line types.
+    # |   Each line is titled by two hexadecimal digits that determined the
+    # |   lengths of dashes and gaps."
+    lty = [
+        (0, (1, 1)),
+        (0, (1, 8)),
+        (0, (1, 15)),
+        (0, (8, 1)),
+        (0, (8, 8)),
+        (0, (8, 15)),
+        (0, (15, 1)),
+        (0, (15, 8)),
+        (0, (15, 15)),
+        (0, (2, 2, 6, 2)),
+    ]
+    linetypes = pd.DataFrame({"y": list(range(len(lty))), "lty": lty})
+    
     (
-        ggplot(linetypes, aes(0, "y")) + 
-        geom_segment(aes(xend = 5, yend = "y", linetype = "lty")) + 
-        scale_linetype_identity(guide=None) + 
-        # TODO: no hjust argument?
-        geom_text(aes(label = "lty"), nudge_y = 0.2) +
-        scale_x_continuous(name=None, breaks = None) + 
-        scale_y_reverse(name=None, breaks = None)
+        ggplot(linetypes, aes(0, "y"))
+        + geom_segment(aes(xend=5, yend="y", linetype="lty"))
+        + scale_linetype_identity(guide=None)
+        +
+        geom_text(aes(label="lty"), nudge_y=0.2, ha="left")
+        + scale_x_continuous(name=None, breaks=None)
+        + scale_y_reverse(name=None, breaks=None)
     )
     ```
 
 
-The five standard dash-dot line types described above correspond to 44, 13, 1343, 73, and 2262.
+The three standard dash-dot line types described above correspond to:
+
+* dashed: `(0, (4, 4))`
+* dotted: `(0, (1, 3)`
+* dashdot: `(0, (1, 3, 4, 3))`
 
 ### Linewidth
 
@@ -187,76 +217,78 @@ Shapes take five types of values:
 
 *   A string for a point type, as specified in [matplotlib.markers](https://matplotlib.org/stable/api/markers_api.html#):
 
-    ```{python}
-    #| echo: false
-    #| fig-alt: "A 5-by-5 grid of point symbols annotated by the numbers
-    #|  that can be used to represent the symbols. From left to right, the
-    #|  first 15 symbols are lines or open shapes, the next 5 symbols are solid 
-    #|  shapes and the last 5 symbols are filled shaped."
+```{python}
+# | echo: false
+# | fig-alt: "A 5-by-5 grid of point symbols annotated by the numbers
+# |  that can be used to represent the symbols. From left to right, the
+# |  first 15 symbols are lines or open shapes, the next 5 symbols are solid
+# |  shapes and the last 5 symbols are filled shaped."
 
-    shape_points = [
-        (".", "point"),
-        (",", "pixel"),
-        ("o", "circle"),
-        ("v", "triangle_down"),
-        ("^", "triangle_up"),
-        ("<", "triangle_left"),
-        (">", "triangle_right"),
-        ("1", "tri_down"),
-        ("2", "tri_up"),
-        ("3", "tri_left"),
-        ("4", "tri_right"),
-        ("8", "octagon"),
-        ("s", "square"),
-        ("p", "pentagon"),
-        ("P", "plus (filled)"),
-        ("*", "star"),
-        ("h", "hexagon1"),
-        ("H", "hexagon2"),
-        ("+", "plus"),
-        ("x", "x"),
-        ("X", "x (filled)"),
-        ("D", "diamond"),
-        ("d", "thin_diamond"),
-        ("|", "vline"),
-        #(pd.NA, "None"),
-         #("_", "hline"),
-        # TODO: how to use these?
-        #(0, "tickleft"),
-        #(1, "tickright"),
-        #(2, "tickup"),
-        #(3, "tickdown"),
-        #(4, "caretleft"),
-        #(5, "caretright"),
-        #(6, "caretup"),
-        #(7, "caretdown"),
-        #(8, "caretleft (centered at base)"),
-        #(9, "caretright (centered at base)"),
-        #(10, "caretup (centered at base)"),
-        #(11, "caretdown (centered at base)")
-    ]
-    n_shapes = len(shape_points)
-    shapes = pd.DataFrame({
-      "shape": [entry[0] for entry in shape_points],
-      "x": [x // 5 for x in range(n_shapes)],
-      "y": [-x % 5 for x in range(n_shapes)]
-    })
+shape_points = [
+    (".", "point"),
+    (",", "pixel"),
+    ("o", "circle"),
+    ("v", "triangle_down"),
+    ("^", "triangle_up"),
+    ("<", "triangle_left"),
+    (">", "triangle_right"),
+    ("1", "tri_down"),
+    ("2", "tri_up"),
+    ("3", "tri_left"),
+    ("4", "tri_right"),
+    ("8", "octagon"),
+    ("s", "square"),
+    ("p", "pentagon"),
+    ("P", "plus (filled)"),
+    ("*", "star"),
+    ("h", "hexagon1"),
+    ("H", "hexagon2"),
+    ("+", "plus"),
+    ("x", "x"),
+    ("X", "x (filled)"),
+    ("D", "diamond"),
+    ("d", "thin_diamond"),
+    ("|", "vline"),
+    (pd.NA, "None"),
+    # ("_", "hline"),
+    # TODO: how to use these?
+    # (0, "tickleft"),
+    # (1, "tickright"),
+    # (2, "tickup"),
+    # (3, "tickdown"),
+    # (4, "caretleft"),
+    # (5, "caretright"),
+    # (6, "caretup"),
+    # (7, "caretdown"),
+    # (8, "caretleft (centered at base)"),
+    # (9, "caretright (centered at base)"),
+    # (10, "caretup (centered at base)"),
+    # (11, "caretdown (centered at base)")
+]
+n_shapes = len(shape_points)
+shapes = pd.DataFrame(
+    {
+        "shape": [entry[0] for entry in shape_points],
+        "x": [x // 5 for x in range(n_shapes)],
+        "y": [-(x % 5) for x in range(n_shapes)],
+    }
+)
 
-    (
-      ggplot(shapes, aes("x", "y")) + 
-      geom_point(aes(shape = "shape"), size = 5, fill = "red") +
-      geom_text(aes(label = "shape"), nudge_x = 0.15) +
-      scale_shape_identity(guide=None) +
-      expand_limits(x = 4.1) +
-      theme_void()
-    )
-    ```
+(
+    ggplot(shapes, aes("x", "y"))
+    + geom_point(aes(shape="shape"), size=5, fill="red")
+    + geom_text(aes(label="shape"), nudge_x=0.15)
+    + scale_shape_identity(guide=None)
+    + expand_limits(x=4.1)
+    + theme_void()
+)
+```
 
-* `None` to draw nothing. (TODO: does not work)
+* `None` to draw nothing.
 
-### Colour and fill
+### Color and fill
 
-While `colour` applies to all shapes, `fill` only applies to shapes with red fill in the plot above. The size of the filled part is controlled by `size`, the size of the stroke is controlled by `stroke`. Each is measured in mm, and the total size of the point is the sum of the two. Note that the size is constant along the diagonal in the following figure.
+While `color` applies to all shapes, `fill` only applies to shapes with red fill in the plot above. The size of the filled part is controlled by `size`, the size of the stroke is controlled by `stroke`. Each is measured in mm, and the total size of the point is the sum of the two. Note that the size is constant along the diagonal in the following figure.
 
 ```{python}
 #| fig-alt: "A plot showing a 4-by-4 grid of red points, the top 12 points with
@@ -285,48 +317,51 @@ sizes = (
 
 ### Font family
 
-There are only three fonts that are guaranteed to work everywhere: "sans" (the default), "serif", or "mono" (TODO: this doesn't work):
+There are only three fonts that are guaranteed to work everywhere: "sans" (the default), "serif", or "mono":
 
 ```{python}
-#| fig-alt: "A plot showing three text labels arranged vertically. The top 
-#|  label is 'sans' and is displayed in a sans-serif font. The middle label is
-#|  'serif' and is displayed in a serif font. The bottom label is 'mono' and
-#|  is displayed in a monospaced font."
+# | fig-alt: "A plot showing three text labels arranged vertically. The top
+# |  label is 'sans' and is displayed in a sans-serif font. The middle label is
+# |  'serif' and is displayed in a serif font. The bottom label is 'mono' and
+# |  is displayed in a monospaced font."
 
 
-# TODO: add cursive and 🧚‍♀️ fantasy  
-df = pd.DataFrame({"x": 1, "y": [3, 2, 1], "family": ["sans-serif", "serif", "monospace"]})
-
-(
-  ggplot(df, aes("x", "y")) + 
-  geom_text(aes(label = "family", family="family"), size=20)
+df = pd.DataFrame(
+    {"x": 1, "y": [3, 2, 1], "family": ["sans-serif", "serif", "monospace"]}
 )
+
+(ggplot(df, aes("x", "y")) + geom_text(aes(label="family", family="family"), size=20))
 ```
-
-You should be able to use any fonts installed on your system.
-TODO: find something to link out to for installing new fonts.
-
-* `showtext` makes GD-independent plots by rendering all text as polygons. (TODO: svg_usefont; trade-off, paths are hard to edit quickly vs fonts eg in inkscape)
 
 
 ### Font weight
 
-TODO: update plotnine and re-run; see geom_text docs
+Currently, font weight doesn't seem to work in plotnine (see [this issue](https://github.com/has2k1/plotnine/issues/940)).
+But once it does, code like this should work:
 
 ```{python}
-#| fig-alt: "A plot showing four text labels arranged vertically. The top 
-#|  label is 'bold.italic' and is displayed in bold and italic. The next three
-#|  labels are 'italic', 'bold' and 'normal' and are displayed in their 
-#|  respective styles."
-df = pd.DataFrame({"x": [1, 2, 3, 4], "fontweight": ["light", "normal", "bold", "extra bold"]})
-
-(
-  ggplot(df, aes(1, "x")) + 
-  geom_text(aes(label = "fontweight"), fontweight="bold")
+# | fig-alt: "A plot showing four text labels arranged vertically. The top
+# |  label is 'bold.italic' and is displayed in bold and italic. The next three
+# |  labels are 'italic', 'bold' and 'normal' and are displayed in their
+# |  respective styles."
+df = pd.DataFrame(
+    {"x": [1, 2, 3, 4], "fontweight": ["light", "normal", "bold", "heavy"]}
 )
+
+(ggplot(df, aes(1, "x")) + geom_text(aes(label="fontweight"), fontweight="bold"))
 ```
 
 ### Font style
+
+Currently font style doesn't seem to work in plotnine (see [this issue](https://github.com/has2k1/plotnine/issues/941)).
+But once it does, code like this should work:
+
+
+```{python}
+df = pd.DataFrame({"x": [1, 2, 3], "fontstyle": ["normal", "italic", "oblique"]})
+
+(ggplot(df, aes(1, "x")) + geom_text(aes(label="fontstyle", fontstyle="fontstyle")))
+```
 
 ### Font size
 
