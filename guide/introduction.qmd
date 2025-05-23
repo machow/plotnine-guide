@@ -101,8 +101,6 @@ See the [Plotnine gallery](../gallery/) for more examples.
 
 ### Publication ready plots
 
-https://staging--plotnine.netlify.app/gallery/anscombes-quartet.html
-
 ```{python}
 # | code-fold: true
 from plotnine import *
@@ -127,8 +125,6 @@ from plotnine.data import anscombe_quartet
 ```
 
 ### Annotated charts
-
-TODO: check on using this plot before deploying.
 
 The plot below makes heavy use of annotation, in order to illustrate coal production over the past century. 
 The chart is largely Plotnine code, with matplotlib for some of the fancier text annotations.

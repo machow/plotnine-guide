@@ -119,9 +119,14 @@ In order to preserve space within a grouping for missing bars, you can calculate
 ```{python}
 df_crossed = mpg[["cyl"]].merge(mpg[["class"]], how="cross")
 
-# TODO: only works because class is a categorical
-# also is this section is pretty cumbersome
-full_counts = mpg.groupby(["cyl", "class"]).size().reset_index(name="n")
+# count rows, then explicitly add 0 counts for missing combinations
+full_counts = (
+    mpg.groupby(["cyl", "class"])
+    .size()
+    .reset_index(name="n")
+    .merge(df_crossed, how="right")
+    .fillna(0)
+)
 
 (
     ggplot(
