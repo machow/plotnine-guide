@@ -2,3 +2,91 @@
 title: "Operators: `+`, `>>`"
 jupyter: python3
 ---
+
+Plotnine overloads the `+` and `>>` operators to make it easier to compose and pass data to plots.
+
+```{python}
+from plotnine import *
+from plotnine.data import mpg
+```
+
+## The `+` operator
+
+Use `+` to add geoms, scales, and themes to a plot.
+
+```{python}
+# | layout-nrow: 1
+(
+    ggplot(mpg, aes("displ", "hwy"))
+    + geom_point(aes(fill="class"))  # first geom
+    + theme_minimal()  # theme
+)
+```
+
+## The `>>` operator
+
+Use the `>>` operator to pipe data into a plot.
+
+```{python}
+(
+    mpg
+    # piped into plot
+    >> ggplot(aes("displ", "hwy", fill="class")) + geom_point()
+)
+```
+
+## Why operators?
+
+### Composable and extendable
+
+Operators enable plot actions to use syntax that's composable and extendable. This means two things:
+
+* **composable**: you can add additional components like geoms to a plot.
+* **extendable**: components defined in other libraries---like new kinds of geoms---can be added to a plot using the same `+` syntax.
+
+For example, suppose you [defined your own Plotnine theme](./themes-basics.qmd), as shown below:
+
+```{python}
+def my_theme(base_size=11):
+    return (
+        theme_grey(base_size=base_size)  # start with grey theme
+        + theme(axis_text_x=element_text(angle=90))  # customize x-axis
+    )
+```
+
+You can use this theme with the `+` operator, just like the built-in Plotnine themes:
+
+
+```{python}
+(
+    ggplot(mpg, aes("displ", "hwy", fill="class"))
+    + geom_point()
+    + my_theme(base_size=16)  # apply custom theme
+)
+```
+
+Notice that the custom `my_theme()` component was added to the plot, in the same way anything else is (e.g. `geom_point()`).
+
+### Keep method chains going
+
+The `>>` operator allows you to keep method chains going, without needing to create intermediate variables.
+This is especially useful when using Polars DataFrames, where you often want to do small bits of data wrangling before piping into the plot.
+
+```{python}
+import polars as pl
+
+pl_mpg = pl.from_pandas(mpg)
+
+(
+    pl_mpg
+    #
+    # label high mpg cars
+    .with_columns(good_mpg=pl.col("hwy") > 30)
+    #
+    # remove compact cars
+    .filter(pl.col("class") != "compact")
+    #
+    # pipe into plot
+    >> ggplot(aes("displ", "hwy", fill="good_mpg")) + geom_point()
+)
+```

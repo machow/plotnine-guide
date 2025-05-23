@@ -9,6 +9,9 @@ aliases:
 Plotnine is a Python package for data visualization, based on the grammar of graphics. It implements a wide range of plots---including barcharts, linegraphs, scatterplots, maps, and much more.
 
 This guide goes from a basic [overview of Plotnine code](./overview.qmd), to explaining each piece of its grammar in more detail.
+While getting started is quick, learning the full grammar takes time.
+But it's worth it!
+The grammar of graphics shows how even plots that look very different share the same underlying structure.
 
 The rest of this page provides brief instructions for installing and starting with Plotnine, followed by some example use cases.
 
