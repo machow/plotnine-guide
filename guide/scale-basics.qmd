@@ -10,7 +10,6 @@ Scale functions follow the naming pattern `scale_{aesthetic}_{type}`, where aest
 
 Plotnine produces a legend automatically, which tells viewers how to map scale values back to the underlying data. These mappings back to data are called guides.
 
-TODO: a graphic with annotations around scales, legends, and guides
 
 :::{.callout-tip title="You will learn"}
 * How to apply a custom color palette.
@@ -22,7 +21,19 @@ TODO: a graphic with annotations around scales, legends, and guides
 :::
 
 :::{.callout-note title="Key points" collapse="true"}
-TODO
+* Scale functions follow the pattern `scale_{aesthetic}_{type}` (e.g. `scale_color_continuous`)
+* Scales have default types based on the aesthetic and data.
+* Scales have an identity type that uses data values directly.
+* Position scale types include log and reverse.
+* Common scale arguments:
+  - `name=` sets guide names.
+  - `values=` sets manual styles (e.g. color or shape).
+  - `breaks=` sets pieces like axis ticks.
+  - `limits=` restricts the range of the scale.
+  - `labels=` sets custom labels for breaks.
+* Legends can be merged by giving scales the same name.
+* `theme(legend_position=...)` sets the position of the legend.
+* The `guide_*()` functions customize pieces like reversing a colorbar.
 :::
 
 ## Setup
@@ -65,7 +76,21 @@ Generally, when using scales you'll often want to use a scale that can automatic
 
 Notice that there are 7 colors in the plot, one for each level of the `class` column.
 
-## Types of scales
+## Scale parts
+
+Scales have many parts, including the overall guide, breaks, break labels, and break values (shown below).
+
+![](./assets/plot-guides-marked.png)
+
+Notice the pieces marked in the diagram above:
+
+* **Guide**: the x-axis, y-axis, and the color guide on the right.
+* **Breaks**: the data points where pieces like labels are applied.
+* **Break labels**: the text displayed for each break.
+* **Break values**: pieces like the position on the axis, or key color in the color guide for a break.
+
+## Varieties of scales
+
 
 ### Default scales
 
@@ -84,7 +109,7 @@ p + geom_point(aes(color="cyl"))
 p + geom_point(aes(color="factor(cyl)"))
 ```
 
-### Position types
+### Position scales
 
 The **position scales** for the x- and y-axis also have many extra transformations available. For example, reversing or log transforming.
 

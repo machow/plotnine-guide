@@ -51,7 +51,6 @@ By default, geoms like `geom_bar()` stack bars on top of each other (`position_s
 # | layout-nrow: 1
 from plotnine.data import diamonds
 
-# TODO: from https://ggplot2-book.org/layers.html#sec-position
 p = ggplot(diamonds, aes("color", fill="cut")) + theme(legend_position="none")
 
 p + geom_bar(position=position_stack())  # default
@@ -101,7 +100,7 @@ dodge = position_dodge(width=0.6)
 
 ### Jitterdodging
 
-If you want to combine jittering and dodging, use `position_jitterdodge()`. (TODO: just link to API Reference, add example there.)
+If you want to combine jittering and dodging, use `position_jitterdodge()`. 
 
 ## Dodging with missing bars
 
@@ -120,9 +119,14 @@ In order to preserve space within a grouping for missing bars, you can calculate
 ```{python}
 df_crossed = mpg[["cyl"]].merge(mpg[["class"]], how="cross")
 
-# TODO: only works because class is a categorical
-# also is this section is pretty cumbersome
-full_counts = mpg.groupby(["cyl", "class"]).size().reset_index(name="n")
+# count rows, then explicitly add 0 counts for missing combinations
+full_counts = (
+    mpg.groupby(["cyl", "class"])
+    .size()
+    .reset_index(name="n")
+    .merge(df_crossed, how="right")
+    .fillna(0)
+)
 
 (
     ggplot(

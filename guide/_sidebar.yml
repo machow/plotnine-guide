@@ -1,8 +1,12 @@
+execute:
+  warning: false
+
 website:
+  page-navigation: true
   sidebar:
     - title: Guide
       contents:
-        - guide/install.qmd
+        - guide/introduction.qmd
         - guide/overview.qmd
         - section: "Basics"
           contents:
@@ -34,8 +38,10 @@ website:
         #   - guide/case-study3.qmd
         - section: "Miscellaneous"
           contents:
+          - guide/install.qmd
           - guide/maps.qmd
           #- guide/shortcuts.qmd
           #- guide/misc.qmd
           #- guide/feature-coverage.qmd
+          - guide/operators.qmd
           - guide/aesthetic-specification.qmd 

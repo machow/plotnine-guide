@@ -16,3 +16,6 @@ dependencies = [
     "pyarrow>=19.0.1",
     "pygments>=2.19.1",
 ]
+
+[tool.uv.sources]
+plotnine = { git = "https://github.com/has2k1/plotnine" }
