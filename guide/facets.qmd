@@ -22,7 +22,7 @@ Facets split a plot into multiple subplots, based on one or more variables. `fac
 
 ```{python}
 from plotnine import *
-from plotnine.data import mpg, penguins
+from plotnine.data import mpg
 ```
 
 Here is a single big plot that you might want to split into subplots.

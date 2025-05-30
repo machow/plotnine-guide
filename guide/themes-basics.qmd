@@ -1,6 +1,7 @@
 ---
 title: Theme basics
-execute: 
+execute:
+  # disable warnings for missing values in penguins dataset
   warning: false
 ---
 

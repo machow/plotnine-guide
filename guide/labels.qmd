@@ -1,6 +1,9 @@
 ---
 title: Labels and titles
 jupyter: python3
+execute:
+  # disable warnings for missing values in penguins dataset
+  warning: false
 ---
 
 :::{.callout-tip title="You will learn"}
