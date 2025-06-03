@@ -336,39 +336,44 @@ df = pd.DataFrame(
 
 ### Font weight
 
-To change the font weight, you need to use a font family that supports your intended font weight(s).
+There are two important considerations when using font weights:
+
+* font family must support your intended font weight(s).
+* fonts that bundle their multiple variants in one `.ttc` file may currently not be supported on your platform. (see [this issue](https://github.com/has2k1/plotnine/issues/941))
 
 ```{python}
 # | fig-alt: "A plot showing four text labels arranged vertically. Top to bottom
 # |  the labels are 'heavy', 'bold', 'normal' and 'light' and are displayed in
-# |  in their respective styles _as supported by the font_.
+# |  in their respective styles as supported by the font."
 df = pd.DataFrame(
     {"x": [1, 2, 3, 4], "fontweight": ["light", "normal", "bold", "heavy"]}
 )
 
 (
     ggplot(df, aes(1, "x"))
-    + geom_text(aes(label="fontweight", fontweight="fontweight"))
-    + theme_gray(base_family="DejaVu Sans")
+    + geom_text(
+        aes(label="fontweight", fontweight="fontweight"),
+        family="Dejavu Sans",
+    )
 )
 ```
 
-_Caveate: fonts that bundle their multiple variants in one `.ttc` file may currently not be supported on your platform. (see [this issue](https://github.com/has2k1/plotnine/issues/941))._
-
 ### Font style
 
+Similar to font weight, fonts that bundle multiple variants in one `.ttc` may not be supported (see [this issue](https://github.com/has2k1/plotnine/issues/941))
 
 ```{python}
 df = pd.DataFrame({"x": [1, 2, 3], "fontstyle": ["normal", "italic", "oblique"]})
 
 (
-   ggplot(df, aes(1, "x"))
-   + geom_text(aes(label="fontstyle", fontstyle="fontstyle"))
-   + theme_gray(base_family="DejaVu Sans")
+    ggplot(df, aes(1, "x"))
+    + geom_text(
+        aes(label="fontstyle", fontstyle="fontstyle"),
+        family="DejaVu Sans",
+    )
 )
 ```
 
-_Caveate: fonts that bundle their multiple variants in one `.ttc` file may currently not be supported on your platform. (see [this issue](https://github.com/has2k1/plotnine/issues/941))._
 
 ### Font size
 
