@@ -336,32 +336,44 @@ df = pd.DataFrame(
 
 ### Font weight
 
-Currently, font weight doesn't seem to work in plotnine (see [this issue](https://github.com/has2k1/plotnine/issues/940)).
-But once it does, code like this should work:
+There are two important considerations when using font weights:
+
+* font family must support your intended font weight(s).
+* fonts that bundle their multiple variants in one `.ttc` file may currently not be supported on your platform. (see [this issue](https://github.com/has2k1/plotnine/issues/941))
 
 ```{python}
-# | fig-alt: "A plot showing four text labels arranged vertically. The top
-# |  label is 'bold.italic' and is displayed in bold and italic. The next three
-# |  labels are 'italic', 'bold' and 'normal' and are displayed in their
-# |  respective styles."
+# | fig-alt: "A plot showing four text labels arranged vertically. Top to bottom
+# |  the labels are 'heavy', 'bold', 'normal' and 'light' and are displayed in
+# |  in their respective styles as supported by the font."
 df = pd.DataFrame(
     {"x": [1, 2, 3, 4], "fontweight": ["light", "normal", "bold", "heavy"]}
 )
 
-(ggplot(df, aes(1, "x")) + geom_text(aes(label="fontweight"), fontweight="bold"))
+(
+    ggplot(df, aes(1, "x"))
+    + geom_text(
+        aes(label="fontweight", fontweight="fontweight"),
+        family="Dejavu Sans",
+    )
+)
 ```
 
 ### Font style
 
-Currently font style doesn't seem to work in plotnine (see [this issue](https://github.com/has2k1/plotnine/issues/941)).
-But once it does, code like this should work:
-
+Similar to font weight, fonts that bundle multiple variants in one `.ttc` may not be supported (see [this issue](https://github.com/has2k1/plotnine/issues/941))
 
 ```{python}
 df = pd.DataFrame({"x": [1, 2, 3], "fontstyle": ["normal", "italic", "oblique"]})
 
-(ggplot(df, aes(1, "x")) + geom_text(aes(label="fontstyle", fontstyle="fontstyle")))
+(
+    ggplot(df, aes(1, "x"))
+    + geom_text(
+        aes(label="fontstyle", fontstyle="fontstyle"),
+        family="DejaVu Sans",
+    )
+)
 ```
+
 
 ### Font size
 
