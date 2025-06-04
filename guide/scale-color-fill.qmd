@@ -39,7 +39,8 @@ p + scale_color_brewer("qualitative", palette="Dark2")
 (
     p
     + scale_color_manual(
-        breaks=["Adelie", "Gentoo", "Chinstrap"], values=["blue", "orange", "green"]
+        breaks=["Adelie", "Gentoo", "Chinstrap"],
+        values=["blue", "orange", "green"]
     )
 )
 ```

@@ -159,10 +159,10 @@ The `labs()` function is a convenient way to set names for guides in one place, 
     ggplot(mpg, aes("displ", "hwy", color="class"))
     + geom_point()
     + labs(
-        title = "Use labs() to quickly set labels",
-        x = "Engine displacement (litres)",
-        y = "Highway miles per gallon",
-        color = "Car class"
+        title="Use labs() to quickly set labels",
+        x="Engine displacement (litres)",
+        y="Highway miles per gallon",
+        color="Car class"
     )
 )
 ```
@@ -189,7 +189,7 @@ keep_classes = ["2seater", "compact", "midsize"]
 ```{python}
 p = ggplot(mpg, aes("displ", "hwy", color="class")) + geom_point()
 
-p + scale_x_continuous(breaks = [4, 4.5, 5, 5.5])
+p + scale_x_continuous(breaks=[4, 4.5, 5, 5.5])
 ```
 
 ```{python}
@@ -242,7 +242,7 @@ p + scale_color_discrete(labels=lambda breaks: [s.upper() for s in breaks])
 The plot below manually sets the x-axis breaks and labels.
 
 ```{python}
-p + scale_x_continuous(breaks = [2, 4, 6], labels = ["TWO", "FOUR", "SIX"])
+p + scale_x_continuous(breaks=[2, 4, 6], labels=["TWO", "FOUR", "SIX"])
 
 ```
 

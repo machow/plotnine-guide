@@ -39,8 +39,8 @@ The simplest way to specify aesthetic mappings is through passing `aes()` to the
 ```{python}
 (
     ggplot(
-      data = penguins,
-      mapping = aes(x = "flipper_length_mm", y = "body_mass_g")
+      data=penguins,
+      mapping=aes(x="flipper_length_mm", y="body_mass_g")
     )
     + geom_point()
 )
@@ -58,9 +58,9 @@ When a mapping in `aes()` references a column of data, it is called a variable m
 (
     ggplot(
         penguins,
-        aes(x = "flipper_length_mm", y = "body_mass_g", color = "species")
-    ) +
-    geom_point()
+        aes(x="flipper_length_mm", y="body_mass_g", color="species")
+    )
+    + geom_point()
 )
 
 ```
@@ -71,9 +71,7 @@ When a mapping in `aes()` references a column of data, it is called a variable m
 (
     ggplot(
         penguins,
-        aes(
-            x="flipper_length_mm", y="body_mass_g", shape="species"
-        ),
+        aes(x="flipper_length_mm", y="body_mass_g", shape="species"),
     )
     + geom_point()
 )
