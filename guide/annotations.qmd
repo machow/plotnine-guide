@@ -33,6 +33,7 @@ from plotnine.data import penguins
 Use `annotate()` to write some text on a plot.
 
 ```{python}
+#| warning: false
 r_coef = penguins["flipper_length_mm"].corr(penguins["body_mass_g"])
 p = (
     ggplot(penguins, aes("flipper_length_mm", "body_mass_g"))
@@ -56,6 +57,7 @@ Notice that the correlation coefficient is shown on the top-left of the plot. Th
 In order to use annotate with another geom, pass the name of the geom as the first argument. For example, the code below draws a rectangle around the text.
 
 ```{python}
+#| warning: false
 p + annotate("rect", xmin=170, xmax=190, ymin=5500, ymax=6000, color="blue", fill=None)
 ```
 
@@ -66,6 +68,7 @@ Note that `annotate()` takes the same arguments as the corresponding `geom_*()` 
 Use the `geom_text(path_effects=...)` argument to add more complex styling to your text. This argument takes a list of objects created by the `matplotlib.patheffects` submodule.
 
 ```{python}
+#| warning: false
 import matplotlib.patheffects as pe
 
 effect = [

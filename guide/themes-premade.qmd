@@ -2,6 +2,7 @@
 title: Premade themes
 jupyter: python3
 execute:
+  # disable warnings for missing values in penguins dataset
   warning: false
 ---
 

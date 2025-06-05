@@ -63,6 +63,7 @@ The scatterplot below shows the relationship between bill length and bill depth 
 
 
 ```{python}
+#| warning: false
 from plotnine import ggplot, aes, geom_point, labs
 from plotnine.data import penguins
 
@@ -80,6 +81,7 @@ It also provides simple a `>>` operator to pipe data into a plot.
 The example below shows a Polars DataFrame being filtered, then piped into a plot.
 
 ```{python}
+#| warning: false
 import polars as pl
 
 pl_penguins = pl.from_pandas(penguins)

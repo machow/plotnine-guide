@@ -1,6 +1,9 @@
 ---
 title: Scale color and fill
 jupyter: python3
+execute:
+  # disable warnings for missing values in penguins dataset
+  warning: false
 ---
 
 ```{python}

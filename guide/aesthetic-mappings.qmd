@@ -1,6 +1,9 @@
 ---
 title: Aesthetic mappings
 jupyter: python3
+execute:
+  # disable warnings for missing values in penguins dataset
+  warning: false
 ---
 
 The `aes()` function maps columns of data onto graphical attributes--such as colors, shapes, or x and y coordinates. (`aes()` is short for aesthetic). It can be specified at the plot level, as well as at the individual geom level.

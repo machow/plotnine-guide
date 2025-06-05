@@ -219,6 +219,8 @@ p + scale_x_continuous(limits=[1950, 1960]) + labs(title="zoom in")
 p + scale_x_continuous(limits=[1800, 2000]) + labs(title="zoom out")
 ```
 
+[By _default_, when you "zoom in" by restricting the limits of the scale and have any data outside go out of bounds, it becomes unrepresentable by the scale. Unrepresentable data falls within the "missing data" category data, and it cannot be plotted so it is dropped with a warning.]{#limits-missing-data}
+
 ```{python}
 #| layout-nrow: 1
 p = ggplot(huron, aes("year", "level", color="year")) + geom_line() 
