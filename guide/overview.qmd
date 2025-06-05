@@ -51,7 +51,7 @@ The `aes()` function maps columns of data onto graphical attributes--such as col
 We can map the `cty` and `hwy` columns to the x- and y- coordinates in the plot using the code below:
 
 ```{python}
-ggplot(data=mpg, mapping = aes(x = "cty", y = "hwy"))
+ggplot(data=mpg, mapping=aes(x="cty", y="hwy"))
 ```
 
 ## `geom_*()` objects

@@ -76,12 +76,13 @@ Line types can be specified with:
       "lty": lty
     }) 
 
-    (ggplot(linetypes, aes(0, "y")) + 
-      geom_segment(aes(xend = 5, yend = "y", linetype = "lty")) + 
-      scale_linetype_identity(guide=None) + 
-      geom_text(aes(label = "lty"), nudge_y = 0.2, ha="left") +
-      scale_x_continuous(name=None, breaks = None) + 
-      scale_y_reverse(name=None, breaks = None)
+    (
+        ggplot(linetypes, aes(0, "y"))
+        + geom_segment(aes(xend=5, yend="y", linetype="lty"))
+        + geom_text(aes(label="lty"), nudge_y=0.2, ha="left")
+        + scale_x_continuous(name=None, breaks=None)
+        + scale_y_reverse(name=None, breaks=None)
+        + scale_linetype_identity(guide=None)
 
     )
     ```
@@ -110,11 +111,10 @@ Line types can be specified with:
     (
         ggplot(linetypes, aes(0, "y"))
         + geom_segment(aes(xend=5, yend="y", linetype="lty"))
-        + scale_linetype_identity(guide=None)
-        +
-        geom_text(aes(label="lty"), nudge_y=0.2, ha="left")
+        + geom_text(aes(label="lty"), nudge_y=0.2, ha="left")
         + scale_x_continuous(name=None, breaks=None)
         + scale_y_reverse(name=None, breaks=None)
+        + scale_linetype_identity(guide=None)
     )
     ```
 
@@ -152,21 +152,21 @@ with this mistake.
     df = pd.DataFrame({"x": [1,2,3], "y": [4, 1, 9]})
     base = ggplot(df, aes("x", "y")) + xlim(0.5, 3.5) + ylim(0, 10)
     (
-      base + 
-      geom_path(size = 10) + 
-      geom_path(size = 1, colour = "red")
+        base
+        + geom_path(size=10)
+        + geom_path(size=1, colour="red")
     )
     
     (
-      base + 
-      geom_path(size = 10, lineend = "round") + 
-      geom_path(size = 1, colour = "red")
+        base
+        + geom_path(size=10, lineend="round")
+        + geom_path(size=1, colour="red")
     )
     
     (
-      base + 
-      geom_path(size = 10, lineend = "square") + 
-      geom_path(size = 1, colour = "red")
+        base
+        + geom_path(size=10, lineend="square")
+        + geom_path(size=1, colour="red")
     )
     ```
 
@@ -183,22 +183,22 @@ with this mistake.
     df = pd.DataFrame({"x": [1,2,3], "y": [9, 1, 9]})
     base = ggplot(df, aes("x", "y")) + ylim(0, 10)
     (
-      base + 
-      geom_path(size = 10) + 
-      geom_path(size = 1, colour = "red")
+        base
+        + geom_path(size=10)
+        + geom_path(size=1, colour="red")
     )
     
 
     (
-      base + 
-      geom_path(size = 10, linejoin = "mitre") + 
-      geom_path(size = 1, colour = "red")
+        base
+        + geom_path(size=10, linejoin="mitre")
+        + geom_path(size=1, colour="red")
     )
     
     (
-      base + 
-      geom_path(size = 10, linejoin = "bevel") + 
-      geom_path(size = 1, colour = "red")
+        base
+        + geom_path(size=10, linejoin="bevel")
+        + geom_path(size=1, colour="red")
     )
     ```
 
@@ -304,10 +304,10 @@ sizes = (
 )
 
 (
-  ggplot(sizes, aes("size", "stroke", size = "size", stroke = "stroke")) + 
-  geom_abline(slope = -1, intercept = 6, colour = "white", size = 6) + 
-  geom_point(shape = "o", fill = "red") +
-  scale_size_identity(guide=None)
+    ggplot(sizes, aes("size", "stroke", size="size", stroke="stroke"))
+    + geom_abline(slope=-1, intercept=6, colour="white", size=6)
+    + geom_point(shape="o", fill="red")
+    + scale_size_identity(guide=None)
 )
 ```
 
@@ -397,10 +397,10 @@ just = pd.DataFrame({"hjust": ["center", "right", "left"], "x": [0, 1, 2]}).merg
 just["label"] = just["hjust"].astype(str).str.cat(just["vjust"].astype(str), sep=", ")
 
 (
-  ggplot(just, aes("x", "y")) +
-  geom_point(colour = "grey", size = 5) + 
-  geom_text(aes(label = "label", hjust = "hjust", vjust = "vjust"))
-  + expand_limits(x = [-.5, 2.5], y = [-.5, 2.5])
+  ggplot(just, aes("x", "y"))
+  + geom_point(colour="grey", size=5)
+  + geom_text(aes(label="label", hjust="hjust", vjust="vjust"))
+  + expand_limits(x=[-.5, 2.5], y=[-.5, 2.5])
 )
 ```
 

@@ -55,8 +55,9 @@ p + scale_shape_manual(breaks=["A", "B"], values=["s", "o"])
 
 ```{python}
 # | layout-nrow: 1
-p = ggplot(df, aes("condition", "measure", group="group", size="measure")) + geom_point(
-    aes(size="measure")
+p = (
+    ggplot(df, aes("condition", "measure", group="group", size="measure"))
+    + geom_point(aes(size="measure"))
 )
 
 p + scale_size_radius()

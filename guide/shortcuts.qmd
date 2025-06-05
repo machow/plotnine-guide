@@ -25,10 +25,10 @@ from plotnine.data import mpg
     ggplot(mpg, aes("displ", "hwy", color="class"))
     + geom_point()
     + labs(
-        title = "Use labs() to quickly set labels",
-        x = "Engine displacement (litres)",
-        y = "Highway miles per gallon",
-        color = "Car class"
+        title="Use labs() to quickly set labels",
+        x="Engine displacement (litres)",
+        y="Highway miles per gallon",
+        color="Car class"
     )
 )
 ```

@@ -36,9 +36,9 @@ p = (
     ggplot(penguins, aes("bill_length_mm", "bill_depth_mm", color="species"))
     + geom_point()
     + labs(
-        title = "Palmer Penguins Bill Depth vs Length",
-        x = "Bill length (mm)",
-        y = "Bill depth (mm)",
+        title="Palmer Penguins Bill Depth vs Length",
+        x="Bill length (mm)",
+        y="Bill depth (mm)",
     )
 )
 
