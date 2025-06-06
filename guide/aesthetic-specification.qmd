@@ -213,78 +213,59 @@ The border of the polygon is controlled by the `colour`, `linetype`, and `linewi
 
 ### Shape {#sec:shape-spec}
 
+<!--
+TODO: Document all ways of specifying shapes.
 Shapes take five types of values:
+*   A character string or an integer for a point type, as specified in [matplotlib.markers](https://matplotlib.org/stable/api/markers_api.html#):
+-->
 
-*   A string for a point type, as specified in [matplotlib.markers](https://matplotlib.org/stable/api/markers_api.html#):
+A character string or an integer for a point type, as specified in [matplotlib.markers](https://matplotlib.org/stable/api/markers_api.html#):
+
 
 ```{python}
 # | echo: false
-# | fig-alt: "A 5-by-5 grid of point symbols annotated by the numbers
-# |  that can be used to represent the symbols. From left to right, the
-# |  first 15 symbols are lines or open shapes, the next 5 symbols are solid
-# |  shapes and the last 5 symbols are filled shaped."
+# | fig-alt: "Point shapes and labels by the characters that represent them.
+# |   The shapes fall into two categories, filled shapes and unfilled shapes."
+import numpy as np
+from plotnine.scales.scale_shape import shapes as filled_shapes, unfilled_shapes
 
-shape_points = [
-    (".", "point"),
-    (",", "pixel"),
-    ("o", "circle"),
-    ("v", "triangle_down"),
-    ("^", "triangle_up"),
-    ("<", "triangle_left"),
-    (">", "triangle_right"),
-    ("1", "tri_down"),
-    ("2", "tri_up"),
-    ("3", "tri_left"),
-    ("4", "tri_right"),
-    ("8", "octagon"),
-    ("s", "square"),
-    ("p", "pentagon"),
-    ("P", "plus (filled)"),
-    ("*", "star"),
-    ("h", "hexagon1"),
-    ("H", "hexagon2"),
-    ("+", "plus"),
-    ("x", "x"),
-    ("X", "x (filled)"),
-    ("D", "diamond"),
-    ("d", "thin_diamond"),
-    ("|", "vline"),
-    (pd.NA, "None"),
-    # ("_", "hline"),
-    # TODO: how to use these?
-    # (0, "tickleft"),
-    # (1, "tickright"),
-    # (2, "tickup"),
-    # (3, "tickdown"),
-    # (4, "caretleft"),
-    # (5, "caretright"),
-    # (6, "caretup"),
-    # (7, "caretdown"),
-    # (8, "caretleft (centered at base)"),
-    # (9, "caretright (centered at base)"),
-    # (10, "caretup (centered at base)"),
-    # (11, "caretdown (centered at base)")
-]
-n_shapes = len(shape_points)
-shapes = pd.DataFrame(
-    {
-        "shape": [entry[0] for entry in shape_points],
-        "x": [x // 5 for x in range(n_shapes)],
-        "y": [-(x % 5) for x in range(n_shapes)],
-    }
-)
+n1 = len(filled_shapes)
+n2 = len(unfilled_shapes)
+ncols = 10
+shapes = filled_shapes + unfilled_shapes
+
+df = pd.DataFrame({
+    "x": np.hstack([np.arange(n1) % ncols, np.arange(n2) % ncols]),
+    "y": 1.5 * np.hstack([np.arange(n1) // ncols, np.arange(n2) // ncols]),
+    "shape": pd.Series(shapes, dtype=object),
+    "shape_kind": np.repeat(["Filled Shapes", "Unfilled Shapes"], (n1, n2))
+})
+
+
+def double_quote_strings(series):  # new
+    return [
+        '"{}"'.format(s) if isinstance(s, str) else "{}".format(s)
+        for s in series
+    ]
 
 (
-    ggplot(shapes, aes("x", "y"))
-    + geom_point(aes(shape="shape"), size=5, fill="red")
-    + geom_text(aes(label="shape"), nudge_x=0.15)
-    + scale_shape_identity(guide=None)
-    + expand_limits(x=4.1)
+    ggplot(df, aes("x", "y"))
+    + geom_tile(width=0.9, height=0.9, fill="#F8F8F8")
+    + geom_segment(aes(x="x-0.45", xend="x+0.45", yend="y"), color="crimson", alpha=0.05)
+    + geom_segment(aes(xend="x", y="y-0.45", yend="y+0.45"), color="crimson", alpha=0.05)
+    + geom_point(aes(shape="shape"), fill="#e5c8d6", size=8)
+    + geom_text(aes("x", "y-.5", label="double_quote_strings(shape)"), va="bottom", color="RoyalBlue")
+    + facet_wrap("shape_kind", ncol=1)
+    + scale_shape_identity()
+    + scale_y_reverse(limits=(-1, 2))
+    + coord_equal()
     + theme_void()
+    + theme(
+        plot_background=element_rect(fill="white"),
+        strip_text=element_text(size=12)
+    )
 )
 ```
-
-* `None` to draw nothing.
 
 ### Color and fill
 
