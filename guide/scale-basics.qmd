@@ -4,6 +4,20 @@ jupyter: python3
 ipynb-shell-interactivity: all
 ---
 
+```{python}
+# | include: false
+# TODO: need more general approach for shortening warnings in docs
+import warnings
+from warnings import WarningMessage, _formatwarnmsg_impl
+
+
+def new_formatwarning(message, category, filename, lineno, line=None):
+    return f"{category.__name__}: {message}\n"
+
+
+warnings.formatwarning = new_formatwarning
+```
+
 Scales specify how aesthetic mappings are ultimately styled as colors, shapes, positions, sizes, and more. This includes choosing the colors used or scaling the size of points based on values of data.
 
 Scale functions follow the naming pattern `scale_{aesthetic}_{type}`, where aesthetic is the name of the mapping (e.g. `x`, `y`, `fill`, `shape`), and type is the type of scale (e.g. `continuous`, `discrete`, `color`, `shape`).
@@ -219,7 +233,12 @@ p + scale_x_continuous(limits=[1950, 1960]) + labs(title="zoom in")
 p + scale_x_continuous(limits=[1800, 2000]) + labs(title="zoom out")
 ```
 
-[By _default_, when you "zoom in" by restricting the limits of the scale and have any data outside go out of bounds, it becomes unrepresentable by the scale. Unrepresentable data falls within the "missing data" category data, and it cannot be plotted so it is dropped with a warning.]{#limits-missing-data}
+Notice two important pieces:
+
+* The second plot is more zoomed in, so excludes some data (e.g. years before 1950).
+* The `PlotnineWarning` printed before the plots comes from the zoomed in plot, and indicates that zooming in cut off 87 rows. When data falls outside limits, Plotnine treats them like missing values.
+
+
 
 ```{python}
 #| layout-nrow: 1
