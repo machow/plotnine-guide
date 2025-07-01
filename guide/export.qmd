@@ -32,6 +32,7 @@ By default, plots in Jupyter and Quarto should be displayed automatically.
 For example, this website is built with Quarto, but the code below should also cause a plot to appear in a Jupyter notebook.
 
 ```{python}
+#| warning: false
 p = (
     ggplot(penguins, aes("bill_length_mm", "bill_depth_mm", color="species"))
     + geom_point()
@@ -48,6 +49,7 @@ p
 If you want to explicitly display a plot, use the `.show()` method.
 
 ```{python}
+#| warning: false
 p.show()
 ```
 

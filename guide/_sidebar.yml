@@ -1,6 +1,3 @@
-execute:
-  warning: false
-
 website:
   page-navigation: true
   sidebar:

@@ -76,7 +76,7 @@ p + coord_cartesian(ylim=[5000, None])
 
 Notice that the second plot is zoomed in, so the y-axis starts at the top of the boxplots.  Importantly, `coord_cartesian()` doesn't affect any statistical calculations.
 
-By contrast, setting limits in scales excludes any data outside those limits.
+By contrast, [setting limits in scales](scale-basics.qmd#limits-for-restricting-data-range) excludes any data outside those limits.
 
 ```{python}
 p + scale_y_continuous(limits=[5000, None])
