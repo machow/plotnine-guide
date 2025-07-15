@@ -7,7 +7,7 @@ For most users, we recommend installing the official release of Plotnine.
 
 ### Installing the official release
 
-The official release can be installed from the command line using either `pip`, `uv`, or `conda`:
+The official release can be installed from the command line using either `pip`, `uv`, `pixi`, or `conda`:
 
 ```bash
 # Using pip:
@@ -15,6 +15,11 @@ $ pip install plotnine
 
 # Using uv:
 $ uv pip install plotnine
+
+# Using pixi:
+$ pixi init name-of-project
+$ cd name-of-project
+$ pixi add plotnine
 
 # Using conda:
 $ conda install -c conda-forge plotnine
@@ -41,6 +46,9 @@ $ pip install 'plotnine[extra]'
 
 # Using uv:
 $ uv pip install 'plotnine[extra]'
+
+# Using pixi:
+$ pixi add --pypi 'plotnine[extra]'
 
 # Using conda:
 $ conda install -c conda-forge 'plotnine[extra]'
