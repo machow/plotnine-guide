@@ -48,7 +48,7 @@ $ pip install 'plotnine[extra]'
 $ uv pip install 'plotnine[extra]'
 
 # Using pixi:
-$ pixi add --pypi 'plotnine[extra]'
+$ pixi add 'plotnine[extra]' --pypi
 
 # Using conda:
 $ conda install -c conda-forge 'plotnine[extra]'
