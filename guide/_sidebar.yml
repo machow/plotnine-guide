@@ -13,11 +13,12 @@ website:
           - guide/position-adjustments.qmd
           - guide/facets.qmd
           - guide/coordinate-systems.qmd
+          - guide/export.qmd
         - section: "Polishing"
           contents:
-          - guide/export.qmd
           - guide/labels.qmd
           - guide/annotations.qmd
+          - guide/plot-composition.qmd
         - section: "Theming"
           contents:
           - guide/themes-basics.qmd

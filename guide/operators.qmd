@@ -1,9 +1,12 @@
 ---
-title: "Operators: `+`, `>>`"
+title: "Operators: `+`, `>>`, `|`, `/`"
 jupyter: python3
 ---
 
 Plotnine overloads the `+` and `>>` operators to make it easier to compose and pass data to plots.
+It also overloads the `|` and `/` operators to [compose multiple plots](./plot-composition.qmd) together. You might also see `&`, and `*` used for adding components to composed plots.
+
+This page covers the basics of the `+` and `>>` operators, along with an explanation for why they exist.
 
 ```{python}
 from plotnine import *
@@ -90,3 +93,36 @@ pl_mpg = pl.from_pandas(mpg)
     >> ggplot(aes("displ", "hwy", fill="good_mpg")) + geom_point()
 )
 ```
+
+## Is overloading operators "Pythonic"?
+
+Sometimes people ask whether overloading the `+` and `>>` operators is "Pythonic" -- meaning that it follows standard conventions for Python code. This is a tricky question to answer, but there are two cases that point to "yes":
+
+* The builtin `pathlib` library overloads `/` to good effect.
+* Tools like Polars use operators to compose selectors.
+
+### `pathlib` example
+
+```{python}
+from pathlib import Path
+
+Path("a/b") / "c"
+```
+
+In this case, the `/` operator makes it quick to add to a path (by returning a new Path object). Similarly, the Plotnine `>>` operator makes it easy to go from DataFrame method chaining into a plot.
+
+### Polars example
+
+```{python}
+import polars as pl
+import polars.selectors as cs
+
+df = pl.DataFrame({"ttl_a": [1], "ttl_b": [2], "ttly": [3]})
+
+# get cols starting with "ttl" but not "ttly"
+selector = cs.starts_with("ttl") - cs.by_name("ttly")
+
+df.select(selector)
+```
+
+Each selector (like `starts_with`) specifies a way to select columns, while operators like `-` provide ways to combine them. Similarly, each geom in Plotnine specifies a piece to include in a plot, while the `+` operator makes it easy to assemble pieces.
