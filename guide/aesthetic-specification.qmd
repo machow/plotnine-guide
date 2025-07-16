@@ -213,94 +213,104 @@ The border of the polygon is controlled by the `colour`, `linetype`, and `linewi
 
 ### Shape {#sec:shape-spec}
 
+<!--
+TODO: Document all ways of specifying shapes.
 Shapes take five types of values:
+*   A character string or an integer for a point type, as specified in [matplotlib.markers](https://matplotlib.org/stable/api/markers_api.html#):
+-->
 
-*   A string for a point type, as specified in [matplotlib.markers](https://matplotlib.org/stable/api/markers_api.html#):
+* A character string or an integer for a point type, as specified in [matplotlib.markers](https://matplotlib.org/stable/api/markers_api.html#):
 
-```{python}
-# | echo: false
-# | fig-alt: "A 5-by-5 grid of point symbols annotated by the numbers
-# |  that can be used to represent the symbols. From left to right, the
-# |  first 15 symbols are lines or open shapes, the next 5 symbols are solid
-# |  shapes and the last 5 symbols are filled shaped."
 
-shape_points = [
-    (".", "point"),
-    (",", "pixel"),
-    ("o", "circle"),
-    ("v", "triangle_down"),
-    ("^", "triangle_up"),
-    ("<", "triangle_left"),
-    (">", "triangle_right"),
-    ("1", "tri_down"),
-    ("2", "tri_up"),
-    ("3", "tri_left"),
-    ("4", "tri_right"),
-    ("8", "octagon"),
-    ("s", "square"),
-    ("p", "pentagon"),
-    ("P", "plus (filled)"),
-    ("*", "star"),
-    ("h", "hexagon1"),
-    ("H", "hexagon2"),
-    ("+", "plus"),
-    ("x", "x"),
-    ("X", "x (filled)"),
-    ("D", "diamond"),
-    ("d", "thin_diamond"),
-    ("|", "vline"),
-    (pd.NA, "None"),
-    # ("_", "hline"),
-    # TODO: how to use these?
-    # (0, "tickleft"),
-    # (1, "tickright"),
-    # (2, "tickup"),
-    # (3, "tickdown"),
-    # (4, "caretleft"),
-    # (5, "caretright"),
-    # (6, "caretup"),
-    # (7, "caretdown"),
-    # (8, "caretleft (centered at base)"),
-    # (9, "caretright (centered at base)"),
-    # (10, "caretup (centered at base)"),
-    # (11, "caretdown (centered at base)")
-]
-n_shapes = len(shape_points)
-shapes = pd.DataFrame(
-    {
-        "shape": [entry[0] for entry in shape_points],
-        "x": [x // 5 for x in range(n_shapes)],
-        "y": [-(x % 5) for x in range(n_shapes)],
-    }
-)
+  ```{python}
+  from plotnine.scales.scale_shape import shapes, unfilled_shapes
+  
+  shape_points = [*shapes, *unfilled_shapes, "none"]
+  
+  n_shapes = len(shape_points)
+  shapes = pd.DataFrame(
+      {
+          "shape": shape_points,
+          "shape_text": [repr(x) if str(x).isdigit() else x for x in shape_points],
+          "x": [x % 5 for x in range(n_shapes)],
+          "y": [-(x // 5) for x in range(n_shapes)],
+      }
+  )
+  
+  (
+      ggplot(shapes, aes("x", "y"))
+      + geom_point(aes(shape="shape"), size=5, fill="red")
+      + geom_text(aes(label="shape_text"), nudge_x=0.15)
+      + scale_shape_identity(guide=None)
+      + theme_void()
+      + expand_limits(x=4.1)
+  )
+  ```
+  
+* Shape path and mathtex (specified in the bottom of [matplotlib.markers](https://matplotlib.org/stable/api/markers_api.html#) table):
+  
+  ```{python}
+  # (num, type, angle)
+  pentagon = (5, 0, 60)             # type 0: polygon
+  five_point_star = (5, 1, 60)      # type 1: star
+  five_point_asterisk = (5, 2, 60)  # type 2: asterisk
+  
+  shape = [pentagon, five_point_star, five_point_asterisk, "$\\alpha$", "$\\beta$"]
+  shape_text = [x.replace("$", "\\$") if isinstance(x, str) else x for x in shape]
+  
+  shapes = pd.DataFrame(
+      {
+          "shape": shape,
+          "shape_text": shape_text,
+          "x": list(range(len(shape))),
+          "y": [0] * len(shape),
+      }
+  )
+  
+  (
+      ggplot(shapes, aes("x", "y"))
+      + geom_point(aes(shape="shape"), size=10)
+      + geom_text(aes(label="shape_text"), nudge_y=-0.1)
+      + scale_shape_identity(guide=None)
+      + theme_void()
+      #+ theme(figure_size=(6, 2))
+      + expand_limits(y=[-0.2, 0.2], x=[-0.5, len(shape) - 0.5])
+  )
+  ```
 
-(
-    ggplot(shapes, aes("x", "y"))
-    + geom_point(aes(shape="shape"), size=5, fill="red")
-    + geom_text(aes(label="shape"), nudge_x=0.15)
-    + scale_shape_identity(guide=None)
-    + expand_limits(x=4.1)
-    + theme_void()
-)
-```
-
-* `None` to draw nothing.
+* Custom matplotlib [path objects](https://matplotlib.org/stable/api/path_api.html#matplotlib.path.Path) as a literal mapping:
+  
+  ```{python}
+  from plotnine.data import mtcars
+  from matplotlib.path import Path
+  
+  
+  star = Path.unit_regular_star(6)
+  circle = Path.unit_circle()
+  
+  cut_star = Path(
+      vertices=[*circle.vertices, *star.vertices[::-1]],
+      codes=[*circle.codes, *star.codes]
+  )
+  
+  (
+      ggplot(mtcars, aes("wt", "mpg"))
+      + geom_point(shape=cut_star, size=10)
+  )
+  ```
 
 ### Color and fill
 
 While `color` applies to all shapes, `fill` only applies to shapes with red fill in the plot above. The size of the filled part is controlled by `size`, the size of the stroke is controlled by `stroke`. Each is measured in mm, and the total size of the point is the sum of the two. Note that the size is constant along the diagonal in the following figure.
 
 ```{python}
-#| fig-alt: "A plot showing a 4-by-4 grid of red points, the top 12 points with
-#|  black outlines. The size of the points increases horizontally. The stroke of 
-#|  the outlines of the points increases vertically. A white diagonal line with
-#|  a negative slope marks that the 'stroke' versus 'size' trade-off has 
-#|  similar total sizes."
-sizes = (
-  pd.DataFrame({"size": [0, 2, 4, 6]})
-  .merge(
+# | fig-alt: "A plot showing a 4-by-4 grid of red points, the top 12 points with
+# |  black outlines. The size of the points increases horizontally. The stroke of
+# |  the outlines of the points increases vertically. A white diagonal line with
+# |  a negative slope marks that the 'stroke' versus 'size' trade-off has
+# |  similar total sizes."
+sizes = pd.DataFrame({"size": [0, 2, 4, 6]}).merge(
     pd.DataFrame({"stroke": [0, 2, 4, 6]}), how="cross"
-  )
 )
 
 (
