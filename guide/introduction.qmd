@@ -40,6 +40,20 @@ uv add plotnine
 uv add 'plotnine[extra]'
 ```
 
+### pixi
+
+```bash
+# simple install
+pixi init name-of-project
+cd name-of-project
+pixi add plotnine
+
+# with dependencies uses in examples
+pixi init name-of-project
+cd name-of-project
+pixi add 'plotnine[extra]' --pypi
+```
+
 ### conda
 
 ```bash
