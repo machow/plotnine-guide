@@ -78,7 +78,7 @@ Notice that the top row has the plots side-by-side, while the bottom row puts a 
 
 Nesting level determines the proportion of space a plot (or group of plots) is given. Essentially, each group of plots is a nesting level, and because groups of plots can hold other groups, you can have multiple levels of nesting. This may sound confusing, so this section will start with an example, before explaining nesting levels in more detail.
 
-Use the `-` operator to put the right-hand plot group twice as much space as each individual plot on the left.
+Use the `-` operator to put the right-hand plot in its own group, giving it twice as much space as each individual plot on the left.
 
 
 ```{python}
@@ -89,11 +89,29 @@ bot = (p1 | p2 | p3) - p4  # p1, p2, p3 grouped (lower nesting level)
 top / bot
 ```
 
-Notice that the top row gives each plot equal space, while the bottom row gives two plots worth of space to the plot on the right (the one added with `-`).
+Notice that the top row gives each plot panel equal space, while the bottom row gives equal space to the plot panel on the right (the one added with `-`).
+
+A key here is that the plot panel is the space where geoms are drawn (e.g. points or bars), which excludes areas like the axes and legends.
+The plot panels for the four bottom plots are marked below.
+
+![](./assets/plot-composition-panels.png)
 
 By default each `|` adds the plot on the right to the group of plots on the left, and each side-by-side plot in a group is given equal horizontal space. The `-` operator creates a new group consisting of the left-hand group and the right-hand plot. In this case, each group is a separate nesting level.
 
+### More on grouping
+
 Here's a diagram of the nesting levels for the example above.
+
+**Grouping code.**
+
+```python
+top = p1 | p2 | p3 | p4  # all on same nesting level
+bot = (p1 | p2 | p3) - p4  # p1, p2, p3 grouped (lower nesting level)
+
+top / bot
+```
+
+**Nesting levels.**
 
 ```
 * level 1 (`/` stack operator)
