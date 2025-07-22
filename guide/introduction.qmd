@@ -205,7 +205,6 @@ df = (
     .with_columns(prop=pl.col("Values") / pl.col("Values").sum().over("Year"))
 )
 
-df.write_csv("plot-data.csv")
 
 # Generate color palette ----------------------------------------
 # this uses 12 colors interpolated to all 30 Groups
