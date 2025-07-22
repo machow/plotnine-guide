@@ -1,5 +1,5 @@
 ---
-title: "Operators: `+`, `>>`, `|`, `/`"
+title: "Operators: +, >>, |, /"
 jupyter: python3
 ---
 
